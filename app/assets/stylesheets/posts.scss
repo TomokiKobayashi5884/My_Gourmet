@@ -1,0 +1,38 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#wrapper {
+    margin: 36px auto 80px auto;
+    // max-width: 1440px;
+    // min-width: 980px;
+}
+
+main {
+    // flex: 1;
+}
+
+aside {
+    // width: 220px;
+}
+
+.ranking {
+    font-size: 150%;
+    line-height: 120%;
+}
+
+// @media screen and (max-width: 480px) {
+//     #wrapper {
+//         deispay: block;
+//         max-width: 100%;
+//         min-width: initial;
+//     }
+    
+//     main {
+//         margin: 0;
+//     }
+    
+//     aside {
+//         width: 100%;
+//     }
+// }
