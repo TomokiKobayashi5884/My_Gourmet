@@ -36,6 +36,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 #ログインシステムにdeviseを使用
 gem 'devise'
+#セキュリティのため、環境変数を使用
+gem 'dotenv-rails'
 
 
 group :development, :test do
