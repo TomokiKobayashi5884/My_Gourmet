@@ -1,3 +1,4 @@
+
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
@@ -36,3 +37,38 @@ aside {
 //         width: 100%;
 //     }
 // }
+
+.food-info {
+    margin-bottom: auto;
+}
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 480px) {
+    .article {
+        // height: auto;
+    }
+    
+    .jenre {
+        ont-size: 0.8rem;
+    }
+    
+    .title {
+        font-size: 1.5rem;
+    }
+    
+    .storename {
+        font-size: 1.0rem;
+    }
+    
+    .post-info {
+        font-size: 1.0rem;
+    }
+}
