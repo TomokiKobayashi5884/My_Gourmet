@@ -1,2 +1,158 @@
-<h1>Posts#new</h1>
-<p>Find me in app/views/posts/new.html.erb</p>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-8 mb-5">
+        <h4 class="my-3">新規投稿</h4>
+      
+        <hr>
+        <!------------------------------------------------新規投稿入力フォーム----------------------------------------------->
+        <%= form_with model: @post, url: posts_path, local: true do |f| %>
+        <!--画像(image)選択部分-->
+          <div class="form-inline row my-4">
+            <div class="col-sm-3 d-flex justify-content-start p-0">
+              <%= f.label "●画像", class: "" %>
+            </div>
+            <div class="col-sm-9 d-flex flex-column pl-0">
+              <!--ユーザーが画像をアップロードした場合は画像をプレビュー表示-->
+              <% if @post.image.present? %>
+                <%= image_tag @post.image.url, id: "post-image-preview", class: "img-fluid d-flex" %>
+              <!--アップロードしていない状態は何も表示しない-->
+              <% else %>
+                <img src="", id="post-image-preview" class="">
+              <% end %>
+              <div class="ml-0 d-flex flex-column">
+                <small class="ml-0">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 450px × 300 px推奨</small>
+                  <%= f.label "画像を選択", for: "post_image", class: "d-flex btn btn-warning col-4 align-items-center text-nowrap" %>
+                  <%= f.file_field :image, { onChange: "javascript: handleImage(this.files);", style: "display: none;" } %>
+                  
+              </div>
+            </div>
+          </div>
+        <!--料理名(title)記入欄-->
+          <div class="form-inline row my-4">
+              <%= f.label "●料理名", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%= f.text_field :title, class: "form-control col-sm-9", required: "required" %>
+              <small class="col-sm-9 ml-auto p-0">※未入力の場合は、ジャンル名が料理名として登録されます。</small>
+          </div>
+        <!--ジャンル名（genre)選択欄-->
+          <div class="form-inline row my-4">
+              <%= f.label "●ジャンル名", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%# if params[:genre_code].present? %>
+                <%#= f.collection_select :genre_code, @genres, :genre_code, :name, { selected: params[:genre_code] }, class: "form-control" %>
+              <%# else %>
+                <%= f.collection_select :genre_id, @genres, :id, :name, { prompt: "選択してください" }, class: "form-control" %>
+              <%# end %>
+          </div>
+        <!--食べた？食べたい？（ate)選択欄-->
+          <div class ="form-inline row my-4">
+              <%= f.label "●オススメ? or 食べたい?", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%= f.radio_button :ate, "true", class: "ml-2 form-check-input" %>オススメ！
+              &emsp;
+              <%= f.radio_button :ate, "false", class: "form-check-input" %>食べたい！
+              <!--<small class="col-sm-9 ml-auto p-0">※オススメしたい場合は「オススメ！」、食べたい場合は「食べたい！」を選択してください。</small>-->
+          </div>
+        <!--料理の詳細(content)記入欄-->
+          <div class ="form-inline row my-4">
+              <%= f.label "●料理の詳細", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%= f.text_area :content, class: "form-control col-sm-9" %>
+          </div>
+          <!--投稿するユーザーのidを保存-->
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <hr>
+           
+          
+          <p>
+            引き続き、下記にて店舗情報を入力してください。<br>
+            (ホットペッパー、または他のユーザーの過去の投稿から店舗情報を検索することもできます。)
+          </p>
+          
+          <!--ホットペッパーでの店舗検索用モーダル-->
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong">
+            ホットペッパーで店舗情報検索
+          </button>
+          <!------------------------------------店舗情報入力フォーム-------------------------------------------------------->
+          <%= f.fields_for @restaurant do |f| %>
+           <!--店名記入欄(name)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●店名", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                <%# if params[:name].present? %>
+                  <%#= f.text_field :name, value: params[:name], class: "form-control col-sm-9" %>
+                <%# else %>
+                  <%= f.text_field :name, class: "form-control col-sm-9" %>
+                <%# end %>
+                
+             </div>
+             <!--都道府県記入欄(large_area_od)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●都道府県", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                <!--ホットペッパーで店舗を選択している場合-->
+                <% if params[:large_area_code].present? %>
+                  <%= f.collection_select :large_area_code, @large_areas, :large_area_code, :name, { selected: params[:large_area_code] }, class: "form-control" %>
+                <% else %>
+                  <%= f.collection_select :large_area_code, @large_areas, :large_area_code, :name, { prompt: "選択してください" }, class: "form-control" %>
+                <% end %>
+             </div>
+             <!--エリア記入欄(middle_area_code)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●市区町村", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                 <!--ホットペッパーで店舗を選択している場合-->
+                <% if params[:middle_area_code].present? %>
+                  <%= f.collection_select :middle_area_code, @middle_areas, :middle_area_code, :name, { selected: params[:middle_area_code] }, class: "form-control" %>
+                <% else %>
+                  <%= f.collection_select :middle_area_code, @middle_areas, :middle_area_code, :name, { prompt: "選択してください" }, class: "form-control" %>
+                <% end %>
+             </div>
+             <!--住所記入欄(address)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●住所", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                <%= f.text_field :address, class: "form-control col-sm-9" %>
+             </div>
+             <!--営業時間記入欄(open_time)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●営業時間", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                <%= f.text_field :open_time, class: "form-control col-sm-9" %>
+             </div>
+             <!--定休日記入欄(close_day)-->
+             <div class="form-inline row my-4">
+                <%= f.label "●定休日", class: "col-sm-3 d-flex justify-content-start p-0" %>
+                <%= f.text_field :close_day, class: "form-control col-sm-9" %>
+             </div>
+         
+           <!--ホットペッパーidとURLを保存(非表示)(店舗情報がホットペッパーにある場合)-->
+           <%= f.hidden_field :hotpepper_id %>
+           <%= f.hidden_field :url %>
+           
+          <%= f.submit "投稿", class: "btn btn-danger w-100 mx-0 my-5" %>
+          <% end %>
+        <% end %>
+       
+       <!--モーダル部分-->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">ホットペッパーで店舗情報を検索</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body row">
+                <!--モーダルの内容-->
+                <%= render "hotpepper_search" %>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+              </div>
+            </div>
+      　  </div>
+  　　    </div>
+       
+       
+       
+       
+       
+      </div>
+    </div>
+</div>
+  
+<%= javascript_include_tag "posts/new" %>

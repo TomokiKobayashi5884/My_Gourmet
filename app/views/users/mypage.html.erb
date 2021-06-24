@@ -1,0 +1,110 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 mt-5">
+            <h4 class="my-3">マイページ</h4>
+            
+            <hr>
+            
+            <%= link_to mypage_my_gourmet_list_users_path, class: "link" do %>
+                <div class="container">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="far fa-heart fa-3x"></i>
+                            </div>
+                            <div class="col-9 d-flex ml-2">
+                               <div class="d-flex flex-column">
+                                   <h4>食べたい物リスト</h4>
+                                   <h6>あなただけの食べたい物リストをご覧になれます</h6>
+                               </div>
+                            </div>
+                        </div>
+                </div>
+            <% end %>
+        
+            <hr>
+            
+            <%= link_to mypage_post_list_users_path, class: "link" do %>
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-list-ul fa-3x"></i>
+                            </div>
+                            <div class="col-9 d-flex ml-2">
+                               <div class="d-flex flex-column">
+                                   <h4>過去の投稿一覧</h4>
+                                   <h6>あなたの過去の投稿の確認、編集ができます</h6>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        
+            <hr>
+            
+            <%= link_to mypage_edit_users_path, class: "link" do %>
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-user fa-3x"></i>
+                            </div>
+                            <div class="col-9 d-flex ml-2">
+                               <div class="d-flex flex-column">
+                                   <h4>会員情報編集</h4>
+                                   <h6>アカウント情報の編集、パスワードの変更はこちらから</h6>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        
+            <hr>
+            
+            <%= link_to mypage_edit_password_users_path, class: "link" do %>
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-lock fa-3x"></i>
+                            </div>
+                            <div class="col-9 d-flex ml-2">
+                               <div class="d-flex flex-column">
+                                   <h4>パスワード変更</h4>
+                                   <h6>パスワードの変更はこちらから</h6>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            
+            <hr>
+            
+            <%= link_to logout_path, class: "link" do %>
+                <div class="container">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-2 d-flex justify-content-center align-items-center">
+                                <i class="fas fa-sign-out-alt fa-3x"></i>
+                            </div>
+                            <div class="col-9 d-flex ml-2">
+                               <div class="d-flex flex-column">
+                                   <h4>ログアウト</h4>
+                                   <h6>ログアウトする場合</h6>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        
+            <hr>
+        
+        </div>
+    </div>
+</div>
+
+

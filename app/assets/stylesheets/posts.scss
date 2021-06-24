@@ -1,20 +1,16 @@
+
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#wrapper {
+#main {
     margin: 36px auto 80px auto;
-    // max-width: 1440px;
-    // min-width: 980px;
 }
 
-main {
-    // flex: 1;
+#side {
+    margin: 0 auto 80px auto;
 }
 
-aside {
-    // width: 220px;
-}
 
 .ranking {
     font-size: 150%;
@@ -36,3 +32,80 @@ aside {
 //         width: 100%;
 //     }
 // }
+#post {
+    padding-right: 0;
+}
+
+.article {
+    margin-bottom: 1.0rem;
+}
+
+.storename {
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+ 
+.article-info {
+    padding-top: 10px;
+    padding-right: 0;
+
+}
+
+.sub-article-info {
+    margin-top: 0.5rem;
+    marginbottom: 0;
+}    
+
+.h-restaurant-image {
+    width: 150px;
+    height: 150px;
+}
+
+
+@media screen and (max-width: 599px) {
+    
+    #main {
+        margin: 20px auto 40px auto;
+    }
+    
+    #side {
+        margin: 20px auto 80px auto;
+    }
+    
+    .article {
+        margin-bottom: 0.5rem;
+    }
+    
+    .title {
+        font-size: 15px;
+    }
+    
+    .genre {
+        font-size: 8px;
+    }
+    
+    .address {
+        font-size: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    .article-info {
+        padding-top: 0;
+    }
+    
+    .food-info {
+        font-size: 10px;
+    }
+    
+    .sub-article-info {
+        font-size: 10px;
+        margin-top: 0;
+        marginbottom: 0;
+    }
+    
+    .h-restaurant-image {
+    width: 120px;
+    height: 120px;
+    }
+}

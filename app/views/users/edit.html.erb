@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 mt-5">
+            <h4 class="my-3">会員情報編集</h4>
+            
+            <hr>
+            
+            <%= form_with model: @user, url: mypage_edit_users_path, local: true, method: :put do |f| %>
+            
+            <!--ユーザー名編集部分-->
+            <div class="form-group">
+                <%= f.label :name, "ユーザー名", class: "col-form-label" %>
+                <!--ユーザー名を表示-->
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-sm-9 collapse show userName my-1">
+                        <h3><%= @user.name %></h3>
+                    </div>
+                    <!--ユーザー名編集時に表示される部分-->
+                    <div class="col-sm-9 collapse editUserName my-1">
+                        <%= f.text_field :name, class: "form-control #{ "is-invalid" if @user.errors.messages[:name].present? }",
+                            required: "required", autocomplete: "name", placeholder: "グルメ太郎" %>
+                        
+                        <!--エラー発生時はメッセージを表示-->
+                        <% if @user.errors.messages[:name].present? %>
+                          <span class="app-error-message">
+                              <strong><%= @user.errors.full_messages_for(:name).first %></strong>
+                          </span>
+                        <% end %>
+                    </div>
+                    <div class="d-flex col-sm-2 justify-content-end align-items-center my-1">
+                        <div class="collapse editUserName">
+                            <%= f.submit "保存", class: "btn btn-danger" %>
+                        </div>
+                        <span onclick="switchEditUserInfo('.userName', '.editUserName', '.userNameEditLabel');" class="userNameEditLabel edit-label text-nowrap ml-2">
+                          編集
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <!--メールアドレス編集部分-->
+            <div class="form-group">
+                <%= f.label :email, "メールアドレス", class: "col-form-label" %>
+                <!--メールアドレスを表示-->
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-sm-9 collapse show userEmail my-1">
+                        <h3><%= @user.email %></h3>
+                    </div>
+                    <!--メールアドレス編集時に表示される部分-->
+                    <div class="col-sm-9 collapse editUserEmail my-1">
+                        <%= f.text_field :email, class: "form-control #{ "is-invalid" if @user.errors.messages[:email].present? }",
+                            required: "required", autocomplete: "email", placeholder: "mygourmet@example.com" %>
+                        <!--エラー発生時はメッセージを表示-->
+                        <% if @user.errors.messages[:email].present? %>
+                          <span class="app-error-message">
+                              <strong><%= @user.errors.full_messages_for(:email).first %></strong>
+                          </span>
+                        <% end %>
+                    </div>
+                    <div class="d-flex col-sm-2 justify-content-end align-items-center my-1">
+                        <div class="collapse editUserEmail">
+                            <%= f.submit "保存", class: "btn btn-danger" %>
+                        </div>
+                        <span onclick="switchEditUserInfo('.userEmail', '.editUserEmail', '.userEmailEditLabel');" class="userEmailEditLabel edit-label text-nowrap ml-2">
+                          編集
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<%= javascript_include_tag "users/edit" %>

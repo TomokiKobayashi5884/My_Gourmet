@@ -38,6 +38,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 #セキュリティのため、環境変数を使用
 gem 'dotenv-rails'
+#画像投稿機能にCarrierWaveを使用
+gem 'carrierwave', '~> 2.0'
+# 画像書こう用
+gem 'mini_magick'
+# ER図確認
+gem 'rails-erd'
+
+
 
 
 group :development, :test do
@@ -45,6 +53,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  
+  gem 'pry-rails'
 end
 
 group :development do

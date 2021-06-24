@@ -1,0 +1,113 @@
+header {
+    background-color: #EEE;
+}
+
+.logo {
+   font-family: 'Palatino','Times New Roman',sans-serif;
+}
+
+#app-overview {
+    position: relative;
+}
+
+#top-image {
+    filter: brightness(90%);
+    filter: opacity(60%);
+    filter: saturate(80%);
+}
+
+#app-overview h2 {
+    position: absolute;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+    white-space: nowrap;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-70%, -200%);
+    -ms-transform: translate(-70%, -200%);
+    -moz-transform: translate(-70%, -200%);
+    transform: translate(-70%, -200%);
+    margin: 0;
+    padding: 0;
+}
+
+#app-overview h1 {
+    position: absolute;
+    color: white;
+    font-size: 5em;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-20%, -10%);
+    -ms-transform: translate(-20%, -10%);
+    -moz-transform: translate(-20%, -10%);
+    transform: translate(-20%, -10%);
+    margin: 0;
+    padding: 0;
+}
+
+body, #wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+    margin-top: auto;
+    pading-top: 30px;
+    background-color: #EEE;
+    width: 100%;
+}
+
+.copyright {
+    background-color: #EEE;
+}
+// footer div a {
+//     background-color: #EEE;
+//     height: 4em;
+//     padding: 1.2em 1.5em;
+// }
+
+
+@media screen and (max-width: 599px) {
+    #app-overview h2 {
+        position: absolute;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px black;
+        white-space: nowrap;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-70%, -200%);
+        -ms-transform: translate(-70%, -200%);
+        -moz-transform: translate(-70%, -200%);
+        transform: translate(-70%, -200%);
+        margin: 0;
+    padding: 0;
+    }
+
+    #app-overview h1 {
+        position: absolute;
+        color: white;
+        font-size: 25px;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px black;
+        white-space: nowrap;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-20%, -10%);
+        -ms-transform: translate(-20%, -10%);
+        -moz-transform: translate(-20%, -10%);
+        transform: translate(-20%, -10%);
+        margin: 0;
+        padding: 0;
+    }
+    
+    footer {
+        background-color: #EEE;
+    }
+}

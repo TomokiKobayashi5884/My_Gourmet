@@ -1,53 +1,114 @@
-<div class="">
-  <img src="images/variousfood.jpg" class="w-100 image-fluid">
-
-
-  <div id="wrapper" class="container justify-content-center w-100">
-    <div class="row d-flex">
-    
-      <main id="posts" class="col-sm-8">
-        
-        <div class="card mb-3 h-75">
-          <div class="row no-gutters">
-            <div class="col-4">
-              <img src="/images/pizza.jpg" alt="..." class="img-fluid">
-            </div>
-            <div class="col-8">
-              <div class="m-3">
-                <h4 class="title mb-0 text-nowrap text-truncate">マルゲリータいいいいいいいいいいいいいい</h5>
-                <small class="jenre">イタリアン</small>
-                <p class="storename mt-2 text-nowrap text-truncate">宮城県仙台市宮城野区榴岡１丁目1番1号　ＪＲ仙台イーストゲートビル　2F</p>
-                <hr class="m-2">
-                <span class="d-flex mb-4">
-                  <p class="text-muted">こば - 2020/06/12</p>
-                  <p class="ml-auto mr-3"><i class="far fa-heart"></i>&ensp;12</p>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </main>
-    
-      <aside id="side" class="col-sm-4">
-        <div class="">
-            <h4><i class="fas fa-crown"></i>&ensp;食べたい数ランキング</h4>
-            <ol>
-              <li class="ranking">マルゲリータ</li>
-              <li class="ranking">マルゲリータ</li>
-              <li class="ranking">マルゲリータ</li>
-            </ol>
-        </div>
-        
-        <hr>
-        
-        <div>
-          <h4><i class="fas fa-search"></i>&ensp;投稿検索</h4>
-        </div>
-        <%= form_with model: posts
-      </aside>
-    
-    </div>
-  </div>
-
+<div id="app-overview">
+  <img src="images/variousfood2.jpg" id="top-image" class="w-100 ">
+  <h2>自分だけの"食べたい物リスト"が作れる</h2>
+  <h1 class="logo">My Gourmet</h1>
 </div>
+
+
+<div id="main" class="container">
+  <div class="row">
+    <!--投稿記事一覧部分-->
+    <main id="posts" class="col-sm-7 offset-1 ml-auto">
+      
+      <% @posts.each do |post| %>
+        <%# link_to "", post_path(post) do %>
+          <div class="card article">
+            <article class="d-flex">
+              <!--画像-->
+              <figure class="col-5 m-0 p-0">
+                <% if post.image.present? %>
+                  <%= image_tag post.image.to_s, class: "img-fluid" %>
+                <% else %>
+                   <img src="/images/pizza.jpg" alt="..." class="img-fluid">
+                <% end %>
+              </figure>
+              <div class="article-info col-7 d-flex flex-column">
+                <div class="food-info">
+                  <!--料理名-->
+                  <h3 class="title mb-0"><%= post.title %></h3>
+                  <!--ジャンル名-->
+                  <small class="genre mt-3"><%= post.genre.name %></small>
+                  <!--店の住所が登録されていれば表示-->
+                  <% if post.restaurant_id != nil && post.restaurant.address != nil %>
+                    <p class="storename text-nowrap text-truncate"><%= post.restaurant.address %></p>
+                  <% else %>
+                    <p class="storename text-nowrap text-truncate"></p>
+                  <% end %>
+                </div>
+                <div class="align-items-end">
+                  <hr class="my-1">
+                  <span class="sub-article-info d-flex">
+                    <!--ユーザー名 - 投稿日-->
+                    <p class="text-muted mb-1"><%= post.user.name %> - <%= l post.updated_at %></p>
+                    <!--食べたい数-->
+                    <p class="ml-auto mr-3 mb-1"><i class="far fa-heart"></i>&ensp;12</p>
+                  </span>
+                </div>  
+              </div>
+            </article>
+          </div>
+        <%# end %>
+      <% end %>
+      
+      
+      <div class="card article">
+            <article class="d-flex">
+              <!--画像-->
+              <figure class="col-5 m-0 p-0">
+                   <img src="/images/pizza.jpg" alt="..." class="img-fluid">
+              </figure>
+              <div class="article-info col-7 d-flex flex-column">
+                <div class="food-info">
+                  <!--料理名-->
+                  <h3 class="title mb-0">マルゲリータ</h3>
+                  <!--ジャンル名-->
+                  <small class="genre mt-3">イタリアン</small>
+                  <p class="storename text-nowrap text-truncate">大阪府大阪市北区４−３−２</p>
+                </div>
+                <div class="align-items-end">
+                  <hr class="my-1">
+                  <span class="sub-article-info d-flex">
+                    <!--ユーザー名 - 投稿日-->
+                    <p class="text-muted mb-1">こば - 2020/03/12</p>
+                    <!--食べたい数-->
+                    <p class="ml-auto mr-3 mb-1"><i class="far fa-heart"></i>&ensp;12</p>
+                  </span>
+                </div>  
+              </div>
+            </article>
+          </div>
+      
+    </main>
+    
+    <!--サイドメニュー部分-->
+    <aside id="side" class="col-sm-4">
+      <div class="">
+          <h4><i class="fas fa-crown"></i>&ensp;食べたい数ランキング</h4>
+          <ol>
+            <li class="ranking">マルゲリータ</li>
+            <li class="ranking">マルゲリータ</li>
+            <li class="ranking">マルゲリータ</li>
+          </ol>
+      </div>
+      
+      <hr>
+      
+      <div>
+        <h4><i class="fas fa-search"></i>&ensp;投稿検索</h4>
+        <%= form_with model: @posts, url: posts_path, remote: true do |f| %>
+          <%= f.label "キーワード", class: "" %>
+          <%= f.text_field :keyword, class: "form-control" %>
+           
+          <%= f.label "エリア", class: "" %>
+           
+           
+          <%= f.label "ジャンル", class: "" %>
+           
+          <%= f.submit "検索", class: "btn" %>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<%= javascript_include_tag "posts/index" %>
