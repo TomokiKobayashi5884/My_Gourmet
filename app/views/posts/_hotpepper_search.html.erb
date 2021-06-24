@@ -1,0 +1,64 @@
+ <div class="col-sm-3">
+   <h4><i class="fas fa-search"></i>&ensp;検索条件</h4>
+   <%= form_with url: new_post_path, method: :get, remote: true do |f| %>
+   <div class="d-flex flex-column form-group">
+     <%= f.label "キーワード", class: "" %>
+       <% if @keyword.present? %>
+         <%= f.text_field :keyword, value: @keyword, class: "form-control" %>
+       <% else %>
+         <%= f.text_field :keyword, class: "form-control" %>
+       <% end %>
+   </div>
+   
+   <div class="large_area d-flex flex-column form-group">
+     <%= f.label "都道府県", class: "" %>
+       <%# if @large_area_selected.present? %>
+         <%#= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { selected: @large_area_selected }, class: "form-control" %>
+       <%# else %>
+         <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
+       <%# end %>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+    
+     <%= f.label "市区町村", class: "" %>
+       <%# if @middle_area_selected.present? %>
+         <%#= f.collection_select :middle_area_selected, @middle_areas, :middle_area_code, :name, { selected: @middle_area_selected}, class: "form-control" %>
+       <%# else %>
+         <%#= render partial: "middle_area", locals: { large_area_id: LargeArea.first.id, middle_area_code: :middle_area_code } %>
+         
+         <%#= f.select :middle_area_selected, [], { include_blank: "選択してください" }, class: "form-control" %>
+         <%# LargeArea.all.each do |large_area| %>
+           <%# template {id: "middle-area-of-large-area#{large_area.id}"} %>
+             <%#= f.collection_select :middle_area_selected, large_area.middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
+         <%# end %>
+         
+         <%= f.collection_select :middle_area_selected, @middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
+       <%# end %>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+     <%= f.label "ジャンル", class: "" %>
+       <%# if @genre_selected.present? %>
+         <%#= f.collection_select :genre_selected, @genres, :genre_code, :name, { selected: @genre_selected }, class: "form-control" %>
+       <%# else %>
+         <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { prompt: "選択してください" }, class: "form-control" %>
+       <%# end %>
+   </div>
+   <div class=" d-flex justify-content-center mt-3 mb-5">
+     <%= f.submit "検索", id: "search_hotpepper", class: " btn btn-danger mt-3" %>
+   </div>   
+   <% end %>
+ </div>
+ 
+ <div class="col-sm-9">
+     <h4>検索結果一覧</h4>
+     <hr>
+     <div id="searched-restaurants" class="d-flex flex-column">
+        
+         <!--検索結果一覧が入る部分-->
+         
+     </div>
+ </div>
+ 
+ <%= javascript_include_tag "posts/new" %>

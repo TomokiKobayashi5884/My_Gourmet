@@ -1,5 +1,5 @@
 <header class="navbar navbar-expand-lg navbar-light sticky-top">
-  <a class="navbar-brand" href="posts" method="get">My Gourmet</a>
+  <%= link_to "My Gourmet", posts_path, class: "navbar-brand logo" %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,13 +8,13 @@
       <!--ユーザーがサインイン状態の場合-->
       <% if user_signed_in? %>
         <li class="nav-item">
-          <%= link_to "新規投稿", "#", class: "nav-link" %>
+          <%= link_to "新規投稿", new_post_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "食べたい物リスト", "#", class: "nav-link" %>
+          <%= link_to "食べたい物リスト", mypage_my_gourmet_list_users_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "マイページ", login_path, class: "nav-link" %>
+          <%= link_to "マイページ", mypage_users_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "ログアウト", logout_path, class: "nav-link" %>
@@ -22,10 +22,10 @@
       <!--ユーザーがサインアウト状態の場合-->
       <% else %>
         <li class="nav-item">
-          <%= link_to "新規投稿", "#", class: "nav-link" %>
+          <%= link_to "新規投稿", login_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "食べたい物リスト", "#", class: "nav-link" %>
+          <%= link_to "食べたい物リスト", login_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "ログイン", login_path, class: "nav-link" %>

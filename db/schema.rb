@@ -10,13 +10,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_11_035436) do
+ActiveRecord::Schema.define(version: 2021_06_23_083559) do
 
-  create_table "posts", force: :cascade do |t|
-    t.string "title"
-    t.text "content"
+  create_table "genres", force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "genre_code"
+  end
+
+  create_table "large_areas", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "large_area_code"
+  end
+
+  create_table "middle_areas", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "large_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "middle_area_code"
+    t.index ["large_area_id"], name: "index_middle_areas_on_large_area_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "content"
+    t.string "ate", default: "0", null: false
+    t.string "image", null: false
+    t.integer "user_id"
+    t.integer "genre_id"
+    t.integer "restaurant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["genre_id"], name: "index_posts_on_genre_id"
+    t.index ["restaurant_id"], name: "index_posts_on_restaurant_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "open_time"
+    t.string "close_day"
+    t.integer "large_area_id"
+    t.integer "middle_area_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.string "hotpepper_id"
+    t.index ["large_area_id"], name: "index_restaurants_on_large_area_id"
+    t.index ["middle_area_id"], name: "index_restaurants_on_middle_area_id"
   end
 
   create_table "users", force: :cascade do |t|

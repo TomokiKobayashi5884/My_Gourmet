@@ -1,9 +1,17 @@
 <footer class="">
-    <div class="row d-flex">
-        <a class="col-sm-3 text-center">My Gourmetとは</a>
-        <a class="col-sm-3 text-center">お問い合わせ</a>
-        <a class="col-sm-3 text-center">利用規約</a>
-        <a class="col-sm-3 text-center">プライバシーポリシー</a>
+    <div class="d-flex justify-content-around row">
+        <%= link_to "My Gourmetとは", "#", class: "col-sm text-center pt-3" %>
+        <%= link_to "お問い合せ", "#", class: "col-sm text-center pt-3" %>
+        <%= link_to "利用規約", "#", class: "col-sm text-center pt-3" %>
+        <%= link_to "プライバシーポリシー", "#", class: "col-sm text-center pt-3" %>
+        
+        <!--<a class="text-center"></a>-->
+        <!--<a class="text-center">お問い合わせ</a>-->
+        <!--<a class="text-center">利用規約</a>-->
+        <!--<a class="text-center">プライバシーポリシー</a>-->
+    </div>
+    <div class="copyright d-flex justify-content-center py-3 w-100">
+      <a>Copyright © 2021 My Gourmet All Rights Reserved.</a>
     </div>
     
 </footer>

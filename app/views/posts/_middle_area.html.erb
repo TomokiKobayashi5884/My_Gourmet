@@ -1,0 +1,5 @@
+<%# if @middle_area_selected.present? %>
+ <%#= collection_select :middle_area_select, @middle_areas, :middle_area_code, :name, { selected: @middle_area_selected}, class: "form-control" %>
+<%# else %>
+ <%= collection_select :middle_area_selected, @middle_areas.where(large_area_id: large_area_id), :middle_area_code, :name, class: "form-control" %>
+<%# end %>
