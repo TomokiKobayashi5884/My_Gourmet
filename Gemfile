@@ -44,7 +44,10 @@ gem 'carrierwave', '~> 2.0'
 gem 'mini_magick'
 # ER図確認
 gem 'rails-erd'
-
+# ページネーション機能
+gem 'kaminari'
+# ページネーションの表示を変更
+gem 'rails-i18n'
 
 
 
