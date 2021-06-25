@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   post 'posts/new' => 'posts#new'
   resources :posts do
    collection do
-    # get "search_by_hotpepper", :to => "posts#search_by_hotpepper"
+    # patch "new", :to => "posts#search_by_hotpepper"
     # get "middle_area_select"
    end
   end

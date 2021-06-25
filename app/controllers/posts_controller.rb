@@ -2,9 +2,12 @@ class PostsController < ApplicationController
   
   require 'net/http'
   require 'json'
+  # 1ページあたりの表示件数
+  PER = 10
   
   def index
-    @posts = Post.all.order("updated_at DESC")
+    # @posts = Post.all.order("updated_at DESC")
+    @posts = Post.order("updated_at DESC").page(params[:page]).per(PER)
   end
 
   def show
@@ -55,6 +58,13 @@ class PostsController < ApplicationController
     # 入力された条件を元にホットペッパーで店舗を検索
     search(search_params)
     logger.debug("============================ restaurant hash = #{@h_restaurants}")
+    
+    # ホットペッパー検索のページネーション
+    # @hot_restaurants = @h_restaurants.page(params[:page]).per(PER)
+    #   respond_to do |format|
+    #   format.html { render "hotpepper_search" }
+    #   format.json { render "hotpepper_search.json.jbuilder" }
+    # end
   end
   
   # def middle_area_select
@@ -220,6 +230,9 @@ class PostsController < ApplicationController
       
       response = JSON.load(json_res)
       
+      # body = JSON.parse(response.body)
+      # meta = body["meta"]
+      
       if response["results"].has_key?("error")
         puts "エラーが発生しました！"
         @h_restaurants = {}
@@ -234,8 +247,12 @@ class PostsController < ApplicationController
                                             "urls" => h_restaurant["urls"]["pc"], "large_area" => h_restaurant["large_area"],
                                             "middle_area" => h_restaurant["middle_area"]  
                                           }
+                      
+        # @hot_restaurants = Kaminari.paginate_array(@h_restaurants, total_count: meta["total_count"])
+        # .page(meta["current_page"]).per(meta["limit_value"])
+        
+                            
         end
-        # return @h_restaurants
       end
-   end   
+    end   
 end
