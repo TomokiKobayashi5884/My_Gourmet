@@ -7,7 +7,6 @@ class PostsController < ApplicationController
   PER = 10
   
   def index
-    # @posts = Post.all.order("updated_at DESC")
     @posts = Post.order("updated_at DESC").page(params[:page]).per(PER)
   end
 
@@ -70,6 +69,7 @@ class PostsController < ApplicationController
     # end
   end
   
+  # 都道府県入力からの市区町村プルダウン
   # def middle_area_select
   #   if request.xhr?
   #     render partial: 'middle_area', locals: { large_area_id: params[:large_area_id]}
