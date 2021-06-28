@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <!--投稿がユーザーによってすでに食べたい物リストに追加されている場合はリストから削除-->
+  <% if post.favorited_by?(current_user) %>
+    <%= link_to post_favorites_path(post), method: :delete, remote: true, class: "link" do %>
+      <i class="fas fa-heart favorite"></i>&ensp;<%= post.favorites.count %>
+    <% end %>
+    <!--リストに追加されていない場合はリストに追加-->
+  <% else %>
+    <%= link_to post_favorites_path(post), method: :post, remote: true, class: "link" do %>
+      <i class="far fa-heart"></i>&ensp;<%= post.favorites.count %>
+    <% end %>
+  <% end %>
+<!--ユーザーがサインインしていない時は、ログイン画面に遷移-->
+<% else %>
+  <%= link_to login_path, class: "link" do %>
+     <i class="far fa-heart"></i>&ensp;<%= post.favorites.count %>
+  <% end %>
+<% end %>

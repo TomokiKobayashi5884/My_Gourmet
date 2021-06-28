@@ -20,7 +20,7 @@
                 <img src="", id="post-image-preview" class="">
               <% end %>
               <div class="ml-0 d-flex flex-column">
-                <small class="ml-0">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 450px × 300 px推奨</small>
+                <small class="ml-0">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 600px × 400 px推奨</small>
                   <%= f.label "画像を選択", for: "post_image", class: "d-flex btn btn-warning col-4 align-items-center text-nowrap" %>
                   <%= f.file_field :image, { onChange: "javascript: handleImage(this.files);", style: "display: none;" } %>
                   

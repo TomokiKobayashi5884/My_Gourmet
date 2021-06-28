@@ -8,16 +8,24 @@
       <!--ユーザーがサインイン状態の場合-->
       <% if user_signed_in? %>
         <li class="nav-item">
-          <%= link_to "新規投稿", new_post_path, class: "nav-link" %>
+          <%= link_to new_post_path, class: "nav-link" do %>
+            <i class="fas fa-plus"></i>&ensp;新規投稿
+          <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to "食べたい物リスト", mypage_my_gourmet_list_users_path, class: "nav-link" %>
+          <%= link_to  mypage_my_gourmet_list_users_path, class: "nav-link" do %>
+            <i class="fas fa-heart"></i>&ensp;食べたい物リスト
+          <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to "マイページ", mypage_users_path, class: "nav-link" %>
+          <%= link_to mypage_users_path, class: "nav-link" do %>
+            <i class="fas fa-user"></i>&ensp;マイページ
+          <% end %>
         </li>
         <li class="nav-item">
-          <%= link_to "ログアウト", logout_path, class: "nav-link" %>
+          <%= link_to logout_path, class: "nav-link" do %>
+            <i class="fas fa-sign-out-alt"></i>&ensp;ログアウト
+          <% end %>
         </li>
       <!--ユーザーがサインアウト状態の場合-->
       <% else %>

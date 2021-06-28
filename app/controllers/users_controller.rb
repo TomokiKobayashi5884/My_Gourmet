@@ -13,7 +13,11 @@ class UsersController < ApplicationController
   def mypage
   end
   
+  # 食べたい物リスト
   def my_gourmet_list
+    
+    favorites = Favorites.where(user_id: current_user.id).pluck(:post_id)
+    @my_gourmet_list = Post.find(favorites)
   end
   
   def post_list

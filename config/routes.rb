@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
  
+  get 'favorites/create'
+  get 'favorites/destroy'
   devise_for :users, :controllers => {
    :registrations => "users/registrations",
    :sessions => "users/sessions",
@@ -15,7 +17,7 @@ Rails.application.routes.draw do
    get "logout", :to => "users/sessions#destroy"
   end
   
-  resource :users, only: [:edit, :update] do
+  resources :users, only: [:show, :edit, :update] do
    collection do
     get "mypage", :to => "users#mypage"
     put "mypage/edit", :to => "users#update"
@@ -25,13 +27,18 @@ Rails.application.routes.draw do
     
     get "mypage/edit_password", :to => "users#edit_password"
     put "mypage/password", :to => "users#update_password"
+    
+    get "favorites"
    end
   end
   
   root to: "posts#index"
   post 'posts/new' => 'posts#new'
   resources :posts do
+   resources :comments, only: [:create, :destroy]
+   resource :favorites, only: [:create, :destroy]
    collection do
+    
     # patch "new", :to => "posts#search_by_hotpepper"
     # get "middle_area_select"
    end

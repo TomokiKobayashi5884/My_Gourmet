@@ -1,0 +1,6 @@
+$("#favorite_<%= @post.id %>").html("<%= j(render partial: 'favorites/favorites', locals: { post: @post }) %>");
+
+<% flash.each do |type, message| %>
+  <!--$("#notice").remove("notice")-->
+  $("#notice").replaceWith('<p id="notice", class="alert alert-warning"><%= message %></p>');
+<% end %>

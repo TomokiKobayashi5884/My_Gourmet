@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   
   require 'net/http'
   require 'json'
@@ -11,6 +12,8 @@ class PostsController < ApplicationController
   end
 
   def show
+      @comments = @post.comments
+      @comment = @post.comments.new
   end
 
   def new
@@ -188,7 +191,7 @@ class PostsController < ApplicationController
          flash[:notice] = "投稿しました。"
          redirect_to root_path
       else
-         flash[:notice] = "投稿に失敗しました。"
+         flash[:alert] = "投稿に失敗しました。"
          render :new
       end
       
@@ -211,6 +214,11 @@ class PostsController < ApplicationController
   end
   
   private
+    
+    def set_post
+      @post = Post.find(params[:id])
+    end
+    
     #投稿保存時のストロングパラメータを設定
     def post_params
       params.require(:post).permit(:image, :title, :genre_id, :ate, :content, :user_id)
@@ -219,6 +227,8 @@ class PostsController < ApplicationController
     def restaurant_params
       params.permit(:name, :address, :phone, :open_time, :close_day, :hotpepper_id, :large_area_id, :middle_area_id, :url)
     end
+    
+  
     
     # ホットペッパーで店舗を検索し、ハッシュに格納する処理
     def search(search_params)

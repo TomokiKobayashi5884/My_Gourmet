@@ -11,9 +11,9 @@
     <main id="posts" class="col-sm-7 offset-1 ml-auto">
       
       <% @posts.each do |post| %>
-        <%# link_to "", post_path(post) do %>
-          <div class="card article">
-            <article class="d-flex">
+        
+          <article class="card article d-flex flex-row">
+            <%= link_to post_path(post), class: "link" do %>
               <!--画像-->
               <figure class="col-5 m-0 p-0">
                 <% if post.image.present? %>
@@ -35,19 +35,21 @@
                     <p class="storename text-nowrap text-truncate"></p>
                   <% end %>
                 </div>
+            <% end %>
                 <div class="align-items-end">
                   <hr class="my-1">
-                  <span class="sub-article-info d-flex">
+                  <div class="sub-article-info d-flex justify-content-between">
                     <!--ユーザー名 - 投稿日-->
-                    <p class="text-muted mb-1"><%= post.user.name %> - <%= l post.updated_at %></p>
+                    <div class="text-muted mb-1"><%= post.user.name %> - <%= l post.updated_at %></div>
                     <!--食べたい数-->
-                    <p class="ml-auto mr-3 mb-1"><i class="far fa-heart"></i>&ensp;12</p>
-                  </span>
+                    <div id="favorite_<%= post.id %>", class="mr-3 mb-1">
+                      <%= render partial: "favorites/favorites", locals: { post: post } %>
+                    </div>
+                  </div>
                 </div>  
               </div>
-            </article>
-          </div>
-        <%# end %>
+          </article>
+       
       <% end %>
       
       
@@ -84,7 +86,7 @@
     <!--サイドメニュー部分-->
     <aside id="side" class="col-sm-4">
       <div class="">
-          <h4><i class="fas fa-crown"></i>&ensp;食べたい数ランキング</h4>
+          <h4><i class="fas fa-crown crown"></i>&ensp;食べたい数ランキング</h4>
           <ol>
             <li class="ranking">マルゲリータ</li>
             <li class="ranking">マルゲリータ</li>

@@ -1,30 +1,97 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-8 mt-5">
+        <div class="col-sm-11 mt-5">
             <!--料理の情報部分-->
-            <div class="row">
-                <figure class="col-6">
-                   <img src="/images/pizza.jpg" alt="..." class="img-fluid">
-                </figure>
-                <div class="article-info col-6 flex-column">
-                    <small class="">こばが「食べたい！」</small>
-                    <h4>マルゲリータ</h4>
-                    <small class="genre">イタリアン</small>
-                    <div class="article-content">
-                        <p>チーズが濃厚でとても美味しい。チーズ好きにはたまらないと思う！絶対また行きたい！</p>
+                <div class="row">
+                    <figure class="col-sm-7">
+                       <%= image_tag @post.image.to_s, class: "img-fluid img" %>
+                    </figure>
+                    <div class="article-info col-sm-5 flex-column">
+                        <% if @post.ate %>
+                          <p class="font-weight-bold"><%= @post.user.name %>　が「オススメ！」</p>
+                        <% else %>
+                          <p class="font-weight-bold"><%= @post.user.name %>　が「食べたい！」</p>
+                        <% end %>
+                        <h3 class="font-weight-bold text-danger"><%= @post.title %></h3>
+                        <p class="genre font-weight-bold"><%= @post.genre.name %></p>
+                        <div class="article-content d-flex flex-fill">
+                            <p><%= @post.content %></p>
+                        </div>
+                        <hr class="mt-5">
+                        <div class="sub-article-info d-flex align-items-center justify-content-between">
+                            <p class="text-muted mb-1 mr-5"><%= l @post.updated_at %></p>
+                            <h5 id="favorite_<%= @post.id %>", class="mr-5 mb-1">
+                                <%= render partial: "favorites/favorites", locals: { post: @post } %>
+                            </h5>
+                        </div>
                     </div>
-                    <span class="sub-article-info d-flex">
-                        <p class="text-muted mb-1">2020/06/12</p>
-                        <p class="ml-auto mr-3 mb-1"><i class="far fa-heart"></i>&ensp;12</p>
-                    </span>
                 </div>
-            </div>
-            
             <hr>
             
             <div class="row">
                 <!--コメント部分-->
-                <div class=""
+                <div class="col-sm-7">
+                    <h5 class="mb-4 font-weight-bold">コメント一覧</h5>
+                    <div class="d-flex flex-column">
+                      <% if @comments.present? %>
+                        <% @comments.each do |comment| %>
+                          <div class="">
+                              <strong><%= comment.user.name if comment.user %></strong>
+                              <div class="mb-2 d-flex">
+                                   <p class="col-11 text-wrap m-0 p-1 border"><%= comment.content %></p>
+                                   <% if current_user == comment.user %>
+                                       <%= link_to "削除", "/posts/#{@post.id}/comments/#{comment.id}", method: :delete, data: { confirm: "コメントを削除しますか？" }, class: "col-1 link align-self-center text-nowrap" %>
+                                   <% end %>
+                              </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+                      
+                      <!--コメント入力部分-->
+                      <%= form_with moddel: @comment, url: post_comments_path(@post), local: true do |f| %>
+                        <%= f.text_area :content, class: "form_control w-100 mt-3" %>
+                        <%= button_tag type: "submit", class: "btn btn-success float-right" do %>
+                          <i class="far fa-comments"></i>コメントする
+                        <% end %>
+                      <% end %>
+                      
+                    </div>
+                </div>
+                
+                <!--店舗情報部分-->
+                <div class="col-sm-5">
+                    <h5 class="mb-5 font-weight-bold">店舗情報</h5>
+                    <div class="d-flex flex-column">
+                            <h3 class="m-0 text-danger font-weight-bold"><%= @post.restaurant.name %></h3>
+                        <table class="table table-borderless mt-2">
+                            <thead>
+                                
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="w-25 pl-0 text-nowrap">住所</th>
+                                    <td><%= @post.restaurant.address %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25 pl-0 text-nowrap">営業時間</th>
+                                    <td><%= @post.restaurant.open_time %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25 pl-0 text-nowrap">定休日</th>
+                                    <td><%= @post.restaurant.close_day %></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="w-25 pl-0 text-nowrap">URL</th>
+                                    <td><%= link_to @post.restaurant.url, target: :_blank, rel: "noopener noreferrer" do %>
+                                          <%= @post.restaurant.url %>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
             </div>
             
             
