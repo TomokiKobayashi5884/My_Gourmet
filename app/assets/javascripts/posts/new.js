@@ -1,3 +1,4 @@
+
 // 画像プレビュー
 function handleImage(image) {
     let reader = new FileReader();
@@ -8,61 +9,50 @@ function handleImage(image) {
     };
     reader.readAsDataURL(image[0]);
 }
-
-
-
-// 都道府県選択後に市区町村を表示
-// $(document).on("change", "#middle_area_select", function() {
-//   return $.ajax({
-//     type: "GET",
-//     url: "/posts/middle_area_serect",
-//     data: {
-//       large_area_id: $(this).val()
-//     }
-//   }).done(function(data) {
-//     return $('#middle_area_select').html(data);
-//   });
-// });
-
-
-$(document).on('turbolinks:load', function() {
- $(document).on('change', '#large_area_selected', function() {
-  let large_areaVal = $('#large_area_selected').val();
-  if (large_areaVal !== "") {
-  let selectedTemplate = $(`#middle-area-of-large-area${large_areaVal}`);
-  $('#large_area_selected').after(selectedTemplate.html());
-  };
- });
+// 画像アップロード後、エラー発生した場合、画像アップロードのrequired属性を外す
+$(window).on('load', function() {
+    if ($('#post-image-preview').hasClass('img')) {
+        $('#post_image').removeAttr('required');
+    }
 });
 
 
-$(document).on('turbolinks:load', function() {
- //HTMLが読み込まれた時の処理
- let large_areaVal = $('#large_area_selected').val();
- //一度目に検索した内容がセレクトボックスに残っている時用のif文
- if (large_areaVal !== "") {
-  let selectedTemplate = $(`#middle-area-of-large-area${large_areaVal}`);
-  $('#middle_area').remove();
-  $('#large_area_selected').after(selectedTemplate.html());
- };
+// 都道府県選択後に関連エリアをプルダウンに表示(newとedit用)
+$(document).on('change', '#post_restaurant_large_area_code', function() {
+  return $.ajax({
+    type: 'GET',
+    url: '/posts/middle_area_select_for_ne',
+    data: {
+      large_area_code: $(this).val()
+    }
+  }).done(function(data) {
+    return $('.middle_area').html(data);
+  });
+});
 
- //先ほどビューファイルに追加したもともとある子要素用のセレクトボックスのHTML
- let defaultMiddleAreaSelect = `<select name="middle_area" id="middle_area">
-<option value>市区町村を選択してください</option>
-</select>`;
+// 都道府県選択後に関連エリアをプルダウンに表示(ホットペッパーで検索の部分用)
+$(document).on('change', '#large_area_selected', function() {
+  return $.ajax({
+    type: 'GET',
+    url: '/posts/middle_area_select',
+    data: {
+      large_area_code: $(this).val()
+    }
+  }).done(function(data) {
+    return $('.middle_area_select').html(data);
+  });
+});
 
- $(document).on('change', '#large_area_selected', function() {
-  let large_areaVal = $('#large_area_selected').val();
-  //親要素のセレクトボックスが変更されてvalueに値が入った場合の処理
-  if (large_areaVal !== "") {
-   let selectedTemplate = $(`#middle-area-of-large-area${large_areaVal}`);
-   //デフォルトで入っていた子要素のセレクトボックスを削除
-   $('#middle_area').remove();
-   $('#large_area_selected').after(selectedTemplate.html());
-  }else {
-   //親要素のセレクトボックスが変更されてvalueに値が入っていない場合（include_blankの部分を選択している場合）
-   $('#middle_area').remove();
-   $('#large_area_selected').after(defaultMiddleAreaSelect);
-  };
- });
+
+// モーダル内のページネーション
+$('.paginateButton').on('click', function() {
+  var startNum = $(this).val();
+  var page = $(this).text().trim();
+  console.log(startNum);
+  console.log(page);
+  
+  $('#current_page').val(page);
+  $('#start').val((startNum * 10) - 9);
+  
+  Rails.fire($('#start').parent()[0], 'submit');
 });

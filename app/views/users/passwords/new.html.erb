@@ -16,9 +16,11 @@
           <%= f.email_field :email, class: "form-control #{ "is-invalid" if resource.errors.messages[:email].present? }",
             autofocus: "true", required: "required", autocomplete: "email", placeholder: "メールアドレス" %>
           <!--エラー発生時はエラーメッセージを表示-->
-          <% if resource.errors.messages[:email].present? %>
-            <span class="app-error-message">
-              <storng><%= resource.errors.messages[:email].first %></storng>
+          <% if resource.errors.messages[:email].any? %>
+            <span class="invalid-feedback">
+               <% resource.errors.full_messages_for(:email).each do |message| %>
+                 <stronng><%= message %></stronng><br>
+               <% end %>
             </span>
           <% end %>
         </div>

@@ -2,8 +2,6 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
   
-  # def comment_build
-  #   comment.build
-  # end
+  validates :content, presence: { message: "を入力してください" }, length: { maximum: 150 }
     
 end

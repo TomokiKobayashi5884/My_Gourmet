@@ -33,15 +33,16 @@ Rails.application.routes.draw do
   end
   
   root to: "posts#index"
-  post 'posts/new' => 'posts#new'
+  # post 'posts/new' => 'posts#new'
   resources :posts do
-   resources :comments, only: [:create, :destroy]
-   resource :favorites, only: [:create, :destroy]
    collection do
-    
-    # patch "new", :to => "posts#search_by_hotpepper"
-    # get "middle_area_select"
+    # get "search_by_hotpepper", :to => "posts#search_by_hotpepper"
+    # get "search_post", :to => "posts#search_post"
+    get "middle_area_select"
+    get "middle_area_select_for_ne"
    end
+  resources :comments, only: [:create, :destroy]
+  resource :favorites, only: [:create, :destroy]
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

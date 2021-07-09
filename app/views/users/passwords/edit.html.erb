@@ -14,9 +14,11 @@
             autofocus: "true", required: "required", placeholder: "新しいパスワード" %>
             
           <!--エラー発生時はエラーメッセージを表示-->
-          <% if resource.errors.messages[:password].present? %>
-            <span class="app-error-message">
-              <storng><%= resource.errors.messages[:password].first %></storng>
+          <% if resource.errors.messages[:name].any? %>
+            <span class="invalid-feedback">
+               <% resource.errors.full_messages_for(:name).each do |message| %>
+                 <stronng><%= message %></stronng><br>
+               <% end %>
             </span>
           <% end %>
         </div>

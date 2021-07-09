@@ -12,6 +12,9 @@ class CommentsController < ApplicationController
             redirect_back(fallback_location: post_path(post))
         else
             flash[:alert] = "コメントできませんでした"
+             @comment.errors.full_messages.each do |message|
+                flash[:alert] = message
+            end
             redirect_back(fallback_location: post_path(post))
         end
     end
@@ -24,7 +27,7 @@ class CommentsController < ApplicationController
             flash[:notice] = "コメントを削除しました"
             redirect_back(fallback_location: post_path(post))
         else
-            flash[:alert] = "コメントさ削除できませんでした"
+            flash[:alert] = "コメントを削除できませんでした"
             redirect_back(fallback_location: post_path(post))
         end
         

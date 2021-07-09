@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-9 mb-5">
+            <div class="d-flex justify-content-between pt-3">
+                <h4 class="mb-0"><%= @user.name %> の投稿一覧</h4>
+                <h4 class="mb-0">全<%= Post.where(user_id: @user.id).count %>件</h4>
+            </div>
+            
+            <hr>
+            
+            <!--投稿一覧部分-->
+            
+            <% @posts.each do |post| %>
+              <div class="row d-flex mb-3">
+                <div class="col-sm-10 p-0">
+                  <article class="card article d-flex flex-row">
+                     <%= link_to post_path(post), class: "link" do %>
+                      <!--画像-->
+                        <% if post.image.present? %>
+                          <%= image_tag post.image.to_s, class: "img-fluid" %>
+                        <% else %>
+                           <img src="/images/pizza.jpg" alt="..." class="img-fluid">
+                        <% end %>
+                     
+                      <div class="article-info col-7 d-flex flex-column">
+                        <div class="food-info">
+                          <!--料理名-->
+                          <h3 class="title mb-1 text-nowrap text-truncate"><%= post.title %></h3>
+                          <!--ジャンル名-->
+                          <small class="genre"><%= post.genre.name %></small>
+                          <!--店の住所が登録されていれば表示-->
+                          <% if post.restaurant_id != nil && post.restaurant.address != nil %>
+                            <p class="storename text-nowrap text-truncate"><%= post.restaurant.address %></p>
+                          <% else %>
+                            <p class="storename text-nowrap text-truncate"></p>
+                          <% end %>
+                        </div>
+                    <% end %>
+                        <div class="sub-article-info-position">
+                          <hr class="mb-1 mt-2">
+                          <div class="sub-article-info d-flex justify-content-between">
+                            <!--ユーザー名 - 投稿日-->
+                            <div class="text-muted my-0"><%= post.user.name %> - <%= l post.updated_at %></div>
+                            <!--食べたい数-->
+                            <div id="favorite_<%= post.id %>", class="mr-3 mb-1">
+                              <%= render partial: "favorites/favorites", locals: { post: post } %>
+                            </div>
+                          </div>
+                        </div>  
+                      </div>
+                  </article>
+                </div>
+                <div class="col-sm-1 d-flex align-items-center">
+                    <%= link_to "編集", edit_post_path(post), method: :get, class: "btn btn-sm text-nowrap mr-1" %>
+                    <%= link_to "削除", post_path(post), method: :delete, data: {confirm: "この投稿を削除しますか？"}, class: "btn btn-sm btn-outline-danger text-nowrap" %>
+                </div>
+              </div>
+            <% end %>
+          
+          <%= paginate @posts %>
+            
+        </div>
+    </div>
+</div>
+
+

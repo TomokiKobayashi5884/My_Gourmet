@@ -25,7 +25,7 @@
                 required: "required", autocomplete: "email", placeholder: "メールアドレス" %>
               <!--エラーメッセージ表示部分  -->
               <% if alert %>
-                <span class="app-error-message">
+                <span class="invalid-feedback">
                   <storng>メールアドレスが正しくない可能性があります。</storng>
                 </span>
               <% end %>
@@ -36,7 +36,7 @@
                 required: "required", placeholder: "パスワード" %>
               <!--エラーメッセージ表示部分-->
               <% if alert %>
-                <span class="app-error-message">
+                <span class="invalid-feedback">
                   <storng>パスワードが正しくない可能性があります。</storng>
                 </span>
               <% end %>

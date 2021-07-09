@@ -7,22 +7,24 @@
                        <%= image_tag @post.image.to_s, class: "img-fluid img" %>
                     </figure>
                     <div class="article-info col-sm-5 flex-column">
-                        <% if @post.ate %>
+                        <% if @post.ate == true %>
                           <p class="font-weight-bold"><%= @post.user.name %>　が「オススメ！」</p>
                         <% else %>
                           <p class="font-weight-bold"><%= @post.user.name %>　が「食べたい！」</p>
                         <% end %>
-                        <h3 class="font-weight-bold text-danger"><%= @post.title %></h3>
-                        <p class="genre font-weight-bold"><%= @post.genre.name %></p>
+                        <h3 class="font-weight-bold text-danger mt-4 mb-3"><%= @post.title %></h3>
+                        <p class="genre mb-2"><%= @post.genre.name %></p>
                         <div class="article-content d-flex flex-fill">
-                            <p><%= @post.content %></p>
+                            <p class="text-wrap" style="word-break:break-all; word-wrap:break-word;"><%= @post.content %></p>
                         </div>
-                        <hr class="mt-5">
-                        <div class="sub-article-info d-flex align-items-center justify-content-between">
-                            <p class="text-muted mb-1 mr-5"><%= l @post.updated_at %></p>
-                            <h5 id="favorite_<%= @post.id %>", class="mr-5 mb-1">
-                                <%= render partial: "favorites/favorites", locals: { post: @post } %>
-                            </h5>
+                        <div class="sub-article-info-position">
+                            <hr class="mt-5">
+                            <div class="sub-article-info d-flex align-items-center justify-content-between">
+                                <h6 class="text-muted mb-1"><%= l @post.updated_at %></h6>
+                                <h5 id="favorite_<%= @post.id %>", class="favorite-mark mb-1 mr-5">
+                                    <%= render partial: "favorites/favorites", locals: { post: @post } %>
+                                </h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,22 +37,20 @@
                     <div class="d-flex flex-column">
                       <% if @comments.present? %>
                         <% @comments.each do |comment| %>
-                          <div class="">
-                              <strong><%= comment.user.name if comment.user %></strong>
-                              <div class="mb-2 d-flex">
-                                   <p class="col-11 text-wrap m-0 p-1 border"><%= comment.content %></p>
-                                   <% if current_user == comment.user %>
-                                       <%= link_to "削除", "/posts/#{@post.id}/comments/#{comment.id}", method: :delete, data: { confirm: "コメントを削除しますか？" }, class: "col-1 link align-self-center text-nowrap" %>
-                                   <% end %>
-                              </div>
+                          <h6 class="font-weight-bold"><%= comment.user.name if comment.user %></h6>
+                          <div class="mb-2 d-flex">
+                               <p class="col-11 text-wrap m-0 p-1 border"><%= comment.content %></p>
+                               <% if current_user = comment.user %>
+                                   <%= link_to "削除", "/posts/#{@post.id}/comments/#{comment.id}", method: :delete, data: { confirm: "コメントを削除しますか？" }, class: "col-1 link align-self-center text-nowrap" %>
+                               <% end %>
                           </div>
                         <% end %>
                       <% end %>
                       
                       <!--コメント入力部分-->
                       <%= form_with moddel: @comment, url: post_comments_path(@post), local: true do |f| %>
-                        <%= f.text_area :content, class: "form_control w-100 mt-3" %>
-                        <%= button_tag type: "submit", class: "btn btn-success float-right" do %>
+                        <%= f.text_area :content, class: "form_control w-100 mt-3 #{"is-invalid" if @comment.errors.messages[:content].any? }" %>
+                        <%= button_tag type: "submit", class: "btn btn-success float-right mb-5" do %>
                           <i class="far fa-comments"></i>コメントする
                         <% end %>
                       <% end %>
@@ -60,45 +60,42 @@
                 
                 <!--店舗情報部分-->
                 <div class="col-sm-5">
-                    <h5 class="mb-5 font-weight-bold">店舗情報</h5>
+                    <h5 class="mb-3 font-weight-bold">店舗情報</h5>
                     <div class="d-flex flex-column">
-                            <h3 class="m-0 text-danger font-weight-bold"><%= @post.restaurant.name %></h3>
-                        <table class="table table-borderless mt-2">
-                            <thead>
-                                
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="w-25 pl-0 text-nowrap">住所</th>
-                                    <td><%= @post.restaurant.address %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="w-25 pl-0 text-nowrap">営業時間</th>
-                                    <td><%= @post.restaurant.open_time %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="w-25 pl-0 text-nowrap">定休日</th>
-                                    <td><%= @post.restaurant.close_day %></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="w-25 pl-0 text-nowrap">URL</th>
-                                    <td><%= link_to @post.restaurant.url, target: :_blank, rel: "noopener noreferrer" do %>
-                                          <%= @post.restaurant.url %>
-                                        <% end %>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        
+                            <h3 class="m-0 text-danger font-weight-bold"><%= @post.restaurant.name if @post.restaurant_id != nil && @post.restaurant.name != nil %></h3>
+                            <table class="table table-borderless mt-2">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="w-25 px-0 text-nowrap">住所</th>
+                                        <td><%= @post.restaurant.address if @post.restaurant_id != nil && @post.restaurant.address %></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="w-25 px-0 text-nowrap">営業時間</th>
+                                        <td><%= @post.restaurant.open_time if @post.restaurant_id != nil && @post.restaurant.open_time %></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="w-25 px-0 text-nowrap">定休日</th>
+                                        <td><%= @post.restaurant.close_day if @post.restaurant_id != nil && @post.restaurant.close_day %></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="w-25 px-0 text-nowrap" style="word-break:break-all; word-wrap:break-word;">URL</th>
+                                        <td>
+                                            <% if @post.restaurant_id != nil && @post.restaurant.url %>
+                                                <%= link_to @post.restaurant.url, target: :_blank, rel: "noopener noreferrer" do %>
+                                                  <%= @post.restaurant.url %>
+                                                <% end %>
+                                            <% end %>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                     </div>
                 </div>
             </div>
             
             
-            
-            
-            
-            
         </div>
     </div>
+    
+    
 </div>

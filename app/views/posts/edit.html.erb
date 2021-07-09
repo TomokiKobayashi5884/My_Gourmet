@@ -1,2 +1,282 @@
-<h1>Posts#edit</h1>
-<p>Find me in app/views/posts/edit.html.erb</p>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-8 mb-5">
+        <h4 class="my-3">投稿編集</h4>
+      
+        <hr>
+        <!------------------------------------------------投稿編集フォーム----------------------------------------------->
+        <%= form_with model: @post, url: post_path, local: true do |f| %>
+        <!--画像(image)選択部分-->
+          <div class="form-inline row my-4">
+            <div class="col-sm-3 d-flex align-items-center p-0 mb-2">
+              <%= f.label "●画像", class: "d-flex mr-3 mb-0" %>
+              <div class="require-input text-nowrap">　必須　</div>
+            </div>
+            <div class="col-sm-9 d-flex flex-column px-0">
+              <!--ユーザーが画像をアップロードした場合は画像をプレビュー表示-->
+              <% if @post.image.present? %>
+                <%= image_tag @post.image.url, id: "post-image-preview", class: "img-fluid d-flex" %>
+              <!--アップロードしていない状態は何も表示しない-->
+              <% else %>
+                <img src="", id="post-image-preview" class="">
+              <% end %>
+              <div class="ml-0 d-flex flex-column">
+                <small class="ml-0">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 600px × 400 px推奨<br>※ アップロード可能なファイル形式はjpg、jpeg、gif、pngです。</small>
+                  <%= f.label "画像を選択", for: "post_image", class: "btn btn-warning w-100 text-center mt-3 #{"is-invalid" if @post.errors.messages[:image].any? }" %>
+                  <%= f.file_field :image, { onChange: "javascript: handleImage(this.files);", style: "position: relative; bottom: 34px; opacity: 0;", class: "w-25" } %>
+                  
+                  <% if @post.errors.messages[:image].any? %>
+                    <span class="invalid-feedback">
+                       <% @post.errors.full_messages_for(:image).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+              </div>
+            </div>
+          </div>
+          
+        <!--料理名(title)記入欄-->
+          <div class="form-inline row my-4">
+              <%= f.label "●料理名", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%= f.text_field :title, class: "form-control col-sm-9 #{"is-invalid" if @post.errors.messages[:title].any? }" %>
+              
+              <% if @post.errors.messages[:title].any? %>
+                <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                  <% @post.errors.full_messages_for(:title).each do |message| %>
+                    <stronng><%= message %></stronng><br>
+                  <% end %>
+                </span>
+              <% end %>
+              <small class="col-sm-9 ml-auto p-0">※未入力の場合は、ジャンル名が料理名として登録されます。</small>
+          </div>
+          
+        <!--ジャンル名（genre)選択欄-->
+          <div class="form-inline row my-4">
+              <div class="col-sm-3 d-flex p-0 align-items-center mb-2">
+                <%= f.label "●ジャンル名", class: "mr-3 mb-0 text-nowrap" %>
+                <div class="require-input text-nowrap">　必須　</div>
+              </div>
+              <%# if params[:genre_id].present? %>
+                <%#= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id] }, required: "required", class: "col-sm-5 form-control mb-2" %>
+              <%# else %>
+                <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, required: "required", class: "col-sm-5 form-control mb-2 #{"is-invalid" if @post.errors.messages[:genre_id].any? }" %>
+                
+                <% if @post.errors.messages[:genre_id].any? %>
+                  <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                     <% @post.errors.full_messages_for(:genre_id).each do |message| %>
+                       <stronng><%= message %></stronng><br>
+                     <% end %>
+                  </span>
+                <% end %>
+              <%# end %>
+          </div>
+          
+        <!--食べた？食べたい？（ate)選択欄-->
+          <div class ="form-inline row my-4">
+            <div class="d-flex flex-sm-column col-sm-3 p-0 align-items-center mb-2">
+              <%= f.label "●オススメ? or 食べたい?　", class: "d-flex mb-0" %>
+              <div class="text-nowrap require-input my-2">　必須　</div>
+            </div>
+              <%= f.radio_button :ate, "true", required: "required", class: "ml-2 #{"is-invalid" if @post.errors.messages[:ate].any? }" %>オススメ！
+              &emsp;
+              <%= f.radio_button :ate, "false", required: "required", class: "#{"is-invalid" if @post.errors.messages[:ate].any? }" %>食べたい！
+              
+              <% if @post.errors.messages[:ate].any? %>
+              <br>
+                <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                   <% @post.errors.full_messages_for(:ate).each do |message| %>
+                     <stronng><%= message %></stronng><br>
+                   <% end %>
+                </span>
+              <% end %>
+          </div>
+          
+        <!--料理の詳細(content)記入欄-->
+          <div class ="form-inline row my-4">
+              <%= f.label "●料理の詳細", class: "col-sm-3 d-flex justify-content-start p-0" %>
+              <%= f.text_area :content, class: "form-control col-sm-9 #{"is-invalid" if @post.errors.messages[:content].any? }" %>
+              
+              <% if @post.errors.messages[:content].any? %>
+                <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                   <% @post.errors.full_messages_for(:content).each do |message| %>
+                     <stronng><%= message %></stronng><br>
+                   <% end %>
+                </span>
+              <% end %>
+          </div>
+          
+          <!--投稿するユーザーのidを保存-->
+          <%= f.hidden_field :user_id, value: current_user.id %>
+          <hr>
+          
+          <p>
+            引き続き、下記にて店舗情報を入力してください。<br>
+            (ホットペッパー、または他のユーザーの過去の投稿から店舗情報を検索することもできます。)
+          </p>
+          
+          
+          <!--ホットペッパーでの店舗検索用モーダル（モーダルのコードは下記）-->
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong" id="image">
+            ホットペッパーで店舗情報検索
+          </button>
+        
+         
+          <!------------------------------------店舗情報入力フォーム-------------------------------------------------------->
+          <div id="restaurant-form">
+            <%= f.fields_for @restaurant do |r| %>
+            
+             <!--店名記入欄(name)-->
+               <div class="form-inline row my-4">
+                  <%= r.label "●店名", class: "col-sm-3 d-flex justify-content-start p-0 mb-2" %>
+                  <%# if params[:name].present? %>
+                    <%#= f.text_field :name, value: params[:name], class: "form-control col-sm-9" %>
+                  <%# else %>
+                    <%= r.text_field :name, class: "form-control col-sm-9 mb-2 #{"is-invalid" if @restaurant.errors.messages[:name].any? }", id: "name-input" %>
+                    
+                    <% if @restaurant.errors.messages[:name].any? %>
+                      <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                         <% @restaurant.errors.full_messages_for(:name).each do |message| %>
+                           <stronng><%= message %></stronng><br>
+                         <% end %>
+                      </span>
+                    <% end %>
+                  <%# end %>
+               </div>
+               
+               <!--都道府県記入欄(large_area_od)-->
+               <div class="form-inline row my-4">
+                  <div class="col-sm-3 d-flex p-0 align-items-center mb-2">
+                    <%= r.label "●都道府県", class: "mr-3 mb-0 text-nowrap" %>
+                    <div class="require-input text-nowrap">　必須　</div>
+                  </div>
+                  
+                  <!--ホットペッパーで店舗を選択している場合-->
+                  <%# if params[:large_area_code].present? %>
+                    <%#= f.collection_select :large_area_code, @large_areas, :large_area_code, :name, { selected: params[:large_area_code] }, class: "col-sm-5 form-control mb-2" %>
+                  <%# else %>
+                    <%= r.collection_select :large_area_code, @large_areas, :large_area_code, :name, { selected: params[:large_area_code], include_blank: "選択してください" }, required: "required", class: "col-sm-5 form-control mb-2 #{"is-invalid" if @restaurant.errors.messages[:large_area_id].any? }" %>
+                    
+                    <% if @restaurant.errors.messages[:large_area_id].any? %>
+                      <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                         <% @restaurant.errors.full_messages_for(:large_area_id).each do |message| %>
+                           <stronng><%= message %></stronng><br>
+                         <% end %>
+                      </span>
+                    <% end %>
+                  <%# end %>
+               </div>
+               
+               <!--エリア記入欄(middle_area_code)-->
+               <div class="form-inline row my-4">
+                  <div class="col-sm-3 d-flex p-0 align-items-center mb-2">
+                    <%= r.label "●エリア", class: "mr-3 mb-0 text-nowrap" %>
+                    <div class="require-input text-nowrap">　必須　</div>
+                  </div>
+                  
+                  <div class="middle_area col-sm-5 p-0">
+                     <% if params[:middle_area_code].present? %>
+                       <%#= render partial: "select_middle_area_for_new", locals: { large_area_code: params[:large_area_code] } %>
+                       <%#= f.collection_select :middle_area_code, @middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "form-control w-100 mb-2" %>
+                       <%= r.collection_select :middle_area_code, MiddleArea.where(large_area_id: @restaurant.large_area_id), :middle_area_code, :name, { selected: params[:middle_area_code], include_blank: "選択してください" }, class: "form-control w-100 mb-2" %>
+                     <% else %>
+                       <%= render partial: "select_middle_area_for_edit", locals: { large_area_code: params[:large_area_code] } %>
+                     <% end %>
+                     
+                     <% if @restaurant.errors.messages[:middle_area_id].any? %>
+                       <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                          <% @restaurant.errors.full_messages_for(:middle_area_id).each do |message| %>
+                            <stronng><%= message %></stronng><br>
+                          <% end %>
+                       </span>
+                     <% end %>
+                  </div>
+                  
+                   <!--ホットペッパーで店舗を選択している場合-->
+                  <%# if params[:middle_area_code].present? %>
+                    <%#= f.collection_select :middle_area_code, @middle_areas, :middle_area_code, :name, { selected: params[:middle_area_code] }, class: "col-sm-4 form-control mb-2" %>
+                  <%# else %>
+                    <%#= f.collection_select :middle_area_code, @middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "col-sm-4 form-control mb-2" %>
+                  <%# end %>
+               </div>
+               
+               <!--住所記入欄(address)-->
+               <div class="form-inline row my-4">
+                  <%= r.label "●住所", class: "col-sm-3 d-flex justify-content-start p-0 mb-2" %>
+                  <%= r.text_field :address, class: "form-control col-sm-9 mb-2 #{"is-invalid" if @restaurant.errors.messages[:address].any? }", id: "address-input" %>
+                  
+                  <% if @restaurant.errors.messages[:address].any? %>
+                    <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                       <% @restaurant.errors.full_messages_for(:address).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+               </div>
+               
+               <!--営業時間記入欄(open_time)-->
+               <div class="form-inline row my-4">
+                  <%= r.label "●営業時間", class: "col-sm-3 d-flex justify-content-start p-0 mb-2" %>
+                  <%= r.text_field :open_time, class: "form-control col-sm-9 mb-2 #{"is-invalid" if @restaurant.errors.messages[:open_time].any? }", id: "open_time-input" %>
+                  
+                  <% if @restaurant.errors.messages[:open_time].any? %>
+                    <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                       <% @restaurant.errors.full_messages_for(:open_time).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+               </div>
+               
+               <!--定休日記入欄(close_day)-->
+               <div class="form-inline row my-4">
+                  <%= r.label "●定休日", class: "col-sm-3 d-flex justify-content-start p-0 mb-2" %>
+                  <%= r.text_field :close_day, class: "form-control col-sm-9 mb-2 #{"is-invalid" if @restaurant.errors.messages[:close_day].any? }", id: "close_day-input" %>
+                  
+                  <% if @restaurant.errors.messages[:close_day].any? %>
+                    <span class="invalid-feedback col-sm-9 p-0 ml-auto">
+                       <% @restaurant.errors.full_messages_for(:close_day).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+               </div>
+           
+               <!--ホットペッパーidとURLを保存(非表示)(店舗情報がホットペッパーにある場合)-->
+               <%= r.hidden_field :hotpepper_id, id: "hotpepper_id-input" %>
+               <%= r.hidden_field :url, id: "url-input" %>
+               
+               <%= f.submit "編集完了", class: "btn btn-danger w-100 mx-0 my-5" %>
+            <% end %>
+          </div>
+        <% end %>
+        
+        
+        
+        <!--モーダル部分-->
+          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">ホットペッパーで店舗情報を検索</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body row">
+                  <!--モーダルの内容-->
+                  <%= render "search_by_hotpepper" %>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                </div>
+              </div>
+        　   </div>
+    　　    </div>
+    　　    
+    　　    
+      </div>
+    </div>
+</div>
+  
+<%= javascript_include_tag "posts/new" %>

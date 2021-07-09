@@ -8,26 +8,24 @@
 <div id="main" class="container">
   <div class="row">
     <!--投稿記事一覧部分-->
-    <main id="posts" class="col-sm-7 offset-1 ml-auto">
+    <main id="posts" class="col-sm-7 ml-auto px-0">
       
       <% @posts.each do |post| %>
-        
           <article class="card article d-flex flex-row">
-            <%= link_to post_path(post), class: "link" do %>
+             <%= link_to post_path(post), class: "link" do %>
               <!--画像-->
-              <figure class="col-5 m-0 p-0">
                 <% if post.image.present? %>
                   <%= image_tag post.image.to_s, class: "img-fluid" %>
                 <% else %>
                    <img src="/images/pizza.jpg" alt="..." class="img-fluid">
                 <% end %>
-              </figure>
+             
               <div class="article-info col-7 d-flex flex-column">
                 <div class="food-info">
                   <!--料理名-->
-                  <h3 class="title mb-0"><%= post.title %></h3>
+                  <h3 class="title mb-1 text-nowrap text-truncate"><%= post.title %></h3>
                   <!--ジャンル名-->
-                  <small class="genre mt-3"><%= post.genre.name %></small>
+                  <small class="genre"><%= post.genre.name %></small>
                   <!--店の住所が登録されていれば表示-->
                   <% if post.restaurant_id != nil && post.restaurant.address != nil %>
                     <p class="storename text-nowrap text-truncate"><%= post.restaurant.address %></p>
@@ -36,11 +34,11 @@
                   <% end %>
                 </div>
             <% end %>
-                <div class="align-items-end">
-                  <hr class="my-1">
+                <div class="sub-article-info-position">
+                  <hr class="mb-1 mt-2">
                   <div class="sub-article-info d-flex justify-content-between">
                     <!--ユーザー名 - 投稿日-->
-                    <div class="text-muted mb-1"><%= post.user.name %> - <%= l post.updated_at %></div>
+                    <div class="text-muted my-0"><%= post.user.name %> - <%= l post.updated_at %></div>
                     <!--食べたい数-->
                     <div id="favorite_<%= post.id %>", class="mr-3 mb-1">
                       <%= render partial: "favorites/favorites", locals: { post: post } %>
@@ -49,67 +47,71 @@
                 </div>  
               </div>
           </article>
-       
       <% end %>
-      
-      
-      <div class="card article">
-            <article class="d-flex">
-              <!--画像-->
-              <figure class="col-5 m-0 p-0">
-                   <img src="/images/pizza.jpg" alt="..." class="img-fluid">
-              </figure>
-              <div class="article-info col-7 d-flex flex-column">
-                <div class="food-info">
-                  <!--料理名-->
-                  <h3 class="title mb-0">マルゲリータ</h3>
-                  <!--ジャンル名-->
-                  <small class="genre mt-3">イタリアン</small>
-                  <p class="storename text-nowrap text-truncate">大阪府大阪市北区４−３−２</p>
-                </div>
-                <div class="align-items-end">
-                  <hr class="my-1">
-                  <span class="sub-article-info d-flex">
-                    <!--ユーザー名 - 投稿日-->
-                    <p class="text-muted mb-1">こば - 2020/03/12</p>
-                    <!--食べたい数-->
-                    <p class="ml-auto mr-3 mb-1"><i class="far fa-heart"></i>&ensp;12</p>
-                  </span>
-                </div>  
-              </div>
-            </article>
-          </div>
       
     <%= paginate @posts %>  
     </main>
     
-    <!--サイドメニュー部分-->
+    <!--サイドメニュー-->
     <aside id="side" class="col-sm-4">
+      <!--ランキング部分-->
       <div class="">
-          <h4><i class="fas fa-crown crown"></i>&ensp;食べたい数ランキング</h4>
-          <ol>
-            <li class="ranking">マルゲリータ</li>
-            <li class="ranking">マルゲリータ</li>
-            <li class="ranking">マルゲリータ</li>
+          <h4 class="ranking mb-3"><i class="fas fa-crown crown"></i>&ensp;食べたい数ランキング</h4>
+          <ol class="pl-4">
+            <% @ranking.each do |ranking| %>
+              <li class="ranking-list">
+                <%= link_to post_path(ranking), class: "link" do %>
+                  <p class="text-nowrap text-truncate mb-0"><%= ranking.title %></p>
+                <% end %>
+              </li>
+            <% end %>
           </ol>
+      </div>
+      
+      <hr class="my-4">
+      <!--投稿検索部分-->
+      <div>
+        <h4 class="post-search mb-3"><i class="fas fa-search"></i>&ensp;投稿検索</h4>
+        <%= form_with url: posts_path, method: :get, local: true do |f| %>
+          <%= f.label "キーワード", class: "form-group mb-0" %>
+          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+           
+          <%= f.label "都道府県", class: "form-group mb-0 mt-3" %>
+          <%= f.collection_select :large_area_id, @large_areas, :id, :name, { selected: params[:large_area_id], include_blank: "選択してください" }, class: "form-control" %>
+              
+          <%= f.label "エリア", class: "form-group mb-0 mt-3" %>
+          <div class="middle_area">
+            <% if params.has_key?(:post) %>
+               <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: params[:post][:middle_area_id] } %>
+            <% else %>
+               <%= render partial: "posts/select_middle_area", locals: { large_area_id: "", middle_area_id: "" } %>
+            <% end %>
+          </div>
+           
+          <%= f.label "ジャンル", class: "form-group mb-0 mt-3" %>
+          <% if params[:genre_id].present? %>
+            <%= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id], include_blank: "選択してください" }, class: "form-control" %>
+          <% else %>
+            <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, class: "form-control" %>
+          <% end %>
+          <div class="d-flex justify-content-center mt-3">
+            <%= f.submit "検索", class: "btn btn-danger my-3 w-100" %>
+          </div>
+        <% end %>
+          
       </div>
       
       <hr>
       
-      <div>
-        <h4><i class="fas fa-search"></i>&ensp;投稿検索</h4>
-        <%= form_with model: @posts, url: posts_path do |f| %>
-          <%= f.label "キーワード", class: "" %>
-          <%= f.text_field :keyword, class: "form-control" %>
-           
-          <%= f.label "エリア", class: "" %>
-           
-           
-          <%= f.label "ジャンル", class: "" %>
-           
-          <%= f.submit "検索", class: "btn" %>
-        <% end %>
-      </div>
+      <!--ホットペッパーから検索部分-->
+      <%= link_to "https://www.hotpepper.jp/index.html", class: "hot link", target: :_blank, rel: "noopener noreferrer" do %>
+        <div class="mt-5 d-flex flex-column">
+          <div class="d-flex justify-content-center">
+            <%= image_tag "/images/hotpepper_logo.jpg", class: "w-75" %>
+          </div>
+          <h6 class="hot mt-3 text-center">ホットペッパーから食べたい物を探す</h6>
+        </div>
+      <% end %>
     </aside>
   </div>
 </div>

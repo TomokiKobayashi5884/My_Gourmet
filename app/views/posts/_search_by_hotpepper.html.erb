@@ -1,52 +1,35 @@
- <div class="col-sm-3">
-   <h4><i class="fas fa-search"></i>&ensp;検索条件</h4>
+ <div class="col-sm-3 hot">
+   <h4 class="mb-3"><i class="fas fa-search"></i>&ensp;検索条件</h4>
    <%= form_with url: new_post_path, method: :get, remote: true do |f| %>
    <div class="d-flex flex-column form-group">
      <%= f.label "キーワード", class: "" %>
-       <% if @keyword.present? %>
-         <%= f.text_field :keyword, value: @keyword, class: "form-control" %>
-       <% else %>
-         <%= f.text_field :keyword, class: "form-control" %>
-       <% end %>
-   </div>
-   
-   <div class="large_area d-flex flex-column form-group">
-     <%= f.label "都道府県", class: "" %>
-       <%# if @large_area_selected.present? %>
-         <%#= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { selected: @large_area_selected }, class: "form-control" %>
-       <%# else %>
-         <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
-       <%# end %>
+         <%= f.text_field :keyword, class: "form-control mb-2" %>
    </div>
    
    <div class="d-flex flex-column form-group">
-    
-     <%= f.label "市区町村", class: "" %>
-       <%# if @middle_area_selected.present? %>
-         <%#= f.collection_select :middle_area_selected, @middle_areas, :middle_area_code, :name, { selected: @middle_area_selected}, class: "form-control" %>
-       <%# else %>
-         <%#= render partial: "middle_area", locals: { large_area_id: LargeArea.first.id, middle_area_code: :middle_area_code } %>
-         
-         <%#= f.select :middle_area_selected, [], { include_blank: "選択してください" }, class: "form-control" %>
-         <%# LargeArea.all.each do |large_area| %>
-           <%# template {id: "middle-area-of-large-area#{large_area.id}"} %>
-             <%#= f.collection_select :middle_area_selected, large_area.middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
-         <%# end %>
-         
-         <%= f.collection_select :middle_area_selected, @middle_areas, :middle_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
-       <%# end %>
+     <%= f.label "都道府県", class: "" %>
+         <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+     <%= f.label "エリア", class: "" %>
+     <div class="middle_area_select">
+           <%= render partial: "select_middle_area_for_hot", locals: { large_area_code: "" } %>
+     </div>
    </div>
    
    <div class="d-flex flex-column form-group">
      <%= f.label "ジャンル", class: "" %>
-       <%# if @genre_selected.present? %>
-         <%#= f.collection_select :genre_selected, @genres, :genre_code, :name, { selected: @genre_selected }, class: "form-control" %>
-       <%# else %>
-         <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { prompt: "選択してください" }, class: "form-control" %>
-       <%# end %>
+         <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
    </div>
+   <!--ページネーション用-->
+   <!--params[:start]-->
+   <%= f.hidden_field :start, value: 1, id: "start" %>
+   <!--params[:page]-->
+   <%= f.hidden_field :page, value: 1, id: "current_page" %>
+     
    <div class=" d-flex justify-content-center mt-3 mb-5">
-     <%= f.submit "検索", id: "search_hotpepper", class: " btn btn-danger mt-3" %>
+     <%= f.submit "検索", id: "search_hotpepper", class: "btn btn-danger mt-3 w-100" %>
    </div>   
    <% end %>
  </div>

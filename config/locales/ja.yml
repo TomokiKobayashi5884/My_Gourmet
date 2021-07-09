@@ -1,5 +1,32 @@
 ja:
+  activerecord:
+    models:
+      user: ユーザー
+      post: 投稿
+      restaurant: 店舗
+      comment: コメント
+    attributes:
+      user:
+        name: ユーザー名
+        email: メールアドレス
+        password: パスワード
+        encrypted_password: パスワード
+        password_confirmation: パスワード
+      post:
+        title: 料理名
+        content: 料理の詳細
+        ate: オススメか食べたい
+        image: 画像
+        genre_id: ジャンル
+      restaurant:
+        name: 店名
+        address: 住所
+        open_time: 営業時間
+        close_day: 定休日
+        large_area_id: 都道府県
+        middle_area_id: エリア
+      comment:
+        content: コメント
   time:
     formats:
       default: "%Y/%m/%d"
- 

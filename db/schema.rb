@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_27_040611) do
+ActiveRecord::Schema.define(version: 2021_07_01_093453) do
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 2021_06_27_040611) do
   create_table "posts", force: :cascade do |t|
     t.string "title", null: false
     t.text "content"
-    t.string "ate", default: "0", null: false
+    t.boolean "ate", default: true, null: false
     t.string "image", null: false
     t.integer "user_id"
     t.integer "genre_id"

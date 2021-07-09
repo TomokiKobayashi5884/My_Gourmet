@@ -13,8 +13,13 @@
 
 
 .ranking {
-    font-size: 150%;
+    font-size: 1.5rem;
     line-height: 120%;
+}
+
+.ranking-list {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
 }
 
 // @media screen and (max-width: 480px) {
@@ -48,6 +53,13 @@
     width: 200%;
     height: 200%;
 }
+
+.title {
+    // display: -webkit-box;
+    // overflow: hidden;
+    // -webkit-line-clamp: 2;
+    // -webkit-box-orient: vertical;
+}
 .storename {
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
@@ -59,19 +71,38 @@
 
 }
 
-// .genre {
-//     background-color:#a9a9a9;
-//     font-color: white;
-// }
+.genre {
+    display: inline-flex;
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem 0.1rem 0.4rem;
+    margin:  0;
+    background-color: #dcdcdc;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: black;
+}
 
 .sub-article-info {
-    margin-top: 0.5rem;
+    margin-top: 0.7rem;
     marginbottom: 0;
 }    
+.sub-article-info-position {
+    position: absolute;
+    bottom: 8%;
+    width: 90%;
+}
 
 .h-restaurant-image {
     width: 150px;
     height: 150px;
+}
+
+.paginateButton {
+    display: inline;
 }
 
 
@@ -85,16 +116,45 @@
         margin: 20px auto 80px auto;
     }
     
+    .ranking {
+        font-size: 1.2rem;
+    }
+    
+    .ranking-list {
+        font-size: 1rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .post-search {
+        font-size: 1.2rem;
+    }
+    
     .article {
         margin-bottom: 0.5rem;
     }
     
     .title {
         font-size: 15px;
+        margin-top: 0.2rem;
+        // display: -webkit-box;
+        // overflow: hidden;
+        // -webkit-line-clamp: 2;
+        // -webkit-box-orient: vertical;
     }
     
     .genre {
-        font-size: 8px;
+        display: inline-flex;
+        border-radius: 3px;
+        padding: 0 0.2rem 0 0.2rem;
+        margin: 0;
+        background-color: #dcdcdc;
+        font-size: 10px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: black;
     }
     
     .address {
@@ -113,12 +173,23 @@
     
     .sub-article-info {
         font-size: 10px;
-        margin-top: 0;
+        margin-top: 0.5rem;
         marginbottom: 0;
+    }
+    
+    .sub-article-info-position {
+        position: relative;
+        bottom: 5%;
+        width: 100%;
+    }
+    
+    .favorite-mark {
+        font-size: 1rem;
     }
     
     .h-restaurant-image {
     width: 120px;
     height: 120px;
     }
+    
 }
