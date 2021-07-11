@@ -9,17 +9,15 @@
   <div class="row">
     <!--投稿記事一覧部分-->
     <main id="posts" class="col-sm-7 ml-auto px-0">
-      
       <% @posts.each do |post| %>
           <article class="card article d-flex flex-row">
              <%= link_to post_path(post), class: "link" do %>
               <!--画像-->
-                <% if post.image.present? %>
-                  <%= image_tag post.image.to_s, class: "img-fluid" %>
-                <% else %>
-                   <img src="/images/pizza.jpg" alt="..." class="img-fluid">
-                <% end %>
-             
+              <% if post.image.present? %>
+                <%= image_tag post.image.to_s, class: "img-fluid" %>
+              <% else %>
+                 <img src="/images/pizza.jpg" alt="..." class="img-fluid">
+              <% end %>
               <div class="article-info col-7 d-flex flex-column">
                 <div class="food-info">
                   <!--料理名-->
@@ -73,30 +71,7 @@
       <div>
         <h4 class="post-search mb-3"><i class="fas fa-search"></i>&ensp;投稿検索</h4>
         <%= form_with url: posts_path, method: :get, local: true do |f| %>
-          <%= f.label "キーワード", class: "form-group mb-0" %>
-          <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
-           
-          <%= f.label "都道府県", class: "form-group mb-0 mt-3" %>
-          <%= f.collection_select :large_area_id, @large_areas, :id, :name, { selected: params[:large_area_id], include_blank: "選択してください" }, class: "form-control" %>
-              
-          <%= f.label "エリア", class: "form-group mb-0 mt-3" %>
-          <div class="middle_area">
-            <% if params.has_key?(:post) %>
-               <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: params[:post][:middle_area_id] } %>
-            <% else %>
-               <%= render partial: "posts/select_middle_area", locals: { large_area_id: "", middle_area_id: "" } %>
-            <% end %>
-          </div>
-           
-          <%= f.label "ジャンル", class: "form-group mb-0 mt-3" %>
-          <% if params[:genre_id].present? %>
-            <%= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id], include_blank: "選択してください" }, class: "form-control" %>
-          <% else %>
-            <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, class: "form-control" %>
-          <% end %>
-          <div class="d-flex justify-content-center mt-3">
-            <%= f.submit "検索", class: "btn btn-danger my-3 w-100" %>
-          </div>
+          <%= render partial: "posts_search_form", locals: { f: f } %>
         <% end %>
           
       </div>
@@ -109,7 +84,7 @@
           <div class="d-flex justify-content-center">
             <%= image_tag "/images/hotpepper_logo.jpg", class: "w-75" %>
           </div>
-          <h6 class="hot mt-3 text-center">ホットペッパーから食べたい物を探す</h6>
+          <h6 class="hot mt-3 text-center">ホットペッパーグルメで食べたい物を探す</h6>
         </div>
       <% end %>
     </aside>

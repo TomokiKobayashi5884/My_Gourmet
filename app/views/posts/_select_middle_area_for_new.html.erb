@@ -1,6 +1,0 @@
-<%# if params[:middle_area_code].present? %> 
-  <%#= collection_select :restaurant, :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: large_area_code).pluck(:id)), :middle_area_code, :name, { selected: params[:middle_area_code], include_blank: "選択してくださいね" }, class: "form-control w-100 mb-2" %>
-<%# else %>
-
-  <%= collection_select :restaurant, :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: large_area_code).pluck(:id)), :middle_area_code, :name, { selected: middle_area_code, include_blank: "選択してください(new)" }, required: "required", class: "form-control w-100" %>
-<%# end %>

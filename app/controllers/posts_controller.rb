@@ -3,10 +3,12 @@ class PostsController < ApplicationController
   
   require 'net/http'
   require 'json'
-  # 1ページあたりの表示件数
+  # 1ページあたりの表示件数（index）
   PER = 10
   # ランキング表示件数
   TOP = 3
+  # 1ページあたりの表示件数（ホットペッパー店舗検索）
+  HOTPEPPER_PER = 10
  
   
   def index
@@ -35,10 +37,10 @@ class PostsController < ApplicationController
     end
     
     if params[:keyword].present?
-      @posts = Post.keyword_search(params[:keyword].strip).where(" id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre)
+      @posts = Post.keyword_search(params[:keyword].strip).where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
               .order("created_at DESC").page(params[:page]).per(PER)
     else
-      @posts = Post.where(" id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre)
+      @posts = Post.where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
               .order("created_at DESC").page(params[:page]).per(PER)
     end
     # ------------------------------------ランキング用の投稿データ-------------------------------------------
@@ -48,7 +50,7 @@ class PostsController < ApplicationController
   
   
   def show
-      @comments = @post.comments
+      @comments = Comment.where(post_id: @post.id)
       @comment = @post.comments.new
   end
 
@@ -60,8 +62,9 @@ class PostsController < ApplicationController
     @large_areas = LargeArea.all
     @middle_areas = MiddleArea.all
     @genres = Genre.all
-    # ---------------------------------店舗検索処理----------------------------------------
-  # ホットペッパーで検索の条件入力部分
+    # --------------------------------ホットペッパーでの-店舗検索処理----------------------------------------
+    
+    # ホットペッパーで検索の際の検索条件から検索用にパラメータを加工
     if params[:keyword] != nil
       keyword = params[:keyword].strip
     else
@@ -87,77 +90,76 @@ class PostsController < ApplicationController
     end
     logger.debug("----------------------params[:start] #{params[:start]}")
     logger.debug("----------------------params[:page] #{params[:page]}")
+    # 検索結果の何件目から出力するか
     if params[:start].present?
-      start = (params[:start].strip.to_i * 10) - 9
+      start = (params[:start].strip.to_i * HOTPEPPER_PER) - (HOTPEPPER_PER - 1)
     else
       start = 1
     end
-    
-    # 店舗情報をフォームに渡す用のインスタンス
-    if params[:name].present?
-      @name = params[:name]
-    else
-      @name = ""
-    end
-    
-    if params[:address].present?
-      @address = params[:address]
-    else
-      @address = ""
-    end
-    
-    if params[:open_time].present?
-      @open_time = params[:open_time]
-    else
-      @open_time = ""
-    end
-    
-    if params[:close_day].present?
-      @close_day = params[:close_day]
-    else
-      @close_day = ""
-    end
-    
-    if params[:hotpepper_id].present?
-      @hotpepper_id = params[:hotpepper_id]
-    else
-      @hotpepper_id = ""
-    end
-    
-    if params[:url].present?
-      @url = params[:url]
-    else
-      @url = ""
-    end
-    
-    if params[:large_area_code].present?
-      @large_area_code = params[:large_area_code]
-    else
-      @large_area_code = ""
-    end
-    
-    if params[:middle_area_code].present?
-      @middle_area_code = params[:middle_area_code]
-    else
-      @middle_area_code = ""
-    end
-    
-    
     # 検索用パラメータ
     keyid = ENV["KEYID"]
     data_format = "json"
-    # start = params[:start]
     search_params = { "key": keyid, "keyword": keyword, "large_area": large_area, "middle_area": middle_area, "genre": genre, "format": data_format, "start": start }
     
     # 入力された条件を元にホットペッパーで店舗を検索
     search(search_params)
     
-  #   # ホットペッパー検索のページネーション
-    # @hot_restaurants = @h_restaurants.page(params[:page]).per(PER)
-    # respond_to do |format|
-    #   format.html { render "hotpepper_search" }
-    #   format.json { render "hotpepper_search.json.jbuilder" }
-    # end
+    # -----------------------------------------ホットペッパー検索部分のページネーション-------------------------------
+    # 最大ページ数
+    @max_page = ( @available_restaurants.to_f / HOTPEPPER_PER ).ceil
+    
+    if params[:page] === "≪"
+      @current_page = 1
+    elsif params[:page] === "≫"
+      @current_page = @max_page
+    else
+      @current_page = ( params[:start].to_i + ( HOTPEPPER_PER - 1 ) ) / HOTPEPPER_PER
+    end
+    
+    @pagination = {}
+    # 検索条件にマッチする店舗がある場合のみページネーションを表示
+    if @available_restaurants != nil && @available_restaurants != 0
+      @pagination["≪"] = 1 if @current_page >= 4
+      @pagination["<"] = @current_page - 1 if @current_page != 1
+      
+      # 現在のページが真ん中に来るようにする
+      if @current_page >= @max_page - 2
+        logger.debug('-------------------current_pageがmax_page - 4より大きい場合')
+        @pagination.merge!( { @max_page - 4 => @max_page - 4, @max_page - 3 => @max_page - 3, @max_page - 2 => @max_page - 2, @max_page - 1 => @max_page - 1, @max_page => @max_page } )
+        # 最大ページ数が5ページ未満の場合に、マイナスのページが出ないようにする
+        delete_list = [0, -1, -2, -3]
+        @pagination.delete_if do |page, start|
+          delete_list.include?(start)
+        end
+      elsif @current_page == 1
+         @pagination.merge!( { @current_page => @current_page, @current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2, @current_page + 3 => @current_page + 3, @current_page + 4 => @current_page + 4 } )
+      elsif @current_page == 2
+         @pagination.merge!( { @current_page - 1 => @current_page - 1, @current_page => @current_page, @current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2, @current_page + 3 => @current_page + 3 } )
+      else
+        logger.debug('-------------------current_pageがmax_page - 4より小さい場合')
+        @pagination.merge!( { @current_page - 2 => @current_page - 2, @current_page - 1 => @current_page - 1, @current_page => @current_page, @current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2 } )
+      end
+      
+      @pagination[">"] = @current_page + 1 if @current_page != @max_page
+      @pagination["≫"] = @max_page if @current_page <= @max_page - 3
+    end
+    
+    
+    # ホットペッパーの店舗情報をフォームに自動入力する際ののパラメータを加工
+    processing_restaurant_params( params[:name], params[:address], params[:open_time], params[:close_day], params[:hotpepper_id], params[:url] )
+    
+    if params[:large_area_code].present?
+      @large_area_code = params[:large_area_code]
+    else
+      @large_area_code = nil
+    end
+      
+    if params[:middle_area_code].present?
+      @middle_area_code = params[:middle_area_code]
+    else
+      @middle_area_code = nil
+    end
+    
   end
   
   
@@ -170,12 +172,11 @@ class PostsController < ApplicationController
     end
   end
   
+  
   # 都道府県入力からエリアプルダウン(newとedit用)
   def middle_area_select_for_ne
     if params[:large_area_code].present?
-      render partial: 'select_middle_area_for_edit', locals: { large_area_code: params[:large_area_code], middle_area_code: params[:middle_area_code] }
-    else
-      # render partial: 'select_middle_area_for_new', locals: { large_area_code: params[:large_area_code] }
+      render partial: 'select_middle_area_for_ne', locals: { large_area_code: params[:large_area_code], middle_area_code: params[:middle_area_code] }
     end
   end
   
@@ -224,133 +225,96 @@ class PostsController < ApplicationController
 
   def create
     redirect_flag = false
-    if params[:post][:title] === ""
-      params[:post][:title] = Genre.find(params[:post][:genre_id]).name
-    end
+    restaurant_save_flag = false
+    
     @post = Post.new(post_params)
     
-    logger.debug("============================ post params = #{params[:post]}")
-    logger.debug("============================ restaurant params = #{params[:post][:restaurant]}")
-    logger.debug("============================ restaurant name = #{params[:post][:restaurant][:name]}")
-    logger.debug("============================ restaurant address = #{params[:post][:restaurant][:address]}")
-    logger.debug("============================ restaurant open_time = #{params[:post][:restaurant][:open_time]}")
-    logger.debug("============================ restaurant close_day = #{params[:post][:restaurant][:close_day]}")
-    logger.debug("============================ restaurant hotpepper_id = #{params[:post][:restaurant][:hotpepper_id]}")
-    logger.debug("============================ restaurant url = #{params[:post][:restaurant][:url]}")
-    logger.debug("============================ restaurant large_area_code = #{params[:post][:restaurant][:large_area_code]}")
-    logger.debug("============================ restaurant middle_area_code = #{params[:restaurant][:middle_area_code]}")
-    # if params[:post][:restaurant][:large_area_code].present? && params[:post][:restaurant][:middle_area_code].present?
+    # large_area_code,middle_area_codeを対応するlarge_area_id,middle_area_idに変換
+    if params[:post][:restaurant][:large_area_code].present?
+      @large_area = LargeArea.find_by( large_area_code: params[:post][:restaurant][:large_area_code] ).id
+      
+      if params[:post].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:post][:middle_area_code] ).id
+      elsif params[:post][:restaurant].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:post][:restaurant][:middle_area_code] ).id
+      elsif params[:restaurant].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:restaurant][:middle_area_code] ).id
+      else
+        @middle_area = nil
+      end
+    else
+      @large_area = nil
+      @middle_area = nil
+    end
     
-    restaurant_save_flag = false
-    # 店名が入力されていない場合は店舗情報を投稿に紐付けない
+    # 店名が入力されていない場合は店舗情報を保存せず、投稿に紐付けない
     if params[:post][:restaurant][:name] == ""
       @post.restaurant_id = nil
       restaurant_save_flag = true
     # 店舗情報がフォームに入力されている場合
     else
-    # 　large_area_code,middle_area_codeを対応するlarge_area_id,middle_area_idに変換
-      if params[:post][:restaurant][:large_area_code].present?
-        large_area = LargeArea.find_by(large_area_code: params[:post][:restaurant][:large_area_code]).id
-        
-        if params[:restaurant][:middle_area_code].present?
-          middle_area = MiddleArea.find_by(middle_area_code: params[:restaurant][:middle_area_code]).id
-        else
-          middle_area = nil
-        end
-      else
-        large_area = nil
-        middle_area = nil
-      end
+      # 店舗情報のパラメータを加工
+      processing_restaurant_params( params[:post][:restaurant][:name], params[:post][:restaurant][:address], params[:post][:restaurant][:open_time],
+                                    params[:post][:restaurant][:close_day], params[:post][:restaurant][:hotpepper_id], params[:post][:restaurant][:url] )
       
-      # フォームに未入力の欄があったときの処理
-      if params[:post][:restaurant][:name].present?
-        name = params[:post][:restaurant][:name]
-      else
-        name = nil
-      end
-      
-      if params[:post][:restaurant][:address].present?
-        address = params[:post][:restaurant][:address]
-      else
-        address = nil
-      end
-
-      if params[:post][:restaurant][:open_time].present?
-        open_time = params[:post][:restaurant][:open_time]
-      else
-        open_time = nil
-      end
-
-      if params[:post][:restaurant][:close_day].present?
-        close_day = params[:post][:restaurant][:close_day]
-      else
-        close_day = nil
-      end
-
-      if params[:post][:restaurant][:hotpepper_id].present?
-        hotpepper_id = params[:post][:restaurant][:hotpepper_id]
-      else
-        hotpepper_id = nil
-      end
-
-      if params[:post][:restaurant][:url].present?
-        url = params[:post][:restaurant][:url]
-      else
-        url = nil
-      end
-      
-      # 保存しようとするレストラン情報がデータベースに存在するかチェック(あれば、@restaurantは既存のデータに,なければ新規で保存)
-      if Restaurant.find_by(address: params[:post][:restaurant][:address]) && params[:post][:restaurant][:address] != nil
+      # 保存しようとする店舗情報がデータベースに存在するかチェック(あれば、@restaurantは既存のデータに,なければ新規で保存)
+      if Restaurant.find_by( address: params[:post][:restaurant][:address] ) && params[:post][:restaurant][:address] != nil
          logger.debug("============================ restaurant exist")
          
-          @restaurant = Restaurant.find_by(address: params[:post][:restaurant][:address])
+          @restaurant = Restaurant.find_by( address: params[:post][:restaurant][:address] )
           restaurant_save_flag = true
+          # @postを@restaurantと紐付ける  
+          @post.restaurant_id = @restaurant.id
       else
          logger.debug("============================ restaurant not exist")
-          @restaurant = Restaurant.new(name: name,
-                                       address: address,
-                                       open_time: open_time,
-                                       close_day: close_day,
-                                       hotpepper_id: hotpepper_id,
-                                       large_area_id: large_area,
-                                       middle_area_id: middle_area,
-                                       url: url)
+          @restaurant = Restaurant.new( name: @name,
+                                        address: @address,
+                                        open_time: @open_time,
+                                        close_day: @close_day,
+                                        hotpepper_id: @hotpepper_id,
+                                        large_area_id: @large_area,
+                                        middle_area_id: @middle_area,
+                                        url: @url )
           if @restaurant.save
               restaurant_save_flag = true
+              logger.debug("============================ new restaurant save")
+              # @postを@restaurantと紐付ける  
+              @post.restaurant_id = @restaurant.id
           end
       end
-      # @postを@restaurantと紐付ける  
-      @post.restaurant_id = @restaurant.id
     end
     
     if restaurant_save_flag
+      # 料理名が未入力の場合はジャンル名を料理名として保存
+      if params[:post][:title] === ""
+        params[:post][:title] = Genre.find(params[:post][:genre_id]).name
+      end
+      @post.title = params[:post][:title]
+      
       if @post.save
         redirect_flag = true
-        # 投稿する食べ物が食べたい物なら、そのまま食べたい物リストに追加
+        # 食べたい物リストに追加するどうかかの処理
         if @post.ate == false
-          @favorite = Favorite.create(user_id: current_user.id, post_id: @post.id)
+          @favorite = Favorite.create( user_id: current_user.id, post_id: @post.id )
         end
       end
     end
     
     if redirect_flag
       flash[:notice] = "投稿しました。"
-        redirect_to root_path
+      redirect_to root_path
     else
       flash.now[:alert] = "投稿に失敗しました。"
       @large_areas = LargeArea.all
       @middle_areas = MiddleArea.all
       @genres = Genre.all
-      # @post = Post.new(post_params)
-      # @restaurant = Restaurant.new(name: name,
-      #                             address: address,
-      #                             open_time: open_time,
-      #                             close_day: close_day,
-      #                             hotpepper_id: hotpepper_id,
-      #                             large_area_code: params[:post][:restaurant][:large_area_code],
-      #                             middle_area_code: params[:restaurant][:middle_area_code],
-      #                             url: url)
-      logger.debug("----------------------------------params[:restaurant][:middle_area_code] #{params[:restaurant][:middle_area_code]}")
+      
+      if @post.restaurant_id == nil
+        @restaurant = Restaurant.new
+      end
+      # 入力されていた都道府県とエリアコードをフォームに再セット
+      @submitted_large_area_code = LargeArea.find(@large_area).large_area_code if @large_area != nil
+      @submitted_middle_area_code = MiddleArea.find(@middle_area).middle_area_code if @middle_area != nil
       render :new
     end
   end
@@ -376,147 +340,87 @@ class PostsController < ApplicationController
   def update
     redirect_flag = false
     restaurant_save_flag = false
-    # 店舗情報がフォームに全く入力されていない場合
-    if params[:post][:restaurant][:name] == "" && params[:post][:restaurant][:address] === ""
-      # && params[:post][:restaurant][:open_time] === "" && params[:post][:restaurant][:close_day] === "" 
-       
+    
+    # large_area_code,middle_area_codeを対応するlarge_area_id,middle_area_idに変換
+    if params[:post][:restaurant][:large_area_code].present?
+      @large_area = LargeArea.find_by( large_area_code: params[:post][:restaurant][:large_area_code] ).id
+      
+      if params[:post].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:post][:middle_area_code] ).id
+      elsif params[:post][:restaurant].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:post][:restaurant][:middle_area_code] ).id
+      elsif params[:restaurant].has_key?(:middle_area_code)
+        @middle_area = MiddleArea.find_by( middle_area_code: params[:restaurant][:middle_area_code] ).id
+      else
+        @middle_area = nil
+      end
+    else
+      @large_area = nil
+      @middle_area = nil
+    end
+    
+    # 店名が入力されていない場合は店舗情報を保存せず、投稿に紐付けない
+    if params[:post][:restaurant][:name] == ""
       @post.restaurant_id = nil
       restaurant_save_flag = true
     # 店舗情報がフォームに入力されている場合
     else
-      # large_area_code,middle_area_codeを対応するlarge_area_id,middle_area_idに変換
-      if params[:post][:restaurant][:large_area_code].present?
-        large_area = LargeArea.find_by(large_area_code: params[:post][:restaurant][:large_area_code]).id
-        
-        if params[:post].has_key?(:middle_area_code)
-          middle_area = MiddleArea.find_by(middle_area_code: params[:post][:middle_area_code]).id
-        elsif params[:restaurant].has_key?(:middle_area_code)
-          middle_area = MiddleArea.find_by(middle_area_code: params[:restaurant][:middle_area_code]).id
-        else
-          middle_area = nil
-        end
-      else
-        large_area = nil
-        middle_area = nil
-      end
-      
-      # フォームに未入力の欄があったときの処理
-      if params[:post][:restaurant][:name].present?
-        name = params[:post][:restaurant][:name]
-      else
-        name = nil
-      end
-      
-      if params[:post][:restaurant][:address].present?
-        address = params[:post][:restaurant][:address]
-      else
-        address = nil
-      end
-
-      if params[:post][:restaurant][:open_time].present?
-        open_time = params[:post][:restaurant][:open_time]
-      else
-        open_time = nil
-      end
-
-      if params[:post][:restaurant][:close_day].present?
-        close_day = params[:post][:restaurant][:close_day]
-      else
-        close_day = nil
-      end
-
-      if params[:post][:restaurant][:hotpepper_id].present?
-        hotpepper_id = params[:post][:restaurant][:hotpepper_id]
-      else
-        hotpepper_id = nil
-      end
-
-      if params[:post][:restaurant][:url].present?
-        url = params[:post][:restaurant][:url]
-      else
-        url = nil
-      end
+      # 店舗情報のパラメータを加工
+      processing_restaurant_params( params[:post][:restaurant][:name], params[:post][:restaurant][:address], params[:post][:restaurant][:open_time],
+                                    params[:post][:restaurant][:close_day], params[:post][:restaurant][:hotpepper_id], params[:post][:restaurant][:url] )
       
       # 保存しようとする店舗情報がデータベースに存在するかチェック(あればそのデータを更新、,なければ新規作成)
-      if Restaurant.find_by(name: params[:post][:restaurant][:name], address: params[:post][:restaurant][:address])
+      if Restaurant.find_by( name: params[:post][:restaurant][:name], address: params[:post][:restaurant][:address] )
         logger.debug("============================ restaurant exist")
         
-        @restaurant = Restaurant.find_by(address: params[:post][:restaurant][:address])
-        @restaurant.update(name: name,
-                           address: address,
-                           open_time: open_time,
-                           close_day: close_day,
-                           hotpepper_id: hotpepper_id,
-                           large_area_id: large_area,
-                           middle_area_id: middle_area,
-                           url: url)
+        @restaurant = Restaurant.find_by( address: params[:post][:restaurant][:address] )
+        if @restaurant.update( name: @name,
+                               address: @address,
+                               open_time: @open_time,
+                               close_day: @close_day,
+                               hotpepper_id: @hotpepper_id,
+                               large_area_id: @large_area,
+                               middle_area_id: @middle_area,
+                               url: @url )
+          # @postを@restaurantと紐付ける      
+          @post.restaurant_id = @restaurant.id
           restaurant_save_flag = true
           logger.debug("============================ restaurant update")
+        end
       else
-        logger.debug("============================ name #{name}")
-        logger.debug("============================ address #{address}")
-        logger.debug("============================ open_time #{open_time}")
-        logger.debug("============================ close_day #{close_day}")
-        logger.debug("============================ hotpepper_id #{hotpepper_id}")
-        logger.debug("============================ large_area #{large_area}")
-        logger.debug("============================ middle_area #{middle_area}")
-        logger.debug("============================ url #{url}")
         logger.debug("============================ restaurant not exist")
-        @restaurant = Restaurant.new(name: name,
-                                     address: address,
-                                     open_time: open_time,
-                                     close_day: close_day,
-                                     hotpepper_id: hotpepper_id,
-                                     large_area_id: large_area,
-                                     middle_area_id: middle_area,
-                                     url: url)
+        @restaurant = Restaurant.new( name: @name,
+                                      address: @address,
+                                      open_time: @open_time,
+                                      close_day: @close_day,
+                                      hotpepper_id: @hotpepper_id,
+                                      large_area_id: @large_area,
+                                      middle_area_id: @middle_area,
+                                      url: @url )
         if @restaurant.save
-          restaurant_save_flag = true
           logger.debug("============================ restaurant save")
-          
+          # @postを@restaurantと紐付ける      
+          @post.restaurant_id = @restaurant.id
+          restaurant_save_flag = true
         end
       end        
-      # @postを@restaurantと紐付ける      
-      @post.restaurant_id = @restaurant.id
-      logger.debug("------------------------------@restaurant #{@restaurant}")
-      logger.debug("------------------------------@post.restaurant_id #{@post.restaurant_id}")
-      
     end
     
     if restaurant_save_flag
-      # 更新する項目だけを更新
       # 料理名が未入力の場合はジャンル名を料理名として保存
       if params[:post][:title] === ""
         params[:post][:title] = Genre.find(params[:post][:genre_id]).name 
       end
       @post.title = params[:post][:title]
       
-      if params[:post][:content].present?
-        @post.content = params[:post][:content]
-      else
-        @post.content = nil
-      end
-      
-      if params[:post][:image]
-        @post.image = params[:post][:image]
-      end
-      
-      @post.ate = params[:post][:ate]
-      @post.genre_id = params[:post][:genre_id]
-      logger.debug("----------------------------params[:post][:title] #{params[:post][:title]}")
-      logger.debug("----------------------------params[:post][:content] #{params[:post][:content]}")
-      logger.debug("----------------------------params[:post][:ate] #{params[:post][:ate]}")
-      logger.debug("----------------------------params[:post][:image] #{params[:post][:image]}")
-      logger.debug("----------------------------params[:post][:user_id] #{params[:post][:user_id]}")
-      logger.debug("----------------------------params[:post][:genre_id] #{params[:post][:genre_id]}")
-      if @post.save
+      if @post.update(post_params)
         redirect_flag = true
         logger.debug("============================ post update")
-        # 食べたい物リストに追加するかの処理
+        # 食べたい物リストに追加するどうかかの処理
         if @post.ate == false
-          @favorite = Favorite.create(user_id: current_user.id, post_id: @post.id)
+          @favorite = Favorite.create( user_id: current_user.id, post_id: @post.id )
         else
-          @favorite = Favorite.find_by(user_id: current_user.id, post_id: @post.id)
+          @favorite = Favorite.find_by( user_id: current_user.id, post_id: @post.id )
           if @favorite.present?
             @favorite.destroy
           end
@@ -527,24 +431,19 @@ class PostsController < ApplicationController
     
     if redirect_flag
       flash[:notice] = "投稿を編集しました。"
-      redirect_to root_path
+      redirect_to post_path(@post)
     else
-      flash[:alert] = "投稿の編集に失敗しました。"
+      flash.now[:alert] = "投稿の編集に失敗しました。"
       @large_areas = LargeArea.all
       @middle_areas = MiddleArea.all
       @genres = Genre.all
       
-      # if @post.restaurant_id.present?
-      #   restaurant_id = @post.restaurant_id
-      #   @restaurant = Restaurant.find(restaurant_id)
-        
-      #   params[:large_area_code] = LargeArea.find(@restaurant.large_area_id).large_area_code
-      #   params[:middle_area_code] = MiddleArea.find(@restaurant.middle_area_id).middle_area_code
-      # else
-      #   @restaurant = Restaurant.new
-      # end
-      # @post.attributes = params[:post]
-      # @restaurant.attributes = params[:post][:restaurant]
+      if @post.restaurant_id == nil
+        @restaurant = Restaurant.new
+      end
+      # 入力されていた都道府県とエリアコードをフォームに再セット
+      @submitted_large_area_code = LargeArea.find(@large_area).large_area_code if @large_area != nil
+      @submitted_middle_area_code = MiddleArea.find(@middle_area).middle_area_code if @middle_area != nil
       render :edit
     end
   end
@@ -554,12 +453,13 @@ class PostsController < ApplicationController
     @post.destroy
     if @post.destroy
       flash[:notice] = "投稿を削除しました。"
-      redirect_back(fallback_location: mypage_post_list_users_path)
+      redirect_back( fallback_location: mypage_post_list_users_path )
     else
       flash[:alert] = "投稿を削除できませんでした。"
-      redirect_back(fallback_location: mypage_post_list_users_path)
+      redirect_back( fallback_location: mypage_post_list_users_path )
     end
   end
+  
   
   
   private
@@ -571,7 +471,7 @@ class PostsController < ApplicationController
     
     #投稿保存時のストロングパラメータを設定
     def post_params
-      params.require(:post).permit(:image, :title, :genre_id, :ate, :content, :user_id, :image_cache)
+      params.require(:post).permit( :image, :title, :genre_id, :ate, :content, :user_id, :image_cache )
     end
     
     
@@ -591,66 +491,83 @@ class PostsController < ApplicationController
       response = JSON.load(json_res)
       
       if response["results"].has_key?("error")
-        # puts "エラーが発生しました！"
+        puts "エラーが発生しました！"
         @h_restaurants = {}
       else
         # 検索条件にマッチする全件数
         @available_restaurants = response["results"]["results_available"]
+        logger.debug("-------------------@available_restaurants #{@available_restaurants}")
         # 検索結果にマッチしたレストランの情報
         response["results"]["shop"].each do |h_restaurant|
-        @h_restaurants[h_restaurant["id"]] = {"photo" => h_restaurant["photo"]["pc"]["m"], "name" => h_restaurant["name"], 
-                                            "genre" => h_restaurant["genre"], "address" => h_restaurant["address"], 
-                                            "open" => h_restaurant["open"], "close" => h_restaurant["close"],
-                                            "urls" => h_restaurant["urls"]["pc"], "large_area" => h_restaurant["large_area"],
-                                            "middle_area" => h_restaurant["middle_area"]}
-        
-        
-        # @current_page = params[:page].nil? ? 1 : params[:page].to_i
-        @max_page = (@available_restaurants.to_f / 10).ceil
-        
-        if params[:page] === "≪"
-          @current_page = 1
-        elsif params[:page] === "≫"
-          @current_page = @max_page
-        else
-          @current_page = (params[:start].to_i + 9) / 10
+        @h_restaurants[h_restaurant["id"]] = { "photo" => h_restaurant["photo"]["pc"]["m"], "name" => h_restaurant["name"], 
+                                               "genre" => h_restaurant["genre"], "address" => h_restaurant["address"], 
+                                               "open" => h_restaurant["open"], "close" => h_restaurant["close"],
+                                               "urls" => h_restaurant["urls"]["pc"], "large_area" => h_restaurant["large_area"],
+                                               "middle_area" => h_restaurant["middle_area"] }
         end
-        
-        @pagination = {}
-        @pagination["≪"] = 1 if @current_page >= 3
-        @pagination["<"] = @current_page - 1 if @current_page != 1
-        
-        if @current_page >= @max_page - 2
-          @pagination.merge!({@max_page - 2 => @max_page - 2, @max_page - 1 => @max_page - 1, @max_page => @max_page})
-          delete_list = [0, -1]
-          @pagination.delete_if do |page, start|
-            delete_list.include?(start)
-          end
-        else
-          @pagination.merge!({@current_page => @current_page, @current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2})
-        end
-        
-        @pagination[">"] = @current_page + 1 if @current_page != @max_page
-        @pagination["≫"] = @max_page if @current_page <= @max_page - 2
-          
-          
-          
-        # @pagination = [*1..@max_page]
-        
-        
-        
-        # @page = params[:page].to_i
-        
-        # if all_page > 10
-        #   first = [1,  @page - 4].max
-        #   first = [first, @max_page - 9].min
-        #   last  = [10, @page + 5].max
-        #   last  = [last, @max_page].min
-        # else
-        #   @pages = [*1..@max_page]
-        # end
-        
-        end
+        logger.debug("----------------------@h_restaurants #{@h_restaurants}")
       end
-    end   
+    end
+    
+    
+    # 店舗情報保存のための準備処理
+    def processing_restaurant_params( r_name, r_address, r_open_time, r_close_day, r_hotpepper_id, r_url )
+        # 店舗情報入力フォームに未入力の欄があったときの処理
+      if r_name.present?
+        @name = r_name
+      else
+        @name = nil
+      end
+      
+      if r_address.present?
+        @address = r_address
+      else
+        @address = nil
+      end
+    
+      if r_open_time.present?
+        @open_time = r_open_time
+      else
+        @open_time = nil
+      end
+    
+      if r_close_day.present?
+        @close_day = r_close_day
+      else
+        @close_day = nil
+      end
+    
+      if r_hotpepper_id.present?
+        @hotpepper_id = r_hotpepper_id
+      else
+        @hotpepper_id = nil
+      end
+    
+      if r_url.present?
+        @url = r_url
+      else
+        @url = nil
+      end
+    end
+    
+    
+    # def area_code_to_id(post_restaurant_l_code, post_m_code, post_restaurant_m_code, restaurant_m_code)
+    #   if post_restaurant_l_code.present?
+    #     @large_area = LargeArea.find_by(large_area_code: post_restaurant_l_code).id
+        
+    #     if params[:post].has_key?(:middle_area_code)
+    #       @middle_area = MiddleArea.find_by(middle_area_code: post_m_code).id
+    #     elsif params[:post][:restaurant].has_key?(:middle_area_code)
+    #       @middle_area = MiddleArea.find_by(middle_area_code: post_restaurant_m_code).id
+    #     elsif params[:restaurant].has_key?(:middle_area_code)
+    #       @middle_area = MiddleArea.find_by(middle_area_code: restaurant_m_code).id
+    #     else
+    #       @middle_area = nil
+    #     end
+    #   else
+    #     @large_area = nil
+    #     @middle_area = nil
+    #   end
+    # end
+    
 end

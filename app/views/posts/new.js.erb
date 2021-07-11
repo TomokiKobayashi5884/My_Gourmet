@@ -12,7 +12,7 @@ console.log(`~~~~~~~~~~~~~~~~~~~~ new.js.erb`);
   $("#url-input").val("<%= @url %>");
   $("#post_restaurant_large_area_code").val("<%= @large_area_code %>");
   
-  $(".middle_area").html("<%= j( collection_select :restaurant, :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: @large_area_code).pluck(:id)), :middle_area_code, :name, { selected: @middle_area_code, include_blank: "選択してください(ホットペッパー経由後)" }, required: "required", class: "form-control w-100 mb-2" ) %>");
+  $(".middle_area").html("<%= j( collection_select :restaurant, :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: @large_area_code).pluck(:id)), :middle_area_code, :name, { selected: @middle_area_code, include_blank: "選択してください" }, required: "required", class: "form-control w-100 mb-2" ) %>");
   
 <!--モーダルを閉じる-->
   $("#exampleModalLong").modal("hide");

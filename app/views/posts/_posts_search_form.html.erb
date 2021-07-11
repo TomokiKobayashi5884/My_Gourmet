@@ -1,0 +1,25 @@
+<!--投稿検索フォーム-->
+  <%= f.label "キーワード", class: "form-group mb-0" %>
+  <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
+   
+  <%= f.label "都道府県", class: "form-group mb-0 mt-3" %>
+  <%= f.collection_select :large_area_id, @large_areas, :id, :name, { selected: params[:large_area_id], include_blank: "選択してください" }, class: "form-control" %>
+      
+  <%= f.label "エリア", class: "form-group mb-0 mt-3" %>
+  <div class="middle_area">
+    <% if params.has_key?(:post) %>
+       <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: params[:post][:middle_area_id] } %>
+    <% else %>
+       <%= render partial: "posts/select_middle_area", locals: { large_area_id: "", middle_area_id: "" } %>
+    <% end %>
+  </div>
+   
+  <%= f.label "ジャンル", class: "form-group mb-0 mt-3" %>
+  <% if params[:genre_id].present? %>
+    <%= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id], include_blank: "選択してください" }, class: "form-control" %>
+  <% else %>
+    <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, class: "form-control" %>
+  <% end %>
+  <div class="d-flex justify-content-center mt-3 mb-5">
+    <%= f.submit "検索", class: "btn btn-danger mt-3 w-100" %>
+  </div>

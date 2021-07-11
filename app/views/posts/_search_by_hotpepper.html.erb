@@ -14,7 +14,7 @@
    <div class="d-flex flex-column form-group">
      <%= f.label "エリア", class: "" %>
      <div class="middle_area_select">
-           <%= render partial: "select_middle_area_for_hot", locals: { large_area_code: "" } %>
+         <%= render partial: "select_middle_area_for_hot", locals: { large_area_code: "" } %>
      </div>
    </div>
    
@@ -22,9 +22,9 @@
      <%= f.label "ジャンル", class: "" %>
          <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
    </div>
-   <!--ページネーション用-->
+   <!--ページネーション用パラメータ-->
    <!--params[:start]-->
-   <%= f.hidden_field :start, value: 1, id: "start" %>
+   <%= f.hidden_field :start, value: 1, id: "start_num" %>
    <!--params[:page]-->
    <%= f.hidden_field :page, value: 1, id: "current_page" %>
      

@@ -1,9 +1,1 @@
-<%# if large_area_id != "" %>
-  <%# if middle_area_id == "" %> 
-    <%= collection_select :post, :middle_area_id, MiddleArea.where(large_area_id: large_area_id), :id, :name, { selected: middle_area_id, include_blank: "選択してください(id)" }, class: "form-control" %>
-  <%# else %>
-    <%#= collection_select :post, :middle_area_id, MiddleArea.where(large_area_id: large_area_id), :id, :name, { include_blank: "選択してください(id)" }, class: "form-control" %>
-  <%# end %>
-<%# else %>
-  <%#= collection_select :post, :middle_area_id, MiddleArea.where(large_area_id: large_area_id), :id, :name, { include_blank: "選択してください" }, class: "form-control" %>
-<%# end %>
+    <%= collection_select :post, :middle_area_id, MiddleArea.where(large_area_id: large_area_id), :id, :name, { selected: middle_area_id, include_blank: "選択してください" }, class: "form-control" %>

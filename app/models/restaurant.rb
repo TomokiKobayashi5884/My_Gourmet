@@ -13,4 +13,5 @@ class Restaurant < ApplicationRecord
     attr_accessor :large_area_code
     attr_accessor :middle_area_code
     
+    
 end

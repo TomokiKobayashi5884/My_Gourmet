@@ -33,7 +33,6 @@ Rails.application.routes.draw do
   end
   
   root to: "posts#index"
-  # post 'posts/new' => 'posts#new'
   resources :posts do
    collection do
     # get "search_by_hotpepper", :to => "posts#search_by_hotpepper"

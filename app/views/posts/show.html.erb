@@ -35,7 +35,7 @@
                 <div class="col-sm-7">
                     <h5 class="mb-4 font-weight-bold">コメント一覧</h5>
                     <div class="d-flex flex-column">
-                      <% if @comments.present? %>
+                      <%# if @comments.present? %>
                         <% @comments.each do |comment| %>
                           <h6 class="font-weight-bold"><%= comment.user.name if comment.user %></h6>
                           <div class="mb-2 d-flex">
@@ -45,7 +45,7 @@
                                <% end %>
                           </div>
                         <% end %>
-                      <% end %>
+                      <%# end %>
                       
                       <!--コメント入力部分-->
                       <%= form_with moddel: @comment, url: post_comments_path(@post), local: true do |f| %>
