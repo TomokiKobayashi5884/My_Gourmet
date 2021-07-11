@@ -28,4 +28,5 @@ class Post < ApplicationRecord
             Post.where("title LIKE ?", "%#{keyword}%")
     end
     
+    
 end

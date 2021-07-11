@@ -11,31 +11,7 @@
               <div class="col-sm-3">
                  <h4><i class="fas fa-search"></i>&ensp;検索条件</h4>
                  <%= form_with url: mypage_my_gourmet_list_users_path, method: :get, local: true do |f| %>
-                    <%= f.label "キーワード", class: "form-group mb-0" %>
-                    <%= f.text_field :keyword, value: params[:keyword], class: "form-control" %>
-                     
-                     
-                     <%= f.label "都道府県", class: "form-group mb-0 mt-3" %>
-                     <%= f.collection_select :large_area_id, @large_areas, :id, :name, { selected: params[:large_area_id], include_blank: "選択してください" }, class: "form-control" %>
-                          
-                     <%= f.label "エリア", class: "form-group mb-0 mt-3" %>
-                     <div class="middle_area">
-                       <% if params.has_key?(:post) %>
-                          <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: params[:post][:middle_area_id] } %>
-                       <% else %>
-                          <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: "" } %>
-                       <% end %>
-                     </div>
-                     
-                    <%= f.label "ジャンル", class: "form-group mb-0 mt-3" %>
-                    <% if params[:genre_id].present? %>
-                      <%= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id], include_blank: "選択してください" }, class: "form-control" %>
-                    <% else %>
-                      <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, class: "form-control" %>
-                    <% end %>
-                    <div class="d-flex justify-content-center mt-3 mb-5">
-                      <%= f.submit "検索", class: "btn btn-danger mt-3 w-100" %>
-                    </div>
+                    <%= render partial: "posts/posts_search_form", locals: { f: f } %>
                  <% end %>
               </div>
                
@@ -45,7 +21,7 @@
                 <hr>
                 
                 <div class="row mb-2 pl-3">
-                  <h4>合計<%= @hit_posts.count %>件</h4>
+                  <h4>全<%= @hit_posts.count %>件</h4>
                 </div>
                  
                   <!--投稿一覧部分-->

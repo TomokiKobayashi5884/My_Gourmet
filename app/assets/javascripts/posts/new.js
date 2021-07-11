@@ -1,4 +1,3 @@
-
 // 画像プレビュー
 function handleImage(image) {
     let reader = new FileReader();
@@ -9,6 +8,8 @@ function handleImage(image) {
     };
     reader.readAsDataURL(image[0]);
 }
+
+
 // 画像アップロード後、エラー発生した場合、画像アップロードのrequired属性を外す
 $(window).on('load', function() {
     if ($('#post-image-preview').hasClass('img')) {
@@ -30,6 +31,7 @@ $(document).on('change', '#post_restaurant_large_area_code', function() {
   });
 });
 
+
 // 都道府県選択後に関連エリアをプルダウンに表示(ホットペッパーで検索の部分用)
 $(document).on('change', '#large_area_selected', function() {
   return $.ajax({
@@ -46,13 +48,17 @@ $(document).on('change', '#large_area_selected', function() {
 
 // モーダル内のページネーション
 $('.paginateButton').on('click', function() {
+  // 選択したページの情報を検索フォームにセットして送信
   var startNum = $(this).val();
   var page = $(this).text().trim();
   console.log(startNum);
   console.log(page);
   
   $('#current_page').val(page);
-  $('#start').val((startNum * 10) - 9);
+  $('#start_num').val((startNum * 10) - 9);
   
-  Rails.fire($('#start').parent()[0], 'submit');
+  Rails.fire($('#start_num').parent()[0], 'submit');
+  
+  // モーダル上部にスクロール
+  $('html, body, #exampleModalLong').animate({ scrollTop: 0 }, 500);
 });

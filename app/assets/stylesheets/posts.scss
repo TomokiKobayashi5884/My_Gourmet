@@ -102,7 +102,20 @@
 }
 
 .paginateButton {
-    display: inline;
+    border: none;
+    color: #696969;
+}
+
+.paginateButton.active {
+    background: #007bff;
+    border-radius: 15px;
+    color: #fff;
+    
+}
+
+.paginateButton:hover {
+    background: #d3d3d3;
+    border-radius: 18px;
 }
 
 
