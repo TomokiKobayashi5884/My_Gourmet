@@ -1,4 +1,8 @@
 class PostsController < ApplicationController
+  
+  include CommonHelper
+  
+  
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   
   require 'net/http'
@@ -16,28 +20,29 @@ class PostsController < ApplicationController
     @middle_areas = MiddleArea.all
     @genres = Genre.all
     # -----------------------------------投稿検索処理------------------------------------------
+    
     if params[:large_area_id].present?
-      restaurant_id = Restaurant.where(large_area_id: params[:large_area_id]).pluck(:id)
-      post_large_area = Post.where(restaurant_id: restaurant_id).pluck(:id)
+      restaurant_id = Restaurant.where( large_area_id: params[:large_area_id] ).pluck(:id)
+      post_large_area = Post.where( restaurant_id: restaurant_id ).pluck(:id)
     else
       post_large_area = Post.all.pluck(:id)
     end
     
     if params[:middle_area_id].present?
-      restaurant_id = Restaurant.where(middle_area_id: params[:middle_area_id]).pluck(:id)
-      post_middle_area = Post.where(restaurant_id: restaurant_id).pluck(:id)
+      restaurant_id = Restaurant.where(middle_area_id: params[:middle_area_id] ).pluck(:id)
+      post_middle_area = Post.where( restaurant_id: restaurant_id ).pluck(:id)
     else
       post_middle_area = Post.all.pluck(:id)
     end
     
     if params[:genre_id].present?
-      post_genre = Post.where(genre_id: params[:genre_id]).pluck(:id)
+      post_genre = Post.where( genre_id: params[:genre_id] ).pluck(:id)
     else
       post_genre = Post.all.pluck(:id)
     end
     
     if params[:keyword].present?
-      @posts = Post.keyword_search(params[:keyword].strip).where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
+      @posts = Post.keyword_search( params[:keyword].strip ).where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
               .order("created_at DESC").page(params[:page]).per(PER)
     else
       @posts = Post.where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
@@ -50,13 +55,14 @@ class PostsController < ApplicationController
   
   
   def show
-      @comments = Comment.where(post_id: @post.id)
+      @comments = Comment.where( post_id: @post.id )
       @comment = @post.comments.new
   end
 
 
   def new
-    logger.debug("---------------------- posts_new")
+    test_method
+    logger.debug("---------------------- posts_new common = #{@test}")
     @post = Post.new
     @restaurant = Restaurant.new
     @large_areas = LargeArea.all
@@ -89,10 +95,10 @@ class PostsController < ApplicationController
       genre = ""
     end
     logger.debug("----------------------params[:start] #{params[:start]}")
-    logger.debug("----------------------params[:page] #{params[:page]}")
     # 検索結果の何件目から出力するか
     if params[:start].present?
-      start = (params[:start].strip.to_i * HOTPEPPER_PER) - (HOTPEPPER_PER - 1)
+      start = params[:start]
+      logger.debug("------------------------start #{start}")
     else
       start = 1
     end
@@ -127,7 +133,7 @@ class PostsController < ApplicationController
         logger.debug('-------------------current_pageがmax_page - 4より大きい場合')
         @pagination.merge!( { @max_page - 4 => @max_page - 4, @max_page - 3 => @max_page - 3, @max_page - 2 => @max_page - 2, @max_page - 1 => @max_page - 1, @max_page => @max_page } )
         # 最大ページ数が5ページ未満の場合に、マイナスのページが出ないようにする
-        delete_list = [0, -1, -2, -3]
+        delete_list = [ 0, -1, -2, -3 ]
         @pagination.delete_if do |page, start|
           delete_list.include?(start)
         end
@@ -180,48 +186,6 @@ class PostsController < ApplicationController
     end
   end
   
-  # ホットペッパーから店舗情報を探すメソッド
-  # def search_by_hotpepper
-  #   # 検索条件入力部分
-  #   if params[:keyword] != nil
-  #     keyword = params[:keyword].strip
-  #   else
-  #     keyword = ""
-  #   end
-  #   @keyword = keyword
-    
-  #   if params[:large_area_select].present?
-  #     large_area = params[:large_area_select]
-  #   else
-  #     large_area = ""
-  #   end
-  #   @large_area_selected = large_area
-    
-  #   if params[:middle_area_select].present?
-  #     middle_area = params[:middle_area_select]
-  #   else
-  #     middle_area = ""
-  #   end
-  #   @middle_area_selected = middle_area
-    
-  #   if params[:genre_select].present?
-  #     genre = params[:genre_select]
-  #   else
-  #     genre = ""
-  #   end
-  #   @genre_selected = genre
-    
-  #   # 検索用パラメータ
-  #   keyid = ENV["KEYID"]
-  #   data_format = "json"
-  #   search_params = { "key": keyid, "keyword": @keyword, "large_area": @large_area_selected, "middle_area": @middle_area_selected, "genre": @genre_selected, "format": data_format }
-    
-  #   # 入力された条件を元にホットペッパーで店舗を検索
-  #   search(search_params)
-  #   logger.debug("============================ restaurant hash = #{@h_restaurants}")
-    
-  # end
-
 
   def create
     redirect_flag = false
@@ -453,11 +417,10 @@ class PostsController < ApplicationController
     @post.destroy
     if @post.destroy
       flash[:notice] = "投稿を削除しました。"
-      redirect_back( fallback_location: mypage_post_list_users_path )
     else
       flash[:alert] = "投稿を削除できませんでした。"
-      redirect_back( fallback_location: mypage_post_list_users_path )
     end
+    redirect_back( fallback_location: mypage_post_list_users_path )
   end
   
   
@@ -473,11 +436,6 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit( :image, :title, :genre_id, :ate, :content, :user_id, :image_cache )
     end
-    
-    
-    # def restaurant_params
-    #   params.require(:restaurant)permit(:name, :address, :phone, :open_time, :close_day, :hotpepper_id, :large_area_id, :middle_area_id, :url)
-    # end
     
     
     # ホットペッパーで店舗を検索し、ハッシュに格納する処理
@@ -549,25 +507,4 @@ class PostsController < ApplicationController
         @url = nil
       end
     end
-    
-    
-    # def area_code_to_id(post_restaurant_l_code, post_m_code, post_restaurant_m_code, restaurant_m_code)
-    #   if post_restaurant_l_code.present?
-    #     @large_area = LargeArea.find_by(large_area_code: post_restaurant_l_code).id
-        
-    #     if params[:post].has_key?(:middle_area_code)
-    #       @middle_area = MiddleArea.find_by(middle_area_code: post_m_code).id
-    #     elsif params[:post][:restaurant].has_key?(:middle_area_code)
-    #       @middle_area = MiddleArea.find_by(middle_area_code: post_restaurant_m_code).id
-    #     elsif params[:restaurant].has_key?(:middle_area_code)
-    #       @middle_area = MiddleArea.find_by(middle_area_code: restaurant_m_code).id
-    #     else
-    #       @middle_area = nil
-    #     end
-    #   else
-    #     @large_area = nil
-    #     @middle_area = nil
-    #   end
-    # end
-    
 end

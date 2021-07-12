@@ -27,9 +27,8 @@
     
     <div id="wrapper">
       <%= render "layouts/header" %>
-      <!--<div id="contents">-->
-        <% if notice %><p id="notice", class="alert alert-warning"><%= notice %></p><% end %>
-        <% if alert %><p id="alert", class="alert alert-danger"><%= alert %></p><% end %>
+        <% if notice %><p id="notice" class="alert alert-warning"><%= notice %></p><% end %>
+        <% if alert %><p id="alert" class="alert alert-danger"><%= alert %></p><% end %>
         
         <%= yield %>
         

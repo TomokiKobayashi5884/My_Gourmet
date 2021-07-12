@@ -5,6 +5,7 @@ ja:
       post: 投稿
       restaurant: 店舗
       comment: コメント
+      contact: お問い合わせ
     attributes:
       user:
         name: ユーザー名
@@ -27,6 +28,11 @@ ja:
         middle_area_id: エリア
       comment:
         content: コメント
+      contact:
+        subject: 件名
+        message: お問い合わせ内容
+        name: 名前
+        email: メールアドレス
   time:
     formats:
       default: "%Y/%m/%d"

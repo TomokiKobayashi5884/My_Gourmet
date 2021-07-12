@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container ">
     <div class="row justify-content-center">
         <div class="col-sm-11 mt-5">
             <!--料理の情報部分-->
@@ -15,7 +15,7 @@
                         <h3 class="font-weight-bold text-danger mt-4 mb-3"><%= @post.title %></h3>
                         <p class="genre mb-2"><%= @post.genre.name %></p>
                         <div class="article-content d-flex flex-fill">
-                            <p class="text-wrap" style="word-break:break-all; word-wrap:break-word;"><%= @post.content %></p>
+                            <p class="text-wrap"><%= @post.content %></p>
                         </div>
                         <div class="sub-article-info-position">
                             <hr class="mt-5">
@@ -62,24 +62,25 @@
                 <div class="col-sm-5">
                     <h5 class="mb-3 font-weight-bold">店舗情報</h5>
                     <div class="d-flex flex-column">
-                            <h3 class="m-0 text-danger font-weight-bold"><%= @post.restaurant.name if @post.restaurant_id != nil && @post.restaurant.name != nil %></h3>
-                            <table class="table table-borderless mt-2">
+                        <h3 class="m-0 text-danger font-weight-bold"><%= @post.restaurant.name if @post.restaurant_id != nil && @post.restaurant.name != nil %></h3>
+                        <div class="">
+                            <table class="table table-borderless mt-2 w-100">
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="w-25 px-0 text-nowrap">住所</th>
-                                        <td><%= @post.restaurant.address if @post.restaurant_id != nil && @post.restaurant.address %></td>
+                                        <th scope="row" class="col-3 px-0 text-nowrap">住所</th>
+                                        <td class="col-9"><%= @post.restaurant.address if @post.restaurant_id != nil && @post.restaurant.address %></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="w-25 px-0 text-nowrap">営業時間</th>
-                                        <td><%= @post.restaurant.open_time if @post.restaurant_id != nil && @post.restaurant.open_time %></td>
+                                        <th scope="row" class="col-3 px-0 text-nowrap">営業時間</th>
+                                        <td class="col-9"><%= @post.restaurant.open_time if @post.restaurant_id != nil && @post.restaurant.open_time %></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="w-25 px-0 text-nowrap">定休日</th>
-                                        <td><%= @post.restaurant.close_day if @post.restaurant_id != nil && @post.restaurant.close_day %></td>
+                                        <th scope="row" class="col-3 px-0 text-nowrap">定休日</th>
+                                        <td class="col-9"><%= @post.restaurant.close_day if @post.restaurant_id != nil && @post.restaurant.close_day %></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="w-25 px-0 text-nowrap" style="word-break:break-all; word-wrap:break-word;">URL</th>
-                                        <td>
+                                        <th scope="row" class="col-3 px-0 text-nowrap" style="word-break:break-all; word-wrap:break-word;">URL</th>
+                                        <td class="col-9">
                                             <% if @post.restaurant_id != nil && @post.restaurant.url %>
                                                 <%= link_to @post.restaurant.url, target: :_blank, rel: "noopener noreferrer" do %>
                                                   <%= @post.restaurant.url %>
@@ -89,6 +90,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
                     </div>
                 </div>
             </div>

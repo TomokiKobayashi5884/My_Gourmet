@@ -1,11 +1,11 @@
 <div class="row mb-2">
-  <% if available_restaurants == nil %>
+  <% if available_restaurants == 0 %>
     <h5>全0件</h5>
   <% else %>
     <% if available_restaurants > (@current_page * 10) + 1 %>
       <h5>全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= (@current_page * 10) + 1 %>件目を表示</h5>
     <% else %>
-      <h5>合計<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= available_restaurants %>件目を表示</h5>
+      <h5>全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= available_restaurants %>件目を表示</h5>
     <% end %>
   <% end %>
   
@@ -14,18 +14,18 @@
 <!--検索結果表示部分-->
 <% h_restaurants.each do |restaurant_id, h_restaurant| %>
   <div class="row">
-    <div class="card article mb-4 pl-0 col-sm-9">
+    <div class="card article mb-4 px-0 col-sm-9">
       <article class="d-flex">
         <figure class="col-4 m-0 p-0">
           <%= image_tag h_restaurant["photo"], class: "h-restaurant-image" %>
         </figure>
-        <div class="article-info col-8 pt-3 d-flex flex-column">
+        <div class="article-info col-8 pt-3 pl-2 d-flex flex-column">
             <div class="food-info">
               <%= link_to h_restaurant["urls"], target: :_blank, rel: "noopener noreferrer" do %>
-                <h4 class="title mb-0 text-nowrap text-truncate"><%= h_restaurant["name"] %></h4>
+                <h4 class="h-title mb-0 text-nowrap text-truncate"><%= h_restaurant["name"] %></h4>
               <% end %>
-              <small class="genre mt-3"><%= h_restaurant["genre"]["name"] %></small>
-              <p class="address mt-2 mb-1 text-nowrap text-truncate"><%= h_restaurant["address"] %></p>
+              <small class="h-genre"><%= h_restaurant["genre"]["name"] %></small>
+              <p class="h-address text-nowrap text-truncate"><%= h_restaurant["address"] %></p>
             </div>
         </div>
       </article>
@@ -54,7 +54,7 @@
 <% end %>
 
 <!--ページネーション部分-->
-<div class="row">
+<div class="row mt-3">
     <% @pagination.each do |page, start| %>
       <button class="btn paginateButton <%= "active" if page == @current_page %>" value="<%= start %>">
         <%= page %>

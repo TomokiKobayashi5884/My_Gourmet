@@ -32,11 +32,19 @@ Rails.application.routes.draw do
    end
   end
   
+  resources :contacts, only: [:new, :create] do
+   collection do
+    post 'confirm', to: 'contacts#confirm'
+    post 'back', to: 'contacts#back'
+    get 'done', to: 'contacts#done'
+   end
+  end
+  
+  
   root to: "posts#index"
   resources :posts do
    collection do
     # get "search_by_hotpepper", :to => "posts#search_by_hotpepper"
-    # get "search_post", :to => "posts#search_post"
     get "middle_area_select"
     get "middle_area_select_for_ne"
    end

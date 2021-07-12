@@ -80,7 +80,7 @@ Rails.application.configure do
       :password => ENV["GMAIL_2FACTOR_PASSWORD"],
       :authentication => :plain,
       :enable_starttls_auto => true,
-      :domain => "gmail.com"
+      :domain => "smtp.gmail.com"
     }
   end
 end
