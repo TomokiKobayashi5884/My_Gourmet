@@ -91,4 +91,26 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  # メールサーバーとしてGmailを使用
+  Rails.application.configure do
+    #default URL
+    config.action_mailer.default_url_options = {
+      protocol: 'https',
+      host: ENV["HEROKU_DOMAIN"]
+    }
+    
+    #email setting
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => "smtp.gmail.com",
+      :port => 587,
+      :user_name => ENV["GMAIL_ADDRESS"],
+      :password => ENV["GMAIL_2FACTOR_PASSWORD"],
+      :authentication => :plain,
+      :enable_starttls_auto => true,
+      :domain => "smtp.gmail.com"
+    }
+  end
 end
