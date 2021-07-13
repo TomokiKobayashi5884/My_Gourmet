@@ -24,10 +24,8 @@ Rails.application.routes.draw do
     get "mypage/edit", :to => "users#edit"
     get "mypage/my_gourmet_list", :to => "users#my_gourmet_list"
     get "mypage/post_list", :to => "users#post_list"
-    
     get "mypage/edit_password", :to => "users#edit_password"
     put "mypage/password", :to => "users#update_password"
-    
     get "favorites"
    end
   end
@@ -39,7 +37,6 @@ Rails.application.routes.draw do
     get 'done', to: 'contacts#done'
    end
   end
-  
   
   root to: "posts#index"
   resources :posts do

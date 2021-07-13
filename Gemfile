@@ -48,7 +48,8 @@ gem 'rails-erd'
 gem 'kaminari'
 # ページネーションの表示を変更
 gem 'rails-i18n'
-
+# 利用規約、プライバシーポリシーなどの静的ページ作成
+gem 'high_voltage'
 
 
 group :development, :test do
