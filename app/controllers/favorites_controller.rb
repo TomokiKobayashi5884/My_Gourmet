@@ -4,11 +4,9 @@ class FavoritesController < ApplicationController
   
   # 食べたい！登録（食べたい物リストに追加）
   def create
-    if @post.user_id = current_user.id
-      @post.ate = false
+    if @post.user_id == current_user.id
       @post.save
     end
-    
     @favorite = Favorite.create(user_id: current_user.id, post_id: @post.id)
     respond_to do |format|
       format.js { flash.now[:notice] = "#{@post.title}が食べたい物リストに追加されました" }
@@ -18,7 +16,7 @@ class FavoritesController < ApplicationController
   end
   
   def destroy
-     if @post.user_id = current_user.id
+     if @post.user_id == current_user.id
        @post.ate = true
        @post.save
      end

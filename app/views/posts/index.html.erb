@@ -1,14 +1,14 @@
 <div id="app-overview">
   <img src="images/variousfood2.jpg" id="top-image" class="w-100 ">
   <h2>自分だけの"食べたい物リスト"が作れる</h2>
-  <h1 class="logo">My Gourmet</h1>
+  <h1 class="logo text-nowrap">My Gourmet</h1>
 </div>
 
 
 <div id="main" class="container">
   <div class="row">
     <!--投稿記事一覧部分-->
-    <main id="posts" class="col-sm-7 ml-auto px-0">
+    <main id="posts" class="col-lg-7 ml-auto px-0">
       <% @posts.each do |post| %>
           <article class="card article d-flex flex-row">
              <%= link_to post_path(post), class: "link" do %>
@@ -51,7 +51,7 @@
     </main>
     
     <!--サイドメニュー-->
-    <aside id="side" class="col-sm-4">
+    <aside id="side" class="col-lg-4">
       <!--ランキング部分-->
       <div class="">
           <h4 class="ranking mb-3"><i class="fas fa-crown crown"></i>&ensp;食べたい数ランキング</h4>

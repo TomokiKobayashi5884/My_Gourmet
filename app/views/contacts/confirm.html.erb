@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-8 mb-5">
+            <h4 class="my-3">お問い合わせ内容確認</h4>
+            
+            <hr>
+                
+            <div class="form-group row">
+                <strong class="col-sm-3 text-nowrap">お名前</strong>
+                <div class="col-sm-9 text-wrap">
+                    <%= @contact.name %>
+                </div>
+            </div>
+              
+            <div class="form-group row">
+                <strong class="col-sm-3 text-nowrap">メールアドレス</strong>
+                <div class="col-sm-9 text-wrap">
+                    <%= @contact.email %>
+                </div>
+            </div>
+              
+            <div class="form-group row">
+                <strong class="col-sm-3 text-nowrap">件名</strong>
+                <div class="col-sm-9 text-wrap">
+                    <%= @contact.subject %>
+                </div>
+            </div>
+          
+            <div class="form-group row">
+                <strong class="col-sm-3 text-nowrap">お問い合わせ内容</strong>
+                <div class="col-sm-9 text-wrap">
+                    <%= @contact.message %>
+                </div>
+            </div>
+            
+            <div class="d-flex mt-5 d-flex row justify-content-between">
+                <div class="col-sm-5 my-2">
+                    <%= form_with model: @contact, local: true do |f| %>
+                        <%= f.hidden_field :name %>
+                        <%= f.hidden_field :email %>
+                        <%= f.hidden_field :subject %>
+                        <%= f.hidden_field :message %>
+                        <%= f.submit "送信", class: "btn btn-danger w-100" %>
+                    <% end %>
+                </div>
+                <div class="col-sm-5 my-2">
+                    <%= form_with model: @contact, url: back_contacts_path, local: true do |f| %>
+                        <%= f.hidden_field :name %>
+                        <%= f.hidden_field :email %>
+                        <%= f.hidden_field :subject %>
+                        <%= f.hidden_field :message %>
+                        <%= f.submit "入力画面に戻る", class: "btn btn-light w-100" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

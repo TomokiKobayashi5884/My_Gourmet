@@ -3,12 +3,12 @@
    <%= form_with url: new_post_path, method: :get, remote: true do |f| %>
    <div class="d-flex flex-column form-group">
      <%= f.label "キーワード", class: "" %>
-         <%= f.text_field :keyword, class: "form-control mb-2" %>
+     <%= f.text_field :keyword, class: "form-control mb-2" %>
    </div>
    
    <div class="d-flex flex-column form-group">
      <%= f.label "都道府県", class: "" %>
-         <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
+     <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
    </div>
    
    <div class="d-flex flex-column form-group">
@@ -20,7 +20,7 @@
    
    <div class="d-flex flex-column form-group">
      <%= f.label "ジャンル", class: "" %>
-         <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
+     <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
    </div>
    <!--ページネーション用パラメータ-->
    <!--params[:start]-->
@@ -28,14 +28,14 @@
    <!--params[:page]-->
    <%= f.hidden_field :page, value: 1, id: "current_page" %>
      
-   <div class=" d-flex justify-content-center mt-3 mb-5">
+   <div class="d-flex justify-content-center mt-3 mb-5">
      <%= f.submit "検索", id: "search_hotpepper", class: "btn btn-danger mt-3 w-100" %>
    </div>   
    <% end %>
  </div>
  
  <div class="col-sm-9">
-     <h4>検索結果一覧</h4>
+     <h4 id="scroll">検索結果一覧</h4>
      <hr>
      <div id="searched-restaurants" class="d-flex flex-column">
         

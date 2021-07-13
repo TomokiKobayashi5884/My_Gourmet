@@ -46,7 +46,7 @@ $(document).on('change', '#large_area_selected', function() {
 });
 
 
-// モーダル内のページネーション
+// モーダル内のページネーション（ホットペッパー検索部分）
 $('.paginateButton').on('click', function() {
   // 選択したページの情報を検索フォームにセットして送信
   var startNum = $(this).val();
@@ -55,10 +55,23 @@ $('.paginateButton').on('click', function() {
   console.log(page);
   
   $('#current_page').val(page);
-  $('#start_num').val((startNum * 10) - 9);
+  $('#start_num').val( ( startNum * 10 ) - 9 );
   
   Rails.fire($('#start_num').parent()[0], 'submit');
   
   // モーダル上部にスクロール
+  var scroll = $('#scroll').offset().top;
+  var all_scroll = $(window).scrollTop();
+  console.log(all_scroll);
+  console.log(scroll);
+  // $('html, body, #exampleModalLong').scrollTop(500);
   $('html, body, #exampleModalLong').animate({ scrollTop: 0 }, 500);
+});
+
+// 検索条件を変更し、検索ボタンを押した場合は1ページ目に戻る
+$('#keyword, #large_area_selected, #restaurant_middle_area_code, #genre_selected').on('change', function() {
+  $('#search_hotpepper').on('click', function() {
+    $('#current_page').val('1');
+    $('#start_num').val('1');
+  });
 });

@@ -22,25 +22,6 @@
     margin-bottom: 0.2rem;
 }
 
-// @media screen and (max-width: 480px) {
-//     #wrapper {
-//         deispay: block;
-//         max-width: 100%;
-//         min-width: initial;
-//     }
-    
-//     main {
-//         margin: 0;
-//     }
-    
-//     aside {
-//         width: 100%;
-//     }
-// }
-// .img {
-//     width: 600px;
-// }
-
 #post {
     padding-right: 0;
 }
@@ -55,6 +36,7 @@
 }
 
 .title {
+    // font-size: 1.5em;
     // display: -webkit-box;
     // overflow: hidden;
     // -webkit-line-clamp: 2;
@@ -66,7 +48,7 @@
 }
  
 .article-info {
-    padding-top: 10px;
+    padding-top: 0.6rem;
     padding-right: 0;
 
 }
@@ -92,13 +74,46 @@
 }    
 .sub-article-info-position {
     position: absolute;
-    bottom: 8%;
+    bottom: 2%;
     width: 90%;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-all;
+    word-wrap: break-all;
 }
 
 .h-restaurant-image {
     width: 150px;
     height: 150px;
+}
+
+.h-title {
+        // font-size: 18px;
+        margin-top: 0.3rem;
+    }
+    
+.h-genre {
+    display: inline-flex;
+    border-radius: 3px;
+    padding: 0 0.2rem 0 0.2rem;
+    margin-top: 0.5rem;
+    background-color: #dcdcdc;
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: black;
+}
+
+.h-address {
+    font-size: 17px;
+    margin-top: 1rem;
+    // margin-bottom: 0;
 }
 
 .paginateButton {
@@ -123,6 +138,7 @@
     
     #main {
         margin: 20px auto 40px auto;
+        width: 95%;
     }
     
     #side {
@@ -192,8 +208,15 @@
     
     .sub-article-info-position {
         position: relative;
-        bottom: 5%;
+        bottom: 0%;
         width: 100%;
+    }
+    
+    table {
+        width: 100%;
+        table-layout: fixed;
+        word-break: break-all;
+        word-wrap: break-all;
     }
     
     .favorite-mark {
@@ -205,4 +228,28 @@
     height: 120px;
     }
     
+    .h-title {
+        font-size: 18px;
+    }
+    
+    .h-genre {
+        display: inline-flex;
+        border-radius: 3px;
+        padding: 0 0.2rem 0 0.2rem;
+        margin-top: 0.5rem;
+        background-color: #dcdcdc;
+        font-size: 10px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: black;
+    }
+    
+    .h-address {
+        font-size: 13px;
+        margin-top: 0.7rem;
+        margin-bottom: 0;
+    }
 }

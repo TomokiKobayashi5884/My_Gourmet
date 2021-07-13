@@ -12,7 +12,7 @@ class Post < ApplicationRecord
     validates :content, length: { maximum: 250 }
     validates :image, presence: { message: "を選択してください" }
     validates :genre_id, presence: true
-    validates :ate, inclusion: {in: [true, false]}
+    validates :ate, inclusion: { in: [ true, false ] }
     
     #画像をアップロード用にImageUploaderクラスを使えるようにする
     mount_uploader :image, ImageUploader

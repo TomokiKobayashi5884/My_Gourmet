@@ -26,7 +26,7 @@
                  
                   <!--投稿一覧部分-->
                   <% @posts.each do |post| %>
-                    <div class="d-flex row pl-3">
+                    <div class="d-flex row">
                         <div class="col-sm-11 p-0">
                             <article class="card article d-flex flex-row">
                                <%= link_to post_path(post), class: "link" do %>
