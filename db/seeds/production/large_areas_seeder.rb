@@ -26,7 +26,7 @@ prepare_params = { "key": keyid, "format": data_format }
       end
     
       return @large_areas
-    end
+  end
     
     prepare_search(prepare_params)
     
