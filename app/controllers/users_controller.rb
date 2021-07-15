@@ -11,7 +11,9 @@ class UsersController < ApplicationController
   def update
     if @user.update_without_password(user_params)
       redirect_to mypage_edit_users_path
+      logger.debug("^^^^^^^^^^^^^^^^^^user update")
     else
+      logger.debug("^^^^^^^^^^^^^^^^^^user not update")
       render :edit
     end
   end

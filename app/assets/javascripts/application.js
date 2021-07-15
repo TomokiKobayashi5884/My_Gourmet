@@ -12,4 +12,5 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
+// turbolinksをオフ（ハンバーガーメニューを閉じれるようにするため）
+// require turbolinks

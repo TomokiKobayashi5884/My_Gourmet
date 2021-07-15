@@ -1,14 +1,14 @@
- <div class="col-sm-3 hot">
-   <h4 class="mb-3"><i class="fas fa-search"></i>&ensp;検索条件</h4>
+ <div class="col-lg-3 hot">
+   <h4 class="mb-3 heading"><i class="fas fa-search"></i>&ensp;検索条件</h4>
    <%= form_with url: new_post_path, method: :get, remote: true do |f| %>
    <div class="d-flex flex-column form-group">
      <%= f.label "キーワード", class: "" %>
-     <%= f.text_field :keyword, class: "form-control mb-2" %>
+     <%= f.text_field :keyword, class: "form-control" %>
    </div>
    
    <div class="d-flex flex-column form-group">
      <%= f.label "都道府県", class: "" %>
-     <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
+     <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
    </div>
    
    <div class="d-flex flex-column form-group">
@@ -20,7 +20,7 @@
    
    <div class="d-flex flex-column form-group">
      <%= f.label "ジャンル", class: "" %>
-     <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control mb-2" %>
+     <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
    </div>
    <!--ページネーション用パラメータ-->
    <!--params[:start]-->
@@ -34,8 +34,8 @@
    <% end %>
  </div>
  
- <div class="col-sm-9">
-     <h4 id="scroll">検索結果一覧</h4>
+ <div class="col-lg-9">
+     <h4 id="scroll" class="heading">検索結果一覧</h4>
      <hr>
      <div id="searched-restaurants" class="d-flex flex-column">
         

@@ -1,18 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8 mb-5">
-        <h4 class="my-3">新規投稿</h4>
+      <div class="col-lg-8 mb-5">
+        <h4 class="my-3 heading">新規投稿</h4>
       
         <hr>
         <!------------------------------------------------新規投稿入力フォーム----------------------------------------------->
         <%= form_with model: @post, url: posts_path, local: true do |f| %>
         <!--画像(image)選択部分-->
           <div class="form-inline row my-4 px-3">
-            <div class="col-md-3 d-flex p-0 align-items-md-start mb-2 flex-row flex-md-column">
+            <div class="col-lg-3 d-flex p-0 align-items-md-start mb-2 flex-row flex-md-column">
               <%= f.label "●画像", class: "d-flex mr-3 my-1 mb-0 text-nowrap" %>
               <div class="ml-3 my-1 require-input text-nowrap">&emsp;必須&emsp;</div>
             </div>
-            <div class="col-md-9 d-flex flex-column px-0">
+            <div class="col-lg-9 d-flex flex-column px-0">
               <!--ユーザーが画像をアップロードした場合は画像をプレビュー表示-->
               <% if @post.image.present? %>
                 <%= image_tag @post.image.url, id: "post-image-preview", class: "img-fluid d-flex img" %>
@@ -40,31 +40,31 @@
           
         <!--料理名(title)記入欄-->
           <div class="form-inline row my-4 px-3">
-              <%= f.label "●料理名", class: "col-md-3 d-flex justify-content-start p-0" %>
-              <%= f.text_field :title, class: "form-control col-md-9 w-100 #{"is-invalid" if @post.errors.messages[:title].any? }" %>
+              <%= f.label "●料理名", class: "col-lg-3 d-flex justify-content-start p-0" %>
+              <%= f.text_field :title, class: "form-control col-lg-9 w-100 #{"is-invalid" if @post.errors.messages[:title].any? }" %>
               
               <!--エラー発生時はエラーメッセージを表示-->
               <% if @post.errors.messages[:title].any? %>
-                <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                   <% @post.errors.full_messages_for(:title).each do |message| %>
                     <stronng><%= message %></stronng><br>
                   <% end %>
                 </span>
               <% end %>
-              <small class="col-sm-9 ml-auto p-0">※未入力の場合は、ジャンル名が料理名として登録されます。</small>
+              <small class="col-lg-9 ml-auto p-0">※未入力の場合は、ジャンル名が料理名として登録されます。</small>
           </div>
           
         <!--ジャンル名（genre)選択欄-->
           <div class="form-inline row my-4 px-3">
-              <div class="col-md-3 d-flex p-0 align-items-md-start mb-2 flex-row flex-md-column">
+              <div class="col-lg-3 d-flex p-0 align-items-md-start mb-2 flex-row flex-md-column">
                 <%= f.label "●ジャンル", class: "mr-3 my-1 mb-0 text-nowrap" %>
                 <div class="ml-3 my-1 require-input text-nowrap">&emsp;必須&emsp;</div>
               </div>
-                <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, required: "required", class: "col-md-5 w-100 form-control mb-2 #{"is-invalid" if @post.errors.messages[:genre_id].any? }" %>
+                <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "選択してください" }, required: "required", class: "col-lg-5 w-100 form-control mb-2 #{"is-invalid" if @post.errors.messages[:genre_id].any? }" %>
                 
                 <!--エラー発生時はエラーメッセージを表示-->
                 <% if @post.errors.messages[:genre_id].any? %>
-                  <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                  <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                      <% @post.errors.full_messages_for(:genre_id).each do |message| %>
                        <stronng><%= message %></stronng><br>
                      <% end %>
@@ -74,7 +74,7 @@
           
         <!--食べた？食べたい？（ate)選択欄-->
           <div class ="form-inline row my-4 px-3">
-            <div class="d-flex flex-row flex-md-column align-items-md-start col-md-3 p-0 mb-2">
+            <div class="d-flex flex-row flex-md-column align-items-md-start col-lg-3 p-0 mb-2">
               <%= f.label "●オススメ? or 食べたい?　", class: "d-flex mb-0 my-1" %>
               <div class="text-nowrap require-input ml-3 my-1">&emsp;必須&emsp;</div>
             </div>
@@ -85,7 +85,7 @@
               <!--エラー発生時はエラーメッセージを表示-->
               <% if @post.errors.messages[:ate].any? %>
               <br>
-                <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                    <% @post.errors.full_messages_for(:ate).each do |message| %>
                      <stronng><%= message %></stronng><br>
                    <% end %>
@@ -95,12 +95,12 @@
           
         <!--料理の詳細(content)記入欄-->
           <div class ="form-inline row my-4 px-3">
-              <%= f.label "●料理の詳細", class: "col-md-3 d-flex justify-content-start p-0" %>
-              <%= f.text_area :content, class: "form-control col-md-9 w-100 #{"is-invalid" if @post.errors.messages[:content].any? }", style: "height: 10rem;" %>
+              <%= f.label "●料理の詳細", class: "col-lg-3 d-flex justify-content-start p-0" %>
+              <%= f.text_area :content, class: "form-control col-lg-9 w-100 #{"is-invalid" if @post.errors.messages[:content].any? }", style: "height: 10rem;" %>
               
               <!--エラー発生時はエラーメッセージを表示-->
               <% if @post.errors.messages[:content].any? %>
-                <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                    <% @post.errors.full_messages_for(:content).each do |message| %>
                      <stronng><%= message %></stronng><br>
                    <% end %>
@@ -129,12 +129,12 @@
             
              <!--店名記入欄(name)-->
                <div class="form-inline row my-4 px-3">
-                  <%= r.label "●店名", class: "col-md-3 d-flex justify-content-start p-0 mb-2" %>
-                    <%= r.text_field :name, class: "form-control col-md-9 w-100 #{"is-invalid" if @restaurant.errors.messages[:name].any? }", id: "name-input" %>
+                  <%= r.label "●店名", class: "col-lg-3 d-flex justify-content-start p-0 mb-2" %>
+                    <%= r.text_field :name, class: "form-control col-lg-9 w-100 #{"is-invalid" if @restaurant.errors.messages[:name].any? }", id: "name-input" %>
                     
                     <!--エラー発生時はエラーメッセージを表示-->
                     <% if @restaurant.errors.messages[:name].any? %>
-                      <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                      <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                          <% @restaurant.errors.full_messages_for(:name).each do |message| %>
                            <stronng><%= message %></stronng><br>
                          <% end %>
@@ -144,15 +144,15 @@
                
                <!--都道府県記入欄(large_area_od)-->
                <div class="form-inline row my-2 px-3">
-                  <div class="d-flex flex-row flex-md-column align-items-md-start col-md-3 p-0 mb-2">
+                  <div class="d-flex flex-row flex-md-column align-items-md-start col-lg-3 p-0 mb-2">
                     <%= r.label "●都道府県", class: "mr-3 my-1 mb-0 text-nowrap" %>
                     <div class="ml-3 my-1 require-input text-nowrap">&emsp;必須&emsp;</div>
                   </div>
-                  <%= r.collection_select :large_area_code, @large_areas, :large_area_code, :name, { selected: @submitted_large_area_code, include_blank: "選択してください" }, required: "required", class: "col-md-5 form-control w-100 #{"is-invalid" if @restaurant.errors.messages[:large_area_id].any? }" %>
+                  <%= r.collection_select :large_area_code, @large_areas, :large_area_code, :name, { selected: @submitted_large_area_code, include_blank: "選択してください" }, required: "required", class: "col-lg-5 form-control w-100 #{"is-invalid" if @restaurant.errors.messages[:large_area_id].any? }" %>
                   
                   <!--エラー発生時はエラーメッセージを表示-->
                   <% if @restaurant.errors.messages[:large_area_id].any? %>
-                    <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                        <% @restaurant.errors.full_messages_for(:large_area_id).each do |message| %>
                          <stronng><%= message %></stronng><br>
                        <% end %>
@@ -162,12 +162,12 @@
                
                <!--エリア記入欄(middle_area_code)-->
                <div class="form-inline row my-2 px-3">
-                  <div class="d-flex flex-row flex-md-column align-items-md-start col-md-3 p-0 mb-2">
+                  <div class="d-flex flex-row flex-md-column align-items-md-start col-lg-3 p-0 mb-2">
                     <%= r.label "●エリア", class: "mr-3 my-1 mb-0 text-nowrap" %>
                     <div class="ml-3 my-1 require-input text-nowrap">&emsp;必須&emsp;</div>
                   </div>
                   
-                  <div class="middle_area col-md-5 p-0">
+                  <div class="middle_area col-lg-5 p-0">
                     <!--新規投稿に失敗した場合用-->
                     <% if @submitted_middle_area_code.present? %>
                        <%= f.collection_select :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: @submitted_large_area_code)), :middle_area_code, :name, { selected: @submitted_middle_area_code, include_blank: "選択してください" }, required: "required", class: "form-control w-100 mb-2 #{"is-invalid" if @restaurant.errors.messages[:middle_area_id].any? }" %>
@@ -178,7 +178,7 @@
                   
                   <!--エラー発生時はエラーメッセージを表示-->
                   <% if @restaurant.errors.messages[:middle_area_id].any? %>
-                    <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                        <% @restaurant.errors.full_messages_for(:middle_area_id).each do |message| %>
                          <stronng><%= message %></stronng><br>
                        <% end %>
@@ -188,12 +188,12 @@
                
                <!--住所記入欄(address)-->
                <div class="form-inline row my-4 px-3">
-                  <%= r.label "●住所", class: "col-md-3 d-flex justify-content-start p-0" %>
-                  <%= r.text_field :address, class: "form-control col-md-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:address].any? }", id: "address-input" %>
+                  <%= r.label "●住所", class: "col-lg-3 d-flex justify-content-start p-0" %>
+                  <%= r.text_field :address, class: "form-control col-lg-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:address].any? }", id: "address-input" %>
                   
                   <!--エラー発生時はエラーメッセージを表示-->
                   <% if @restaurant.errors.messages[:address].any? %>
-                    <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                        <% @restaurant.errors.full_messages_for(:address).each do |message| %>
                          <stronng><%= message %></stronng><br>
                        <% end %>
@@ -203,12 +203,12 @@
                
                <!--営業時間記入欄(open_time)-->
                <div class="form-inline row my-4 px-3">
-                  <%= r.label "●営業時間", class: "col-md-3 d-flex justify-content-start p-0" %>
-                  <%= r.text_field :open_time, class: "form-control col-md-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:open_time].any? }", id: "open_time-input" %>
+                  <%= r.label "●営業時間", class: "col-lg-3 d-flex justify-content-start p-0" %>
+                  <%= r.text_field :open_time, class: "form-control col-lg-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:open_time].any? }", id: "open_time-input" %>
                   
                   <!--エラー発生時はエラーメッセージを表示-->
                   <% if @restaurant.errors.messages[:open_time].any? %>
-                    <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                        <% @restaurant.errors.full_messages_for(:open_time).each do |message| %>
                          <stronng><%= message %></stronng><br>
                        <% end %>
@@ -218,12 +218,12 @@
                
                <!--定休日記入欄(close_day)-->
                <div class="form-inline row my-4 px-3">
-                  <%= r.label "●定休日", class: "col-md-3 d-flex justify-content-start p-0" %>
-                  <%= r.text_field :close_day, class: "form-control col-md-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:close_day].any? }", id: "close_day-input" %>
+                  <%= r.label "●定休日", class: "col-lg-3 d-flex justify-content-start p-0" %>
+                  <%= r.text_field :close_day, class: "form-control col-lg-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:close_day].any? }", id: "close_day-input" %>
                   
                   <!--エラー発生時はエラーメッセージを表示-->
                   <% if @restaurant.errors.messages[:close_day].any? %>
-                    <span class="invalid-feedback col-md-9 p-0 ml-auto">
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
                        <% @restaurant.errors.full_messages_for(:close_day).each do |message| %>
                          <stronng><%= message %></stronng><br>
                        <% end %>
@@ -236,8 +236,8 @@
                <%= r.hidden_field :url, id: "url-input" %>
                
                <div class="d-flex mt-5 d-flex row justify-content-between px-3">
-                 <%= f.submit "投稿", class: "btn btn-danger col-md-5 my-2" %>
-                 <%= link_to "キャンセル", posts_path, class: "btn btn-light col-md-5 my-2" %>
+                 <%= f.submit "投稿", class: "btn btn-danger col-lg-5 my-2" %>
+                 <%= link_to "キャンセル", posts_path, class: "btn btn-light col-lg-5 my-2" %>
                </div>
             <% end %>
           </div>
@@ -250,7 +250,7 @@
             <div class="modal-dialog modal-xl" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">ホットペッパーグルメで店舗情報を検索</h5>
+                  <h5 class="modal-title heading" id="exampleModalLongTitle">ホットペッパーグルメで店舗情報を検索</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>

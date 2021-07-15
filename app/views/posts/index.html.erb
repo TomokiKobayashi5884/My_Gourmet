@@ -1,5 +1,5 @@
 <div id="app-overview">
-  <img src="images/variousfood2.jpg" id="top-image" class="w-100 ">
+  <img src="images/variousfood2.jpg" id="top-image" class="w-100">
   <h2>自分だけの"食べたい物リスト"が作れる</h2>
   <h1 class="logo text-nowrap">My Gourmet</h1>
 </div>
@@ -10,15 +10,18 @@
     <!--投稿記事一覧部分-->
     <main id="posts" class="col-lg-7 ml-auto px-0">
       <% @posts.each do |post| %>
-          <article class="card article d-flex flex-row">
-             <%= link_to post_path(post), class: "link" do %>
+          <article class="card article d-flex flex-row row mx-3">
+            <div class="col-lg-5 p-0">
+              <%= link_to post_path(post), class: "link" do %>
               <!--画像-->
               <% if post.image.present? %>
-                <%= image_tag post.image.to_s, class: "img-fluid" %>
+                <%= image_tag post.image.to_s, class: "img-fluid food-img w-100" %>
               <% else %>
                  <img src="/images/pizza.jpg" alt="..." class="img-fluid">
               <% end %>
-              <div class="article-info col-7 d-flex flex-column">
+            </div>
+             
+              <div class="article-info col-lg-7 d-flex flex-column w-100">
                 <div class="food-info">
                   <!--料理名-->
                   <h3 class="title mb-1 text-nowrap text-truncate"><%= post.title %></h3>
@@ -26,15 +29,15 @@
                   <small class="genre"><%= post.genre.name %></small>
                   <!--店の住所が登録されていれば表示-->
                   <% if post.restaurant_id != nil && post.restaurant.address != nil %>
-                    <p class="storename text-nowrap text-truncate"><%= post.restaurant.address %></p>
+                    <p class="address text-nowrap text-truncate"><%= post.restaurant.address %></p>
                   <% else %>
-                    <p class="storename text-nowrap text-truncate"></p>
+                    <p class="address text-nowrap text-truncate"></p>
                   <% end %>
                 </div>
             <% end %>
-                <div class="sub-article-info-position">
-                  <hr class="mb-1 mt-2">
-                  <div class="sub-article-info d-flex justify-content-between">
+                <div class="sub-article-info">
+                  <hr class="mt-lg-2 my-1">
+                  <div class="d-flex justify-content-between">
                     <!--ユーザー名 - 投稿日-->
                     <div class="text-muted my-0"><%= post.user.name %> - <%= l post.updated_at %></div>
                     <!--食べたい数-->
