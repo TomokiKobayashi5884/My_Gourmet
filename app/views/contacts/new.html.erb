@@ -1,18 +1,18 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-8 mb-5">
-            <h4 class="my-3">お問い合わせ</h4>
+        <div class="col-lg-8 mb-5">
+            <h4 class="my-3 heading">お問い合わせ</h4>
             
             <hr>
             
-            <p class="mt-4 mb-5">My Gourmetをご利用いただき、誠にありがとうございます。<br>
+            <p class="mt-lg-4 mb-lg-5">My Gourmetをご利用いただき、誠にありがとうございます。<br>
                 ご意見、お問い合わせは以下のフォームよりお問い合わせください。</p>
             
             <%= form_with model: @contact, url: confirm_contacts_path, method: :post, local: true do |f| %>
                 
                 <div class="form-group row">
-                    <%= f.label :name, "お名前", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
+                    <%= f.label :name, "お名前", class: "col-lg-3 col-form-label" %>
+                    <div class="col-lg-9">
                       <%= f.text_field :name, class: "form-control #{ "is-invalid" if @contact.errors.messages[:name].present? }",
                         autofocus: "true", required: "required", autocomplete: "name", placeholder: "グルメ太郎" %>
                       <!--エラー発生時はエラーメッセージを表示-->
@@ -27,8 +27,8 @@
                 </div>
                   
                 <div class="form-group row">
-                  <%= f.label :email, "メールアドレス", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
+                  <%= f.label :email, "メールアドレス", class: "col-lg-3 col-form-label" %>
+                    <div class="col-lg-9">
                       <%= f.email_field :email, class: "form-control #{ "is-invalid" if @contact.errors.messages[:email].present? }",
                         required: "required", autocomplete: "email", placeholder: "mygourmet@example.com" %>
                       <!--エラー発生時はエラーメッセージを表示-->
@@ -43,8 +43,8 @@
                 </div>
                   
                 <div class="form-group row">
-                  <%= f.label :subject, "件名", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
+                  <%= f.label :subject, "件名", class: "col-lg-3 col-form-label" %>
+                    <div class="col-lg-9">
                       <%= f.text_field :subject, class: "form-control #{ "is-invalid" if @contact.errors.messages[:subject].present? }",
                         required: "required", placeholder: "" %>
                       <!--エラー発生時はエラーメッセージを表示-->
@@ -59,8 +59,8 @@
                 </div>
               
                 <div class="form-group row">
-                  <%= f.label :message, "お問い合わせ内容", class: "col-sm-3 col-form-label" %>
-                    <div class="col-sm-9">
+                  <%= f.label :message, "お問い合わせ内容", class: "col-lg-3 col-form-label" %>
+                    <div class="col-lg-9">
                       <%= f.text_area :message, class: "form-control #{ "is-invalid" if @contact.errors.messages[:message].present? }",
                         required: "required", placeholder: "", style: "height: 12rem;" %>
                       <!--エラー発生時はエラーメッセージを表示-->

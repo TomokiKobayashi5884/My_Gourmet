@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-8 mt-5">
-            <h4 class="my-3">会員情報編集</h4>
+        <div class="col-lg-8 mt-5">
+            <h4 class="my-3 heading">会員情報編集</h4>
             
             <hr>
             
@@ -12,11 +12,11 @@
                 <%= f.label :name, "ユーザー名", class: "col-form-label" %>
                 <!--ユーザー名を表示-->
                 <div class="row justify-content-between align-items-center">
-                    <div class="col-sm-9 collapse show userName my-1">
-                        <h3 class="user-info"><%= @user.name %></h3>
+                    <div class="col-lg-9 collapse show userName my-1">
+                        <h3 class="user-info text-truncate"><%= @user.name %></h3>
                     </div>
                     <!--ユーザー名編集時に表示される部分-->
-                    <div class="col-sm-9 collapse editUserName my-1">
+                    <div class="col-lg-9 collapse editUserName my-1">
                         <%= f.text_field :name, class: "name-form form-control #{ "is-invalid" if @user.errors.messages[:name].any? }",
                             required: "required", autocomplete: "name", placeholder: "グルメ太郎" %>
                         
@@ -29,7 +29,7 @@
                           </span>
                         <% end %>
                     </div>
-                    <div class="d-flex col-sm-2 justify-content-end align-items-center my-1">
+                    <div class="d-flex col-lg-2 justify-content-end align-items-center my-1">
                         <div class="collapse editUserName">
                             <%= f.submit "保存", class: "btn btn-danger" %>
                         </div>
@@ -47,11 +47,11 @@
                 <%= f.label :email, "メールアドレス", class: "col-form-label" %>
                 <!--メールアドレスを表示-->
                 <div class="row justify-content-between align-items-center">
-                    <div class="col-sm-9 collapse show userEmail my-1">
-                        <h3 class="user-info"><%= @user.email %></h3>
+                    <div class="col-lg-9 collapse show userEmail my-1">
+                        <h3 class="user-info text-truncate"><%= @user.email %></h3>
                     </div>
                     <!--メールアドレス編集時に表示される部分-->
-                    <div class="col-sm-9 collapse editUserEmail my-1">
+                    <div class="col-lg-9 collapse editUserEmail my-1">
                         <%= f.text_field :email, class: "form-control #{ "is-invalid" if @user.errors.messages[:email].any? }",
                             required: "required", autocomplete: "email", placeholder: "mygourmet@example.com" %>
                         <!--エラー発生時はエラーメッセージを表示-->
@@ -63,7 +63,7 @@
                           </span>
                         <% end %>
                     </div>
-                    <div class="d-flex col-sm-2 justify-content-end align-items-center my-1">
+                    <div class="d-flex col-lg-2 justify-content-end align-items-center my-1">
                         <div class="collapse editUserEmail">
                             <%= f.submit "保存", class: "btn btn-danger" %>
                         </div>

@@ -12,7 +12,8 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+-.]+@[a-z\d-]+(.[a-z\d-]+)*.[a-z]+\z/i
   validates :email, uniqueness: true, presence: true, format: { with: VALID_EMAIL_REGEX }, length: { maximum: 70 }
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i
-  validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は半角英数字を両方使用してください" }, length: { minimum: 8 }
+  validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は半角英数字を両方使用してください" }, length: { minimum: 8 }, on: :create
+  validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は半角英数字を両方使用してください" }, length: { minimum: 8 }, allow_blank: true, on: :update
   
   
   def update_password(params, *options)
@@ -20,6 +21,7 @@ class User < ApplicationRecord
       params.delete(:password)
       params.delete(:password_confirmation) if params[:password_confirmation].blank?
     end
+    
     
     result = update(params, *options)
     clean_up_passwords

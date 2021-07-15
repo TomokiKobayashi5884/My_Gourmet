@@ -1,73 +1,70 @@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-sm-11 mb-5">
+        <div class="col-lg-11 mb-5">
             <div class="d-flex justify-content-between pt-3">
-                <h4 class="mb-0"><%= @user.name %> の食べたい物リスト</h4>
+                <h4 class="mb-0 heading"><%= @user.name %> の食べたい物リスト</h4>
             </div>
             
             <hr>
             <div class="row">
               
-              <div class="col-sm-3">
-                 <h4><i class="fas fa-search"></i>&ensp;検索条件</h4>
+              <div class="col-lg-3">
+                 <h4 class="post-search"><i class="fas fa-search"></i>&ensp;検索条件</h4>
                  <%= form_with url: mypage_my_gourmet_list_users_path, method: :get, local: true do |f| %>
                     <%= render partial: "posts/posts_search_form", locals: { f: f } %>
                  <% end %>
               </div>
                
-              <div class="col-sm-9">
-                <h4>検索結果一覧</h4>
+              <div class="col-lg-9">
+                <h4 class="heading">検索結果一覧</h4>
                 
                 <hr>
                 
                 <div class="row mb-2 pl-3">
-                  <h4>全<%= @hit_posts.count %>件</h4>
+                  <h4 class="heading">全<%= @hit_posts.count %>件</h4>
                 </div>
                  
                   <!--投稿一覧部分-->
                   <% @posts.each do |post| %>
-                    <div class="d-flex row">
-                        <div class="col-sm-11 p-0">
-                            <article class="card article d-flex flex-row">
-                               <%= link_to post_path(post), class: "link" do %>
-                                <!--画像-->
-                                  <% if post.image.present? %>
-                                    <%= image_tag post.image.to_s, class: "img-fluid" %>
-                                  <% else %>
-                                     <img src="/images/pizza.jpg" alt="..." class="img-fluid">
-                                  <% end %>
-                               
-                                <div class="article-info col-7 d-flex flex-column">
-                                  <div class="food-info">
-                                    <!--料理名-->
-                                    <h3 class="title mb-1 text-nowrap text-truncate"><%= post.title %></h3>
-                                    <!--ジャンル名-->
-                                    <small class="genre"><%= post.genre.name %></small>
-                                    <!--店の住所が登録されていれば表示-->
-                                    <% if post.restaurant_id != nil && post.restaurant.address != nil %>
-                                      <p class="storename text-nowrap text-truncate"><%= post.restaurant.address %></p>
-                                    <% else %>
-                                      <p class="storename text-nowrap text-truncate"></p>
-                                    <% end %>
-                                  </div>
-                              <% end %>
-                                  <div class="sub-article-info-position">
-                                    <hr class="mb-1 mt-2">
-                                    <div class="sub-article-info d-flex justify-content-between">
-                                      <!--ユーザー名 - 投稿日-->
-                                      <div class="text-muted my-0"><%= post.user.name %> - <%= l post.updated_at %></div>
-                                      <!--食べたい数-->
-                                      <div id="favorite_<%= post.id %>", class="mr-3 mb-1">
-                                        <%= render partial: "favorites/favorites", locals: { post: post } %>
-                                      </div>
-                                    </div>
-                                  </div>  
-                                </div>
-                            </article>
+                      <article class="card article d-flex flex-row row mx-3">
+                        <div class="col-lg-5 p-0">
+                          <%= link_to post_path(post), class: "link" do %>
+                          <!--画像-->
+                          <% if post.image.present? %>
+                            <%= image_tag post.image.to_s, class: "img-fluid food-img w-100" %>
+                          <% else %>
+                             <img src="/images/pizza.jpg" alt="..." class="img-fluid">
+                          <% end %>
                         </div>
-                    </div>
-                 
-                　<% end %>
+                         
+                          <div class="article-info col-lg-7 d-flex flex-column w-100">
+                            <div class="food-info">
+                              <!--料理名-->
+                              <h3 class="title mb-1 text-nowrap text-truncate"><%= post.title %></h3>
+                              <!--ジャンル名-->
+                              <small class="genre"><%= post.genre.name %></small>
+                              <!--店の住所が登録されていれば表示-->
+                              <% if post.restaurant_id != nil && post.restaurant.address != nil %>
+                                <p class="address text-nowrap text-truncate"><%= post.restaurant.address %></p>
+                              <% else %>
+                                <p class="address text-nowrap text-truncate"></p>
+                              <% end %>
+                            </div>
+                        <% end %>
+                            <div class="sub-article-info">
+                              <hr class="mt-lg-2 my-1">
+                              <div class="d-flex justify-content-between">
+                                <!--ユーザー名 - 投稿日-->
+                                <div class="text-muted my-0"><%= post.user.name %> - <%= l post.updated_at %></div>
+                                <!--食べたい数-->
+                                <div id="favorite_<%= post.id %>", class="mr-3 mb-1">
+                                  <%= render partial: "favorites/favorites", locals: { post: post } %>
+                                </div>
+                              </div>
+                            </div>  
+                          </div>
+                      </article>
+                  <% end %>
                 
                 <%= paginate @posts %>
                  

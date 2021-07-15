@@ -23,3 +23,10 @@ body {
   letter-spacing: normal;
   color: #ffffff;
 }
+
+
+@media screen and (max-width: 599px) {
+  .heading {
+    font-size: 4.7vw;
+  }
+}
