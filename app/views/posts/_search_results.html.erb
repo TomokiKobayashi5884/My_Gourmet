@@ -2,8 +2,8 @@
   <% if available_restaurants == 0 %>
     <h5 class="available_h_restaurants">全0件</h5>
   <% else %>
-    <% if available_restaurants > (@current_page * 10) + 1 %>
-      <h5 class="available_h_restaurants">全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= (@current_page * 10) + 1 %>件目を表示</h5>
+    <% if available_restaurants > (@current_page * 10) %>
+      <h5 class="available_h_restaurants">全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= (@current_page * 10) %>件目を表示</h5>
     <% else %>
       <h5 class="available_h_restaurants">全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= available_restaurants %>件目を表示</h5>
     <% end %>
