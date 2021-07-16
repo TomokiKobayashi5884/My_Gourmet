@@ -50,6 +50,9 @@ gem 'kaminari'
 gem 'rails-i18n'
 # 利用規約、プライバシーポリシーなどの静的ページ作成
 gem 'high_voltage'
+# 画像の保存先をS3に設定
+gem 'aws-sdk-s3'
+gem 'fog-aws'
 
 
 group :development, :test do
