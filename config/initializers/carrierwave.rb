@@ -10,8 +10,8 @@ CarrierWave.configure do |config|
     config.fog_public = false
     config.fog_credentials = {
       provider: 'AWS',
-      aws_access_key_id: ENV['ACCESS_KEY_ID'], # アクセスキー
-      aws_secret_access_key: ENV['SECRET_ACCESS_KEY'], # シークレットアクセスキー
+      aws_access_key_id: Rails.application.credentials.aws[:access_key_id], # アクセスキー
+      aws_secret_access_key: Rails.application.credentials.aws[:secret_access_key], # シークレットアクセスキー
       region: ENV['REGION'], # リージョン
       path_style: true
     }
