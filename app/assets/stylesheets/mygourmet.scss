@@ -86,13 +86,19 @@ footer {
 .copyright {
     background-color: #EEE;
 }
-// footer div a {
-//     background-color: #EEE;
-//     height: 4em;
-//     padding: 1.2em 1.5em;
-// }
 
-
+.about_app > li {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+}
+ 
+.about_app > li > ul {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: 1rem;
+}
+ 
 @media screen and (max-width: 599px) {
     #app-overview h2 {
         position: absolute;
@@ -130,5 +136,17 @@ footer {
     
     footer {
         background-color: #EEE;
+    }
+    
+    .about_app > li {
+        font-size: 4.3vw;
+        font-weight: 600;
+        line-height: 1.8rem;
+    }
+     
+    .about_app > li > ul {
+        font-size: 1rem;
+        font-weight: normal;
+        margin-top: 1rem;
     }
 }

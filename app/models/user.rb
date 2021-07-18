@@ -14,7 +14,8 @@ class User < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i
   validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は半角英数字を両方使用してください" }, length: { minimum: 8 }, on: :create
   validates :password, presence: true, format: { with: VALID_PASSWORD_REGEX, message: "は半角英数字を両方使用してください" }, length: { minimum: 8 }, allow_blank: true, on: :update
-  
+  validates :agreement_terms, acceptance: true, on: :create
+  validates :agreement_privacy, acceptance: true, on: :create
   
   def update_password(params, *options)
     if params[:password].blank?

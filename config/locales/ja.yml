@@ -13,6 +13,8 @@ ja:
         password: パスワード
         encrypted_password: パスワード
         password_confirmation: パスワード
+        agreement_terms: 利用規約
+        agreement_privacy: プライバシーポリシー
       post:
         title: 料理名
         content: 料理の詳細
