@@ -41,7 +41,6 @@ Rails.application.routes.draw do
   root to: "posts#index"
   resources :posts do
    collection do
-    # get "search_by_hotpepper", :to => "posts#search_by_hotpepper"
     get "middle_area_select"
     get "middle_area_select_for_ne"
    end
