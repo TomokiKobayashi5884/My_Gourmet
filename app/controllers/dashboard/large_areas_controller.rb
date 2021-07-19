@@ -15,14 +15,10 @@ class Dashboard::LargeAreasController < ApplicationController
             @large_areas = large_areas.display_list(params[:page])
         end
         @total_count = large_areas.count
-       
     end
     
     def new
         @large_area = LargeArea.new
-    end
-    
-    def show
     end
     
     def create
@@ -34,7 +30,6 @@ class Dashboard::LargeAreasController < ApplicationController
            flash.now[:alert] = "新規作成に失敗しました"
            render :new
        end
-       
     end
     
     def edit
@@ -57,8 +52,6 @@ class Dashboard::LargeAreasController < ApplicationController
             flash[:alert] = "#{@large_area.name}を削除できませんでした"
         end
         redirect_to dashboard_large_areas_path
-       
-        
     end
     
     

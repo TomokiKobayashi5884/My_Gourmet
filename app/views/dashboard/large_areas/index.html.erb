@@ -12,7 +12,6 @@
             <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "ID、都道府県名、大エリアコード" %>
           </div>
           <%= f.submit "検索", class: "btn btn-danger" %>
-          
         </div>
       <% end %>
     </div>
@@ -20,7 +19,7 @@
     <div class="row d-flex align-items-center mt-3">
         <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
     </div>
-    
+    <!--都道府県（大エリア）一覧-->
     <table class="table mt-3">
       <thead>
         <tr class="table-secondary">
