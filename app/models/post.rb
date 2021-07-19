@@ -25,7 +25,7 @@ class Post < ApplicationRecord
     
     # 投稿検索用メソッド
     def self.keyword_search(keyword)
-            Post.where("title LIKE ?", "%#{keyword}%")
+            Post.where("title LIKE ?" , "%#{keyword}%")
     end
     
     

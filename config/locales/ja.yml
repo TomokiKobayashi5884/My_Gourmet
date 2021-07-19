@@ -6,6 +6,8 @@ ja:
       restaurant: 店舗
       comment: コメント
       contact: お問い合わせ
+      large_area: 都道府県
+      middle_area: エリア
     attributes:
       user:
         name: ユーザー名
@@ -28,6 +30,9 @@ ja:
         close_day: 定休日
         large_area_id: 都道府県
         middle_area_id: エリア
+      large_area:
+        name: 都道府県（大エリア）名
+        large_area_code: 大エリアコード
       comment:
         content: コメント
       contact:

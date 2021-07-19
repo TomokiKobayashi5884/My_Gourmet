@@ -1,7 +1,20 @@
 Rails.application.routes.draw do
  
-  get 'favorites/create'
-  get 'favorites/destroy'
+  devise_for :admins, :controllers => {
+    :sessions => 'admins/sessions'
+  }
+  
+  devise_scope :admin do
+    get "dashboard", :to => "dashboard#index"
+    get "dashboard/login", :to => "admins/sessions#new"
+    post "dashboard/login", :to => "admins/sessions#create"
+    get "dashboard/logout", :to => "admins/sessions#destroy"
+  end
+  
+  namespace :dashboard do
+   resources :large_areas
+  end
+  
   devise_for :users, :controllers => {
    :registrations => "users/registrations",
    :sessions => "users/sessions",
@@ -30,6 +43,7 @@ Rails.application.routes.draw do
    end
   end
   
+  
   resources :contacts, only: [:new, :create] do
    collection do
     post 'confirm', to: 'contacts#confirm'
@@ -38,7 +52,11 @@ Rails.application.routes.draw do
    end
   end
   
-  root to: "posts#index"
+  
+  get 'favorites/create'
+  get 'favorites/destroy'
+  
+  
   resources :posts do
    collection do
     get "middle_area_select"
@@ -47,5 +65,6 @@ Rails.application.routes.draw do
   resources :comments, only: [:create, :destroy]
   resource :favorites, only: [:create, :destroy]
   end
+  root to: "posts#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
