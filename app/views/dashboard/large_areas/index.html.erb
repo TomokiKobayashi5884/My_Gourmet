@@ -1,0 +1,47 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">都道府県(大エリア)管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <%= link_to "都道府県(大エリア)新規作成", new_dashboard_large_area_path, class: "btn btn-warning mb-5" %> 
+      <!--都道府県（大エリア）一覧検索フォーム-->
+      <%= form_with url: dashboard_large_areas_path, method: :get, local: true do |f| %>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+        <div class="row d-flex align-items-center">
+          <div class="col-7">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "ID、都道府県名、大エリアコード" %>
+          </div>
+          <%= f.submit "検索", class: "btn btn-danger" %>
+          
+        </div>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    
+    <table class="table mt-3">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col" class="col-lg-1">ID</th>
+          <th scope="col" class="col-lg-3">都道府県名</th>
+          <th scope="col" class="col-lg-3">大エリアコード</th>
+          <th scope="col" class="col-lg-1"></th>
+          <th scope="col" class="col-lg-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @large_areas.each do |large_area| %>
+          <tr>
+            <td scope="row" class="align-middle"><%= large_area.id %></td>
+            <td class="align-middle"><%= large_area.name %></td>
+            <td class="align-middle"><%= large_area.large_area_code %></td>
+            <td><%= link_to "編集", edit_dashboard_large_area_path(large_area), class: "btn btn-sm"  %></td>
+            <td><%= link_to "削除", dashboard_large_area_path(large_area), method: :delete, data: { confirm: "#{large_area.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @large_areas %>
+</div>

@@ -1,4 +1,4 @@
-table_names = %w(middle_areas)
+table_names = %w(large_areas)
 
 table_names.each do |table_name|
   path = Rails.root.join("db", "seeds", Rails.env, "#{table_name}_seeder.rb")

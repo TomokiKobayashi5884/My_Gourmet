@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <% if resource_is_user? %>
+      <div class="col-lg-8 mb-5">
+          <h4 class="my-3 heading">まだ会員登録されていない方</h4>
+          
+        <hr>
+        
+        <div class="justify-content-center">
+          <%= link_to "会員登録に進む", signup_path, class: "btn btn-warning text-white w-100" %>
+        </div>
+      </div>
+    <% end %>
+    
+    
+    <div class="col-lg-8 mt-5">
+      <% if resource_is_user? %>
+        <h4 class="my-3 heading">会員登録済みの方</h4>
+      <% else %>
+        <h4 class="my-3 heading">管理者ログイン画面</h4>
+      <% end %>
+      
+      <hr>
+      
+      <!--ログインのためのフォーム入力部分-->
+        <%= form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          
+            <div class="form-group">
+              <%= f.email_field :email, class: "form-control #{ "is-invalid" if alert }", autofocus: "true",
+                required: "required", autocomplete: "email", placeholder: "メールアドレス" %>
+              <!--エラーメッセージ表示部分  -->
+              <% if alert %>
+                <span class="invalid-feedback">
+                  <storng>メールアドレスが正しくない可能性があります。</storng>
+                </span>
+              <% end %>
+            </div>
+            
+            <div class="form-group">
+              <%= f.password_field :password, class: "form-control #{ "is-invalid" if alert }",
+                required: "required", placeholder: "パスワード" %>
+              <!--エラーメッセージ表示部分-->
+              <% if alert %>
+                <span class="invalid-feedback">
+                  <storng>パスワードが正しくない可能性があります。</storng>
+                </span>
+              <% end %>
+            </div>
+            
+            <!--自動ログイン機能-->
+            <div class="form-group">
+              <div class="form-check">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, "次回から自動的にログインする", class: "form-check-label" %>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <%= f.submit "ログイン", class: "btn btn-danger w-100" %>
+            </div>
+            
+            <% if resource_is_user? %>
+              <%= link_to "パスワードをお忘れの場合", new_user_password_path, class: "btn btn-link" %>
+            <% end %>
+        <% end %>    
+    </div>
+  </div>
+</div>
