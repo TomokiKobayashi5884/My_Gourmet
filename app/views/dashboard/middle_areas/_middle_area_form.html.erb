@@ -1,0 +1,44 @@
+<div class="form-group row align-items-center">
+  <%= f.label :name, "エリア(中エリア)名", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :name, class: "form-control #{"is-invalid" if @middle_area.errors.messages[:name].any? }", required: "required" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @middle_area.errors.messages[:name].any? %>
+         <span class="invalid-feedback">
+           <% @middle_area.errors.full_messages_for(:name).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+    <%= f.label :large_area_id, "都道府県", class: "col-lg-3 col-form-label" %>
+    <div class="col-lg-4">
+        <%= f.collection_select :large_area_id, @large_areas, :id, :name, { include_blank: "選択してください" }, required: "required", class: "form-control #{"is-invalid" if @middle_area.errors.messages[:large_area_id].any? }" %>
+        <!--エラー発生時はエラーメッセージを表示-->
+        <% if @middle_area.errors.messages[:large_area_id].any? %>
+          <span class="invalid-feedback">
+             <% @middle_area.errors.full_messages_for(:large_area_id).each do |message| %>
+                <stronng><%= message %></stronng><br>
+             <% end %>
+          </span>
+        <% end %>
+    </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :middle_area_code, "中エリアコード", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :middle_area_code, class: "form-control #{"is-invalid" if @middle_area.errors.messages[:middle_area_code].any? }", required: "required" %>
+      <!--エラー発生時はエラーメッセージを表示-->
+      <% if @middle_area.errors.messages[:middle_area_code].any? %>
+        <span class="invalid-feedback">
+           <% @middle_area.errors.full_messages_for(:middle_area_code).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+        </span>
+      <% end %>
+  </div>
+</div>

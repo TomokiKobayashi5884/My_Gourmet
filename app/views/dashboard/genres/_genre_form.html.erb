@@ -1,0 +1,29 @@
+<div class="form-group row align-items-center">
+  <%= f.label :name, "ジャンル名", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :name, class: "form-control #{"is-invalid" if @genre.errors.messages[:name].any? }", required: "required" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @genre.errors.messages[:name].any? %>
+         <span class="invalid-feedback">
+           <% @genre.errors.full_messages_for(:name).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :genre_code, "ジャンルコード", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :genre_code, class: "form-control #{"is-invalid" if @genre.errors.messages[:genre_code].any? }", required: "required" %>
+      <!--エラー発生時はエラーメッセージを表示-->
+      <% if @genre.errors.messages[:genre_code].any? %>
+        <span class="invalid-feedback">
+           <% @genre.errors.full_messages_for(:genre_code).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+        </span>
+      <% end %>
+  </div>
+</div>

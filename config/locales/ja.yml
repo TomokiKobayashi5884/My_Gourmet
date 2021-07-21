@@ -8,6 +8,7 @@ ja:
       contact: お問い合わせ
       large_area: 都道府県
       middle_area: エリア
+      genre: ジャンル
     attributes:
       user:
         name: ユーザー名
@@ -33,6 +34,13 @@ ja:
       large_area:
         name: 都道府県（大エリア）名
         large_area_code: 大エリアコード
+      middle_area:
+        name: エリア（中エリア）名
+        middle_area_code: 中エリアコード
+        large_area_id: 都道府県
+      genre:
+        name: ジャンル名
+        genre_code: ジャンルコード
       comment:
         content: コメント
       contact:

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   
   namespace :dashboard do
    resources :large_areas
+   resources :middle_areas
+   resources :genres
   end
   
   devise_for :users, :controllers => {

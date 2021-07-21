@@ -13,5 +13,11 @@ class Restaurant < ApplicationRecord
     attr_accessor :large_area_code
     attr_accessor :middle_area_code
     
+    scope :search_restaurant_by_large_area, -> (large_area_id) {
+        where(large_area_id: large_area_id) if large_area_id.present?
+    }
     
+    scope :search_restaurant_by_middle_area, -> (middle_area_id) {
+        where(middle_area_id: middle_area_id) if middle_area_id.present?
+    }
 end

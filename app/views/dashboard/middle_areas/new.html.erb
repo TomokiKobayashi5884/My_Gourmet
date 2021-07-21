@@ -1,0 +1,17 @@
+<div class="col-lg-10 p-0">
+    <h4 class="mb-0 heading">エリア(中エリア)新規作成</h4>
+    
+    <hr class="mb-5">
+    
+    <%= form_with model: @middle_area, url: dashboard_middle_areas_path, method: :post, local: true do |f| %>
+    
+      <%= render partial: "middle_area_form", locals: { f: f } %>
+      
+      <div class="form-group mt-4 row justify-content-between px-3">
+         <%= f.submit "新規作成", class: "btn btn-danger col-lg-5 my-2" %>
+         <%= link_to "キャンセル", dashboard_middle_areas_path, class: "btn btn-light col-lg-5 my-2" %>
+      </div>
+    <% end %>
+</div>
+
+
