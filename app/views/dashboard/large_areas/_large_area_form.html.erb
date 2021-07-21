@@ -1,7 +1,7 @@
 <div class="form-group row align-items-center">
   <%= f.label :name, "都道府県(大エリア)名", class: "col-lg-3 col-form-label" %>
   <div class="col-lg-9">
-      <%= f.text_field :name, class: "form-control #{"is-invalid" if @large_area.errors.messages[:name].any? }" %>
+      <%= f.text_field :name, class: "form-control #{"is-invalid" if @large_area.errors.messages[:name].any? }", required: "required" %>
        <!--エラー発生時はエラーメッセージを表示-->
        <% if @large_area.errors.messages[:name].any? %>
          <span class="invalid-feedback">
@@ -16,7 +16,7 @@
 <div class="form-group row align-items-center">
   <%= f.label :large_area_code, "都道府県コード", class: "col-lg-3 col-form-label" %>
   <div class="col-lg-9">
-      <%= f.text_field :large_area_code, class: "form-control #{"is-invalid" if @large_area.errors.messages[:large_area_code].any? }" %>
+      <%= f.text_field :large_area_code, class: "form-control #{"is-invalid" if @large_area.errors.messages[:large_area_code].any? }", required: "required" %>
       <!--エラー発生時はエラーメッセージを表示-->
       <% if @large_area.errors.messages[:large_area_code].any? %>
         <span class="invalid-feedback">

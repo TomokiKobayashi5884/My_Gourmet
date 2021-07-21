@@ -28,9 +28,13 @@ class PostsController < ApplicationController
       post_large_area = Post.all.pluck(:id)
     end
     
-    if params[:middle_area_id].present?
-      restaurant_id = Restaurant.where(middle_area_id: params[:middle_area_id] ).pluck(:id)
-      post_middle_area = Post.where( restaurant_id: restaurant_id ).pluck(:id)
+    if params.has_key?(:post)
+      if params[:post][:middle_area_id].present?
+        restaurant_id = Restaurant.where(middle_area_id: params[:post][:middle_area_id] ).pluck(:id)
+        post_middle_area = Post.where( restaurant_id: restaurant_id ).pluck(:id)
+      else
+        post_middle_area = Post.all.pluck(:id)
+      end
     else
       post_middle_area = Post.all.pluck(:id)
     end
@@ -42,12 +46,23 @@ class PostsController < ApplicationController
     end
     
     if params[:keyword].present?
-      @posts = Post.keyword_search( params[:keyword].strip ).where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
+      @posts = Post.search_by_keyword( params[:keyword].strip ).where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
               .order("created_at DESC").page(params[:page]).per(PER)
     else
       @posts = Post.where( "id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre )
               .order("created_at DESC").page(params[:page]).per(PER)
     end
+    
+    # restaurant_id_large_area = Restaurant.search_restaurant_by_large_area(params[:large_area_id])
+    # if params.has_key?(:post)
+    #   restaurant_id_middle_area = Restaurant.search_restaurant_by_middle_area(params[:post][:middle_area_id])
+    # else
+    #   restaurant_id_middle_area = nil
+    # end
+    # @posts = Post.search_by_keyword(params[:keyword]).search_by_large_area(restaurant_id_large_area)
+    #         .search_by_middle_area(restaurant_id_middle_area).search_by_genre(params[:genre_id])
+    #         .order("created_at DESC").page(params[:page]).per(PER)
+    
     # ------------------------------------ランキング用の投稿データ-------------------------------------------
     rank_in_posts_ids = Favorite.group(:post_id).order('count(post_id) DESC').limit(TOP).pluck(:post_id)
     @ranking = Post.find(rank_in_posts_ids)

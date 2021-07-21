@@ -24,9 +24,25 @@ class Post < ApplicationRecord
     end
     
     # 投稿検索用メソッド
-    def self.keyword_search(keyword)
-            Post.where("title LIKE ?" , "%#{keyword}%")
-    end
+    # def self.search_by_keyword(keyword)
+    #         Post.where("title LIKE ?" , "%#{keyword}%")
+    # end
+    
+    scope :search_by_keyword, -> (keyword) {
+        where("title LIKE ? OR content LIKE ?", "%#{keyword}%", "%#{keyword}%") if keyword.present?
+    }
+    
+    scope :search_by_large_area, -> (restaurant_id) {
+        where(restaurant_id: restaurant_id) if restaurant_id.present?
+    }
+    
+    scope :search_by_middle_area, -> (restaurant_id) {
+        where(restaurant_id: restaurant_id) if restaurant_id.present?
+    }
+    
+    scope :search_by_genre, -> (genre_id) {
+        where(genre_id: genre_id.strip) if genre_id.present?
+    }
     
     
 end

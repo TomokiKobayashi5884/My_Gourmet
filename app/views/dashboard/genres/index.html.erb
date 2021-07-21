@@ -1,0 +1,44 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">ジャンル管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <%= link_to "ジャンル新規作成", new_dashboard_genre_path, class: "btn btn-warning mb-5 col-lg-3" %> 
+      <!--ジャンル一覧検索フォーム-->
+      <%= form_with url: dashboard_genres_path, method: :get, local: true do |f| %>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control w-100", placeholder: "ID、ジャンル、ジャンルコード" %>
+          </div>
+        <%= f.submit "検索", class: "btn btn-danger col-lg-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--ジャンル一覧-->
+    <table class="table mt-3">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col" class="col-lg-1 pr-0">ID</th>
+          <th scope="col" class="col-lg-3 pr-0">ジャンル</th>
+          <th scope="col" class="col-lg-3 pr-0">ジャンルコード</th>
+          <th scope="col" class="col-lg-1"></th>
+          <th scope="col" class="col-lg-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @genres.each do |genre| %>
+          <tr>
+            <td scope="row" class="align-middle"><%= genre.id %></td>
+            <td class="align-middle pr-0"><%= genre.name %></td>
+            <td class="align-middle pr-0"><%= genre.genre_code %></td>
+            <td class="align-middle pr-0"><%= link_to "編集", edit_dashboard_genre_path(genre), class: "btn btn-sm"  %></td>
+            <td class="align-middle pr-0"><%= link_to "削除", dashboard_genre_path(genre), method: :delete, data: { confirm: "#{genre.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @genres %>
+</div>
