@@ -1,6 +1,6 @@
 class Dashboard::LargeAreasController < ApplicationController
     before_action :authenticate_admin!, except: :index
-    before_action :set_large_areas, only: %w[show edit update destroy]
+    before_action :set_large_area, only: %w[edit update destroy]
     layout "dashboard/dashboard"
     
     
@@ -57,7 +57,7 @@ class Dashboard::LargeAreasController < ApplicationController
     
     private
     
-        def set_large_areas
+        def set_large_area
             @large_area = LargeArea.find(params[:id])
         end
         

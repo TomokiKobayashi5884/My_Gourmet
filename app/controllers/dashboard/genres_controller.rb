@@ -1,6 +1,6 @@
 class Dashboard::GenresController < ApplicationController
     before_action :authenticate_admin!, except: :index
-    before_action :set_genres, only: %w[show edit update destroy]
+    before_action :set_genre, only: %w[edit update destroy]
     layout "dashboard/dashboard"
     
     
@@ -52,7 +52,7 @@ class Dashboard::GenresController < ApplicationController
     
     private
     
-        def set_genres
+        def set_genre
             @genre = Genre.find(params[:id])
         end
         

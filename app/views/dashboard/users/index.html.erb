@@ -1,0 +1,51 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">ユーザー管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <!--ユーザー一覧検索フォーム-->
+      <%= form_with url: dashboard_users_path, method: :get, local: true do |f| %>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control w-100", placeholder: "ID、ユーザー名、メールアドレス" %>
+          </div>
+        <%= f.submit "検索", class: "btn btn-danger col-lg-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--ユーザー一覧-->
+      <table class="table mt-3">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col" class="col-lg-1 pr-0">ID</th>
+            <th scope="col" class="col-lg-2 pr-0">ユーザー名</th>
+            <th scope="col" class="col-lg-4 pr-0">メールアドレス</th>
+            <th scope="col" class="col-lg-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td scope="row" class="pr-0 align-middle"><%= user.id %></td>
+              <td class="pr-0 align-middle"><%= user.name if user.name.present? %></td>
+              <td class="pr-0 align-middle"><%= user.email if user.email.present? %></td>
+              <td class="pr-0 align-middle">
+                  <!--ユーザーを退会、復帰させられるように-->
+                  <%= form_with model: user, url: dashboard_user_path(user), local: true, method: :delete do |f| %>
+                      <% if user.deleted_flg %>
+                          <%= f.submit "復帰", class: "btn btn-sm" %>
+                      <% else %>
+                          <%= f.submit "削除", data: { confirm: "#{user.name}を削除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
+                      <% end %>
+                  <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    
+    <%= paginate @users %>
+</div>

@@ -1,0 +1,43 @@
+<div class="col-lg-10 p-0">
+    <h4 class="mb-0 heading">店舗情報編集</h4>
+    
+    <hr class="mb-5">
+    
+    <button type="button" class="btn btn-warning mb-5" data-toggle="modal" data-target="#exampleModalLong">
+        ホットペッパーグルメで店舗情報検索
+    </button>
+    
+    <%= form_with model: @restaurant, url: dashboard_restaurant_path, method: :put, local: true do |f| %>
+    
+      <%= render partial: "restaurant_form", locals: { f: f } %>
+      
+      <div class="form-group mt-4 row justify-content-between px-3">
+         <%= f.submit "編集完了", class: "btn btn-danger col-lg-5 my-2" %>
+         <%= link_to "キャンセル", dashboard_restaurants_path, class: "btn btn-light col-lg-5 my-2" %>
+      </div>
+    <% end %>
+</div>
+
+
+<!--モーダル部分-->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title heading" id="exampleModalLongTitle">ホットペッパーグルメで店舗情報を検索</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body row">
+          <!--モーダルの内容-->
+          <%= render "dashboard/restaurants/search_by_hotpepper" %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+　   </div>
+  </div>
+
+<%= javascript_include_tag "dashboards/restaurants_new" %>

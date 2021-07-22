@@ -12,9 +12,11 @@ Rails.application.routes.draw do
   end
   
   namespace :dashboard do
+   resources :users, only: [:index, :destroy]
    resources :large_areas
    resources :middle_areas
    resources :genres
+   resources :restaurants
   end
   
   devise_for :users, :controllers => {
@@ -41,6 +43,7 @@ Rails.application.routes.draw do
     get "mypage/post_list", :to => "users#post_list"
     get "mypage/edit_password", :to => "users#edit_password"
     put "mypage/password", :to => "users#update_password"
+    delete "mypage/delete", :to => "users#destroy"
     get "favorites"
    end
   end

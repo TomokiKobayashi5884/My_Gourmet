@@ -59,7 +59,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   # 店舗情報表示時のレンダリングを許可
-  config.web_console.whitelisted_ips = '119.26.0.136'
+  config.web_console.whitelisted_ips = ['119.26.0.136', '61.46.202.232']
   
   
   # メールサーバーとしてGmailを使用

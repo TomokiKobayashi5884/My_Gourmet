@@ -1,6 +1,6 @@
 class Dashboard::MiddleAreasController < ApplicationController
     before_action :authenticate_admin!, except: :index
-    before_action :set_middle_areas, only: %w[show edit update destroy]
+    before_action :set_middle_area, only: %w[edit update destroy]
     layout "dashboard/dashboard"
     
     
@@ -57,7 +57,7 @@ class Dashboard::MiddleAreasController < ApplicationController
     
     private
     
-        def set_middle_areas
+        def set_middle_area
             @middle_area = MiddleArea.find(params[:id])
         end
         

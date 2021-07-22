@@ -1,0 +1,49 @@
+<div class="col-lg-10 p-0">
+    <h4 class-"mb-0 heading">店舗詳細情報</h4>
+    
+    <hr class="mb-5">
+    
+    <table class="table mt-3">
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ID</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.id %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">店名</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.name if @restaurant.name.present?%></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">住所</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.address if @restaurant.address.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">都道府県</th>
+            <td scope="row" class="pr-0"><div><%= LargeArea.find(@restaurant.large_area_id).name if @restaurant.large_area_id.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">エリア</th>
+            <td scope="row" class="pr-0"><div><%= MiddleArea.find(@restaurant.middle_area_id).name if @restaurant.middle_area_id.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">営業時間</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.open_time if @restaurant.open_time.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">定休日</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.close_day if @restaurant.close_day.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">URL</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.url if @restaurant.url.present? %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ホットペッパーID</th>
+            <td scope="row" class="pr-0"><div><%= @restaurant.hotpepper_id if @restaurant.hotpepper_id.present? %></div></td>
+          </tr>
+    </table>
+</div>
+
+<div class="mt-5">
+  <%= link_to "編集", edit_dashboard_restaurant_path(@restaurant), class: "btn col-lg-4" %>
+  <%= link_to "削除", dashboard_restaurant_path(@restaurant), method: :delete, data: { confirm: "#{@restaurant.name}を削除しますか？"}, class: "btn btn-outline-danger col-lg-4" %>
+</div>

@@ -1,0 +1,47 @@
+ <div class="col-lg-3 hot">
+   <h4 class="mb-3 heading"><i class="fas fa-search"></i>&ensp;検索条件</h4>
+   <%= form_with url: new_dashboard_restaurant_path, method: :get, remote: true do |f| %>
+   <div class="d-flex flex-column form-group">
+     <%= f.label "キーワード", class: "" %>
+     <%= f.text_field :keyword, class: "form-control" %>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+     <%= f.label "都道府県", class: "" %>
+     <%= f.collection_select :large_area_selected, @large_areas, :large_area_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+     <%= f.label "エリア", class: "" %>
+     <div class="middle_area_select">
+         <%= render partial: "posts/select_middle_area_for_hot", locals: { large_area_code: "" } %>
+     </div>
+   </div>
+   
+   <div class="d-flex flex-column form-group">
+     <%= f.label "ジャンル", class: "" %>
+     <%= f.collection_select :genre_selected, @genres, :genre_code, :name, { include_blank: "選択してください" }, class: "form-control" %>
+   </div>
+   <!--ページネーション用パラメータ-->
+   <!--params[:start]-->
+   <%= f.hidden_field :start, value: 1, id: "start_num" %>
+   <!--params[:page]-->
+   <%= f.hidden_field :page, value: 1, id: "current_page" %>
+     
+   <div class="d-flex justify-content-center mt-3 mb-5">
+     <%= f.submit "検索", id: "search_hotpepper", class: "btn btn-danger mt-3 w-100" %>
+   </div>   
+   <% end %>
+ </div>
+ 
+ <div class="col-lg-9">
+     <h4 id="scroll" class="heading">検索結果一覧</h4>
+     <hr>
+     <div id="searched-restaurants" class="d-flex flex-column">
+        
+         <!--検索結果一覧が入る部分-->
+         
+     </div>
+ </div>
+ 
+ <%= javascript_include_tag "posts/new" %>

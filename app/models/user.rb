@@ -6,6 +6,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :confirmable
+  
+  extend DisplayList
+  extend SwitchFlg
          
   
   validates :name, uniqueness: true, length: { maximum: 10 }, presence: true
@@ -29,4 +32,7 @@ class User < ApplicationRecord
     result
   end
   
+  scope :search_by_keyword, -> (keyword) {
+        where("id LIKE ? OR name LIKE ? OR email LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") if keyword.present?
+    }
 end
