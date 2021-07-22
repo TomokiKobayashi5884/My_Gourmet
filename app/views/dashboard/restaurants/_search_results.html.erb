@@ -1,0 +1,61 @@
+<div class="row mb-2 px-3">
+  <% if available_restaurants == 0 %>
+    <h5 class="available_h_restaurants">全0件</h5>
+  <% else %>
+    <% if available_restaurants > (@current_page * 10) %>
+      <h5 class="available_h_restaurants">全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= (@current_page * 10) %>件目を表示</h5>
+    <% else %>
+      <h5 class="available_h_restaurants">全<%= available_restaurants %>件中&emsp;<%= (@current_page * 10) - 9 %>件目〜<%= available_restaurants %>件目を表示</h5>
+    <% end %>
+  <% end %>
+  
+</div>
+
+<!--検索結果表示部分-->
+<% h_restaurants.each do |restaurant_id, h_restaurant| %>
+  <div class="row px-3">
+    <div class="card article mb-lg-3 mb-1 px-0 col-lg-9">
+      <article class="d-flex">
+        <figure class="col-3 m-0 p-0">
+          <%= image_tag h_restaurant["photo"], class: "h-restaurant-image" %>
+        </figure>
+        <div class="article-info col-8 offset-1 pt-lg-2 pl-1 pr-1 d-flex flex-column align-self-center ml-4">
+            <div class="food-info">
+              <%= link_to h_restaurant["urls"], target: :_blank, rel: "noopener noreferrer" do %>
+                <h4 class="h-title mb-0 text-nowrap text-truncate"><%= h_restaurant["name"] %></h4>
+              <% end %>
+              <small class="h-genre"><%= h_restaurant["genre"]["name"] %></small>
+              <p class="h-address text-nowrap text-truncate"><%= h_restaurant["address"] %></p>
+            </div>
+        </div>
+      </article>
+    </div>
+    <div class="col-lg-2 d-flex justify-content-center align-items-center mb-lg-3 mb-4">
+      <!--フォームにセットする店舗情報を送信-->
+        <%= form_with url: new_dashboard_restaurant_path, method: "get", remote: true do |f| %>
+          <%= f.hidden_field :hotpepper_id, value: restaurant_id %>
+          <%#= f.hidden_field :image, value: h_restaurant["photo"] %>
+          <%= f.hidden_field :name, value: h_restaurant["name"] %>
+          <%= f.hidden_field :address, value: h_restaurant["address"] %>
+          <%= f.hidden_field :open_time, value: h_restaurant["open"] %>
+          <%= f.hidden_field :close_day, value: h_restaurant["close"] %>
+          <%= f.hidden_field :url, value: h_restaurant["urls"] %>
+          <%#= f.hidden_field :genre_code, value: h_restaurant["genre"]["code"] %>
+          <%= f.hidden_field :large_area_code, value: h_restaurant["large_area"]["code"] %>
+          <%= f.hidden_field :middle_area_code, value: h_restaurant["middle_area"]["code"] %>
+          <%= f.submit "選択" %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!--ページネーション部分-->
+<div class="row mt-3 px-3">
+    <% @pagination.each do |page, start| %>
+      <button class="btn paginateButton <%= "active" if page == @current_page %>" value="<%= start %>">
+        <%= page %>
+      </button>
+    <% end %>
+</div>
+
+<%= javascript_include_tag "posts/new" %>

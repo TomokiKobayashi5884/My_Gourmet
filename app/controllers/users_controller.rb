@@ -94,6 +94,19 @@ class UsersController < ApplicationController
     end
   end
   
+  def destroy
+    deleted_flg = User.switch_flg(@user.deleted_flg)
+    if @user.update(deleted_flg: deleted_flg)
+      reset_session
+      flash[:notice] = "退会しました"
+      redirect_to root_path
+    else
+      flash[:alert] = "退会できませんでした"
+      redirect_to mypage_edit_users_path
+    end
+    
+  end
+  
   
   private
     

@@ -76,8 +76,6 @@ class PostsController < ApplicationController
 
 
   def new
-    test_method
-    logger.debug("---------------------- posts_new common = #{@test}")
     @post = Post.new
     @restaurant = Restaurant.new
     @large_areas = LargeArea.all
@@ -194,7 +192,7 @@ class PostsController < ApplicationController
   end
   
   
-  # 都道府県入力からエリアプルダウン(newとedit用)
+  # 都道府県入力からエリアプルダウン(newとedit用)(required付き)
   def middle_area_select_for_ne
     if params[:large_area_code].present?
       render partial: 'select_middle_area_for_ne', locals: { large_area_code: params[:large_area_code], middle_area_code: params[:middle_area_code] }

@@ -1,0 +1,126 @@
+<div class="form-group row align-items-center">
+  <%= f.label :name, "店名", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :name, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:name].any? }", id: "name-input" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @restaurant.errors.messages[:name].any? %>
+         <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:name).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :address, "住所", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :address, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:address].any? }", id: "address-input" %>
+      <!--エラー発生時はエラーメッセージを表示-->
+      <% if @restaurant.errors.messages[:address].any? %>
+        <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:address).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+        </span>
+      <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+ <%= f.label :large_area_id, "都道府県", class: "col-lg-3 col-form-label" %>
+ <div class="col-lg-4">
+    <%= f.collection_select :large_area_id, @large_areas, :id, :name, { selected: @large_area_id, include_blank: "選択してください" }, required: "required", class: "form-control #{"is-invalid" if @restaurant.errors.messages[:large_area_id].any? }", id: "large_area_id-input" %>
+    <!--エラー発生時はエラーメッセージを表示-->
+    <% if @restaurant.errors.messages[:large_area_id].any? %>
+      <span class="invalid-feedback">
+         <% @restaurant.errors.full_messages_for(:large_area_id).each do |message| %>
+            <stronng><%= message %></stronng><br>
+         <% end %>
+      </span>
+    <% end %>
+ </div>
+</div>
+
+<div class="form-group row align-items-center">
+    <%= f.label "エリア", class: "col-lg-3 col-form-label" %>
+    <div class="col-lg-4 middle_area">
+    <!--新規投稿に失敗した場合用-->
+    <% if @middle_area_id.present? %>
+        <%= f.collection_select :middle_area_id, MiddleArea.where(large_area_id: @large_area_id), :id, :name, { selected: @middle_area_id, include_blank: "選択してください" }, required: "required", class: "form-control #{"is-invalid" if @restaurant.errors.messages[:middle_area_id].any? }" %>
+    <% elsif params.has_key?(:post) %>
+       <%= render partial: "posts/select_middle_area", locals: { large_area_id: params[:large_area_id], middle_area_id: params[:post][:middle_area_id] } %>
+    <% else %>
+       <%= render partial: "posts/select_middle_area", locals: { large_area_id: "", middle_area_id: "" } %>
+    <% end %>
+     <!--エラー発生時はエラーメッセージを表示-->
+     <% if @restaurant.errors.messages[:middle_area_id].any? %>
+        <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:middle_area_id).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+        </span>
+     <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :open_time, "営業時間", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :open_time, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:open_time].any? }", id: "open_time-input" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @restaurant.errors.messages[:open_time].any? %>
+         <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:open_time).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :close_day, "定休日", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :close_day, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:close_day].any? }", id: "close_day-input" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @restaurant.errors.messages[:close_day].any? %>
+         <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:close_day).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :url, "URL", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :url, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:url].any? }", id: "url-input" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @restaurant.errors.messages[:url].any? %>
+         <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:url).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>
+
+<div class="form-group row align-items-center">
+  <%= f.label :hotpepper_id, "ホットペッパーID", class: "col-lg-3 col-form-label" %>
+  <div class="col-lg-9">
+      <%= f.text_field :hotpepper_id, class: "form-control #{"is-invalid" if @restaurant.errors.messages[:hotpepper_id].any? }", id: "hotpepper_id-input" %>
+       <!--エラー発生時はエラーメッセージを表示-->
+       <% if @restaurant.errors.messages[:hotpepper_id].any? %>
+         <span class="invalid-feedback">
+           <% @restaurant.errors.full_messages_for(:hotpepper_id).each do |message| %>
+             <stronng><%= message %></stronng><br>
+           <% end %>
+         </span>
+       <% end %>
+  </div>
+</div>

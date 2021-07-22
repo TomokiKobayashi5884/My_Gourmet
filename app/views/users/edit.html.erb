@@ -74,8 +74,32 @@
                 </div>
             </div>
             
+            <% end %>
+            
             <hr>
             
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelMembershipModal" id="cancel-membership">
+              退会する
+            </button>
+            
+            <!-- Modal -->
+            <%= form_with model: @user, url: mypage_delete_users_path, method: :delete, local: true do |f| %>
+                <div class="modal fade" id="cancelMembershipModal" tabindex="-1" aria-labelledby="cancelMembershipModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="cancelMembershipModalLabel">本当に退会しますか？</h5>
+                      </div>
+                      <div class="modal-body">
+                        一度退会するとデータはすべて削除され、元に戻すことはできません。
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal" id="cancel">キャンセル</button>
+                        <button type="submit" class="btn btn-danger">退会する</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             <% end %>
         </div>
     </div>

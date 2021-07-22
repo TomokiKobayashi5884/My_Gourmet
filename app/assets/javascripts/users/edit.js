@@ -26,3 +26,13 @@ $(window).on('load', function() {
         $('.userEmailEditLabel').remove();
     }
 });
+
+$('#cancel-membership').on('click', () => {
+    $('#cancelMembershipModal').modal();
+});
+
+$('#cancel').on('click', () => {
+    $("#cancelMembershipModal").modal("hide");
+    $('body').removeClass('modal-open');　　　　　
+    $('.modal-backdrop').remove();
+});

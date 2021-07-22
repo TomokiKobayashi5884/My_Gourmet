@@ -1,0 +1,1 @@
+    <%= collection_select :post, :middle_area_id, MiddleArea.where(large_area_id: large_area_id), :id, :name, { selected: middle_area_id, include_blank: "選択してください" }, required: "required", class: "form-control" %>

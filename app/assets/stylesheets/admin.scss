@@ -9,3 +9,16 @@
 //     border-color: #b3b7bb;
 //     border-radius: 8px;
 // }
+.table-x {
+    display: block;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+}
+
+.table-data {
+    height: 97.5px;
+    overflow-y: scroll;
+    display: flex;
+    // align-items: center;
+}
+
