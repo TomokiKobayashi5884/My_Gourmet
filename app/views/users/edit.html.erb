@@ -78,9 +78,12 @@
             
             <hr>
             
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelMembershipModal" id="cancel-membership">
-              退会する
-            </button>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#cancelMembershipModal" id="cancel-membership">
+                  退会する
+                </button>
+            </div>
+            
             
             <!-- Modal -->
             <%= form_with model: @user, url: mypage_delete_users_path, method: :delete, local: true do |f| %>
