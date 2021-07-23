@@ -5,15 +5,9 @@ class Dashboard::LargeAreasController < ApplicationController
     
     
     def index
-        if params[:keyword].present?
-            keyword = params[:keyword].strip
-            large_areas = LargeArea.search_by_keyword(keyword)
-            @large_areas = large_areas.display_list(params[:page])
-            logger.debug("----------------------@large_areas #{@large_areas.inspect}")
-        else
-            large_areas = LargeArea.all
-            @large_areas = large_areas.display_list(params[:page])
-        end
+        large_areas = LargeArea.search_by_keyword(params[:keyword])
+        @large_areas = large_areas.display_list(params[:page])
+        logger.debug("----------------------@large_areas #{@large_areas.inspect}")
         @total_count = large_areas.count
     end
     

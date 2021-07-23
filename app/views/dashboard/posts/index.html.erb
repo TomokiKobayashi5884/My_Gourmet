@@ -1,0 +1,89 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">投稿管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <!--投稿一覧検索フォーム-->
+      <%= form_with url: dashboard_posts_path, method: :get, local: true do |f| %>
+        <%= f.label "", class: "col-form-labl pr-0" %>ユーザーID
+        <div class="row d-flex align-items-center mb-3">
+          <div class="col-7">
+            <%= f.text_field :user_info, value: params[:user_info], class: "form-control", placeholder: "ユーザーID" %>
+          </div>
+        </div>
+        <%= f.label "ジャンル", class: "col-form-labl pr-0" %>
+        <div class="row d-flex align-items-center mb-3">
+          <div class="col-7">
+            <%= f.collection_select :genre_id, @genres, :id, :name, { selected: params[:genre_id], include_blank: "選択してください" }, class: "form-control w-100" %>
+          </div>
+        </div>
+        <%= f.label "", class: "col-form-labl pr-0" %>店舗ID
+        <div class="row d-flex align-items-center mb-3">
+          <div class="col-7">
+            <%= f.text_field :restaurant_id, value: params[:restaurant_id], class: "form-control", placeholder: "店舗ID" %>
+          </div>
+        </div>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+        <div class="row d-flex align-items-center mb-3">
+          <div class="col-7">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "ID、料理名、料理の詳細" %>
+          </div>
+        </div>
+        <%= f.submit "検索", class: "btn btn-danger col-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--投稿一覧-->
+    <table class="table mt-3">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col" class="col-lg-1 pr-0 ">ID</th>
+          <th scope="col" class="col-lg-4 pr-0">画像</th>
+          <th scope="col" class="col-lg-3 pr-0">料理名</th>
+          <th scope="col" class="col-lg-3 pr-0">ジャンル</th>
+          <th scope="col" class="col-lg-3 pr-0">投稿ユーザー</th>
+          <th scope="col" class="col-lg-2 pr-0">店舗ID</th>
+          <th scope="col" class="col-lg-1"></th>
+          <th scope="col" class="col-lg-1"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td scope="row" class="align-middle pr-0"><div class="table-data-restaurant"><%= post.id %></div></td>
+            <td class="align-middle pr-0"><div class="table-data-restaurant"><%= image_tag post.image.url, class: "img-data" %></div></td>
+            <td class="align-middle pr-0">
+              <div class="table-data-restaurant">
+                <%= link_to dashboard_post_path(post) do %>
+                  <%= post.title %>
+                <% end %>
+              </div>
+            </td>
+            <td class="align-middle pr-0"><div class="table-data-restaurant"><%= Genre.find(post.genre_id).name %></div></td>
+            <td class="align-middle pr-0">
+              <div class="table-data-restaurant">
+                <%= link_to dashboard_user_path(post.user_id) do %>
+                  <%= User.find(post.user_id).name %>
+                <% end %>
+              </div>
+            </td>
+            <td class="align-middle pr-0">
+              <div class="table-data-restaurant">
+                <% if post.restaurant_id.present? %>
+                  <%= link_to dashboard_restaurant_path(post.restaurant_id) do %>
+                    <%= post.restaurant_id %>
+                  <% end %>
+                <% end %>
+              </div>
+            </td>
+            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_post_path(post), class: "btn btn-sm"  %></td>
+            <td class="align-middle p-0"><%= link_to "削除", dashboard_post_path(post), method: :delete, data: { confirm: "#{post.title}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @posts %>
+</div>

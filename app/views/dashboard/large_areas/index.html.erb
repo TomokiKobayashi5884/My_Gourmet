@@ -33,11 +33,11 @@
       <tbody>
         <% @large_areas.each do |large_area| %>
           <tr>
-            <td scope="row" class="align-middle"><%= large_area.id %></td>
+            <td scope="row" class="align-middle pr-0"><%= large_area.id %></td>
             <td class="align-middle pr-0"><%= large_area.name %></td>
             <td class="align-middle pr-0"><%= large_area.large_area_code %></td>
-            <td class="align-middle pr-0"><%= link_to "編集", edit_dashboard_large_area_path(large_area), class: "btn btn-sm"  %></td>
-            <td class="align-middle pr-0"><%= link_to "削除", dashboard_large_area_path(large_area), method: :delete, data: { confirm: "#{large_area.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
+            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_large_area_path(large_area), class: "btn btn-sm"  %></td>
+            <td class="align-middle p-0"><%= link_to "削除", dashboard_large_area_path(large_area), method: :delete, data: { confirm: "#{large_area.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
           </tr>
         <% end %>
       </tbody>

@@ -1,11 +1,10 @@
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 mb-5 ">
-        <h4 class="my-3">投稿編集</h4>
-      
-        <hr>
-        <!------------------------------------------------投稿編集フォーム----------------------------------------------->
-        <%= form_with model: @post, url: post_path, local: true do |f| %>
+<div class="col-lg-10 p-0">
+    <h4 class="mb-0 heading">投稿編集</h4>
+    
+    <hr class="mb-5">
+    
+    <%= form_with model: @post, url: dashboard_post_path, method: :put, local: true do |f| %>
+        
           <!--画像(image)選択部分-->
           <div class="form-inline row my-4 px-3">
             <div class="col-lg-3 d-flex p-0 align-items-md-start mb-2 flex-row flex-md-column">
@@ -108,8 +107,6 @@
               <% end %>
           </div>
           
-          <!--投稿するユーザーのidを保存-->
-          <%= f.hidden_field :user_id, value: current_user.id %>
           <hr>
           
           <p>
@@ -181,7 +178,7 @@
                      <% elsif @submitted_middle_area_code.present? %>
                        <%= r.collection_select :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: @submitted_large_area_code)), :middle_area_code, :name, { selected: @submitted_middle_area_code, include_blank: "選択してください" }, required: "required", class: "form-control w-100 mb-2 #{"is-invalid" if @restaurant.errors.messages[:middle_area_id].any? }" %>
                      <% else %>
-                       <%= render partial: "select_middle_area_for_ne", locals: { large_area_code: params[:large_area_code] } %>
+                       <%= render partial: "posts/select_middle_area_for_ne", locals: { large_area_code: params[:large_area_code] } %>
                      <% end %>
                      
                      <!--エラー発生時はエラーメッセージを表示-->
@@ -246,37 +243,33 @@
                
                <div class="d-flex mt-5 d-flex row justify-content-between px-3">
                  <%= f.submit "編集完了", class: "btn btn-danger col-lg-5 my-2" %>
-                 <%= link_to "キャンセル", mypage_post_list_users_path, class: "btn btn-light col-lg-5 my-2" %>
+                 <%= link_to "キャンセル", dashboard_posts_path, class: "btn btn-light col-lg-5 my-2" %>
                </div>
             <% end %>
           </div>
-        <% end %>
-        
-        
-        
-        <!--モーダル部分-->
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-          <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">ホットペッパーグルメで店舗情報を検索</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body row">
-              <!--モーダルの内容-->
-              <%= render "search_by_hotpepper" %>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-              </div>
-            </div>
-        　</div>
-    　　  </div>
-      
-      </div>
-    </div>
+    <% end %>
+    
+    <!--モーダル部分-->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">ホットペッパーグルメで店舗情報を検索</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body row">
+          <!--モーダルの内容-->
+          <%= render "posts/search_by_hotpepper" %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+          </div>
+        </div>
+    　</div>
+　　  </div>
+    　　    
 </div>
-  
+
 <%= javascript_include_tag "posts/new" %>

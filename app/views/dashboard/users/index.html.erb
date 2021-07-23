@@ -30,9 +30,13 @@
           <% @users.each do |user| %>
             <tr>
               <td scope="row" class="pr-0 align-middle"><%= user.id %></td>
-              <td class="pr-0 align-middle"><%= user.name if user.name.present? %></td>
-              <td class="pr-0 align-middle"><%= user.email if user.email.present? %></td>
               <td class="pr-0 align-middle">
+                <%= link_to dashboard_user_path(user) do %>
+                  <%= user.name %>
+                <% end %>
+              </td>
+              <td class="pr-0 align-middle"><%= user.email %></td>
+              <td class="p-0 align-middle">
                   <!--ユーザーを退会、復帰させられるように-->
                   <%= form_with model: user, url: dashboard_user_path(user), local: true, method: :delete do |f| %>
                       <% if user.deleted_flg %>

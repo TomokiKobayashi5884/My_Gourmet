@@ -8,6 +8,16 @@ class Dashboard::UsersController < ApplicationController
         @total_count = users.count
     end
     
+    def show
+        @user = User.find(params[:id])
+        # 投稿数
+        @post_count = Post.where(user_id: @user.id).count
+        # 食べたい物リストの数
+        @mygourmet_count = Favorite.where(user_id: @user.id).count
+        # コメント数
+        @comment_count = Comment.where(user_id: @user.id).count
+    end
+    
     def destroy
         # ユーザーを論理削除
         user = User.find(params[:id])
