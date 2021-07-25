@@ -8,7 +8,7 @@ class LargeArea < ApplicationRecord
     extend DisplayList
     
     scope :search_by_keyword, -> (keyword) {
-        where("id LIKE ? OR name LIKE ? OR large_area_code LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%")
+        where("id LIKE ? OR name LIKE ? OR large_area_code LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") if keyword.present?
     }
     
     # scope :search_name, -> (name) {

@@ -44,8 +44,8 @@
               <td class="pr-0"><div class="table-data"><%= restaurant.address if restaurant.address.present? %></div></td>
               <td class="pr-0"><div class="table-data"><%= restaurant.open_time if restaurant.open_time.present? %></div></td>
               <td class="pr-0"><div class="table-data"><%= restaurant.close_day if restaurant.close_day.present? %></div></td>
-              <td class="pr-0 align-middle"><div><%= link_to "編集", edit_dashboard_restaurant_path(restaurant), class: "btn btn-sm" %></div></td>
-              <td class="pr-0 align-middle"><div><%= link_to "削除", dashboard_restaurant_path(restaurant), method: :delete, data: { confirm: "#{restaurant.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></div></td>
+              <td class="p-0 align-middle"><div><%= link_to "編集", edit_dashboard_restaurant_path(restaurant), class: "btn btn-sm" %></div></td>
+              <td class="p-0 align-middle"><div><%= link_to "削除", dashboard_restaurant_path(restaurant), method: :delete, data: { confirm: "#{restaurant.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></div></td>
             </tr>
           <% end %>
         </tbody>

@@ -17,6 +17,8 @@ class Post < ApplicationRecord
     #画像をアップロード用にImageUploaderクラスを使えるようにする
     mount_uploader :image, ImageUploader
     
+     extend DisplayList
+    
     
     # ユーザーに食べたい物リストに登録されているか
     def favorited_by?(user)
@@ -28,6 +30,7 @@ class Post < ApplicationRecord
     #         Post.where("title LIKE ?" , "%#{keyword}%")
     # end
     
+    # キーワードで投稿検索する用
     scope :search_by_keyword, -> (keyword) {
         where("title LIKE ? OR content LIKE ?", "%#{keyword}%", "%#{keyword}%") if keyword.present?
     }
@@ -44,5 +47,13 @@ class Post < ApplicationRecord
         where(genre_id: genre_id.strip) if genre_id.present?
     }
     
+    # 投稿検索（admin）用
+    scope :search_by_user, -> (user_info) {
+        where("user_id LIKE ?", "%#{user_info}%") if user_info.present?
+    }
+    
+    scope :search_by_restaurant, -> (restaurant_id) {
+        where(restaurant_id: restaurant_id) if restaurant_id.present?
+    }
     
 end

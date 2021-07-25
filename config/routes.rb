@@ -12,11 +12,12 @@ Rails.application.routes.draw do
   end
   
   namespace :dashboard do
-   resources :users, only: [:index, :destroy]
+   resources :users, only: [:index, :show, :destroy]
    resources :large_areas
    resources :middle_areas
    resources :genres
    resources :restaurants
+   resources :posts
   end
   
   devise_for :users, :controllers => {

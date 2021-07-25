@@ -1,0 +1,43 @@
+<div class="col-lg-10 p-0">
+    <h4 class-"mb-0 heading">ユーザー詳細</h4>
+    
+    <hr class="mb-5">
+    
+    <table class="table mt-3">
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ID</th>
+            <td scope="row" class="pr-0"><div><%= @user.id %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ユーザー名</th>
+            <td scope="row" class="pr-0"><div><%= @user.name %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">メールアドレス</th>
+            <td scope="row" class="pr-0"><div><%= @user.email %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">投稿数</th>
+            <td scope="row" class="pr-0"><div><%= @post_count %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">食べたい物リストの数</th>
+            <td scope="row" class="pr-0"><div><%= @mygourmet_count %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">コメント回数</th>
+            <td scope="row" class="pr-0"><div><%= @comment_count %></div></td>
+          </tr>
+    </table>
+</div>
+
+<div class="my-5">
+  <!--ユーザーを退会、復帰させられるように-->
+  <%= form_with model: @user, url: dashboard_user_path(@user), local: true, method: :delete do |f| %>
+      <% if @user.deleted_flg %>
+          <%= f.submit "復帰", class: "btn btn-sm" %>
+      <% else %>
+          <%= f.submit "削除", data: { confirm: "#{@user.name}を削除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
+      <% end %>
+  <% end %>
+</div>

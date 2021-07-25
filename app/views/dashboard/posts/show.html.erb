@@ -1,0 +1,71 @@
+<div class="col-lg-10 p-0">
+    <h4 class-"mb-0 heading">投稿詳細</h4>
+    
+    <hr class="mb-5">
+    
+    <table class="table mt-3">
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ID</th>
+            <td scope="row" class="pr-0"><div><%= @post.id %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">画像</th>
+            <td scope="row" class="pr-0"><div><%= image_tag @post.image.url %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">料理名</th>
+            <td scope="row" class="pr-0"><div><%= @post.title if @post.title.present?%></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ジャンル</th>
+            <td scope="row" class="pr-0"><div><%= Genre.find(@post.genre_id).name %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">オススメ？ or 食べたい？</th>
+            <td scope="row" class="pr-0">
+                <div>
+                    <% if @post.ate %>
+                        オススメ！
+                    <% else %>
+                        食べたい！
+                    <% end %>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">料理の詳細</th>
+            <td scope="row" class="pr-0"><div><%= @post.content %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">コメント数</th>
+            <td scope="row" class="pr-0"><div><%= @comment_count %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">投稿ユーザー</th>
+            <td scope="row" class="pr-0">
+                <div>
+                    <%= link_to dashboard_user_path(@post.user_id) do %>
+                        <%= @user_name %>
+                    <% end %>
+                </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">店舗ID</th>
+            <td scope="row" class="pr-0">
+                <div>
+                  <% if @post.restaurant_id.present? %>
+                    <%= link_to dashboard_restaurant_path(@post.restaurant_id) do %>
+                        <%= @post.restaurant_id if @post.restaurant_id.present? %>
+                    <% end %>
+                  <% end %>
+                </div>
+            </td>
+          </tr>
+    </table>
+</div>
+
+<div class="my-5">
+  <%= link_to "編集", edit_dashboard_post_path(@post), class: "btn col-lg-4 mb-5" %>
+  <%= link_to "削除", dashboard_post_path(@post), method: :delete, data: { confirm: "#{@post.title}を削除しますか？"}, class: "btn btn-outline-danger col-lg-4 mb-5" %>
+</div>
