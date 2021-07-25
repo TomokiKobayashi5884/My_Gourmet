@@ -1,0 +1,60 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">お問い合わせ管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <!--お問い合わせ一覧検索フォーム-->
+      <%= form_with url: dashboard_contacts_path, method: :get, local: true do |f| %>
+        <%= f.label "氏名", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :name, value: params[:name], class: "form-control w-100", placeholder: "氏名" %>
+          </div>
+        <%= f.label "メールアドレス", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :email, value: params[:email], class: "form-control w-100", placeholder: "メールアドレス" %>
+          </div>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control w-100", placeholder: "ID、件名、内容" %>
+          </div>
+        <%= f.submit "検索", class: "btn btn-danger col-lg-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--お問い合わせ一覧-->
+      <table class="table mt-3">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col" class="col-lg-1 pr-0">ID</th>
+            <th scope="col" class="col-lg-3 pr-0">氏名</th>
+            <th scope="col" class="col-lg-3 pr-0">件名</th>
+            <th scope="col" class="col-lg-3 pr-0">内容</th>
+            <th scope="col" class="col-lg-3 pr-0">受信日</th>
+            <th scope="col" class="col-lg-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @contacts.each do |contact| %>
+            <tr>
+              <td scope="row" class="pr-0"><div class="table-data-middle"><%= contact.id %></div></td>
+              <td class="pr-0"><div class="table-data-middle"><%= contact.name if contact.name.present?%></div></td>
+              <td class="pr-0">
+                <div class="table-data-middle">
+                  <%= link_to dashboard_contact_path(contact) do %>
+                    <%= contact.subject if contact.subject.present? %>
+                  <% end %>
+                </div>
+              </td>
+              <td class="pr-0"><div class="table-data-middle"><%= contact.message if contact.message.present? %></div></td>
+              <td class="pr-0"><div class="table-data-middle"><%= contact.created_at.strftime("%Y/%m/%d - %H:%M") %></div></td>
+              <td class="p-0 align-middle"><div><%= link_to "削除", dashboard_contact_path(contact), method: :delete, data: { confirm: "#{contact.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></div></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    
+    <%= paginate @contacts %>
+</div>

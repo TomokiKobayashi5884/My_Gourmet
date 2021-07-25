@@ -4,7 +4,6 @@ class ContactMailer < ApplicationMailer
         @contact = contact
         # 送信先のメールアドレス
         mail to: ENV["TOMAIL"],
-             subject: "【お問い合わせ】" + @contact.subject
+        subject: "【お問い合わせ】" + @contact.subject
     end
-    
 end

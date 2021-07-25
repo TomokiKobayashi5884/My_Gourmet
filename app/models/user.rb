@@ -34,5 +34,5 @@ class User < ApplicationRecord
   
   scope :search_by_keyword, -> (keyword) {
         where("id LIKE ? OR name LIKE ? OR email LIKE ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%") if keyword.present?
-    }
+  }
 end

@@ -19,6 +19,8 @@ Rails.application.routes.draw do
    resources :restaurants
    resources :posts, except: [:new]
    resources :comments, except: [:show, :new]
+   resources :contacts, only: [:index, :show, :destroy]
+   resources :admins, only: [:index]
   end
   
   devise_for :users, :controllers => {

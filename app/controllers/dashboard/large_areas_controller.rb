@@ -1,5 +1,5 @@
 class Dashboard::LargeAreasController < ApplicationController
-    before_action :authenticate_admin!, except: :index
+    before_action :authenticate_admin!
     before_action :set_large_area, only: %w[edit update destroy]
     layout "dashboard/dashboard"
     

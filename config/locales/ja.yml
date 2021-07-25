@@ -9,6 +9,7 @@ ja:
       large_area: 都道府県
       middle_area: エリア
       genre: ジャンル
+      admin: 管理者
     attributes:
       user:
         name: ユーザー名
@@ -42,12 +43,18 @@ ja:
         name: ジャンル名
         genre_code: ジャンルコード
       comment:
-        content: コメント
+        content: コメント内容
       contact:
         subject: 件名
         message: お問い合わせ内容
         name: 名前
         email: メールアドレス
+      admin:
+        name: 管理者名
+        email: メールアドレス
+        password: パスワード
+        encrypted_password: パスワード
+        password_confirmation: パスワード
   time:
     formats:
       default: "%Y/%m/%d"

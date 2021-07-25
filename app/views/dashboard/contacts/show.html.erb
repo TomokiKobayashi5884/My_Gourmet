@@ -1,0 +1,39 @@
+<div class="col-lg-10 p-0">
+    <h4 class-"mb-0 heading">お問い合わせ詳細</h4>
+    
+    <hr class="mb-5">
+    
+    <table class="table mt-3">
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">ID</th>
+            <td scope="row" class="pr-0"><div><%= @contact.id %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">氏名</th>
+            <td scope="row" class="pr-0"><div><%= @contact.name %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">メールアドレス</th>
+            <td scope="row" class="pr-0"><div><%= @contact.email %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">件名</th>
+            <td scope="row" class="pr-0"><div><%= @contact.subject %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">お問い合わせ内容</th>
+            <td scope="row" class="pr-0"><div><%= @contact.message %></div></td>
+          </tr>
+          <tr>
+            <th scope="row" class="col-3 pr-0 align-middle">受信日</th>
+            <td scope="row" class="pr-0"><div><%= @contact.created_at.strftime("%Y/%m/%d - %H:%M") %></div></td>
+          </tr>
+    </table>
+</div>
+
+<div class="my-5">
+  <!--ユーザーを退会、復帰させられるように-->
+  <%= form_with model: @contact, url: dashboard_contact_path(@contact), local: true, method: :delete do |f| %>
+      <%= link_to "削除", dashboard_contact_path(@contact), method: :delete, data: { confirm: "#{@contact.subject}を削除しますか？"}, class: "btn btn-outline-danger mb-5" %>
+  <% end %>
+</div>

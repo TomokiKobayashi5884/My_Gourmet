@@ -1,5 +1,5 @@
 class Dashboard::RestaurantsController < ApplicationController
-    before_action :authenticate_admin!, except: :index
+    before_action :authenticate_admin!
     before_action :set_restaurant, only: %w[show edit update destroy]
     layout "dashboard/dashboard"
     

@@ -1,0 +1,40 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">管理者一覧</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <!--管理者一覧検索フォーム-->
+      <%= form_with url: dashboard_admins_path, method: :get, local: true do |f| %>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control w-100", placeholder: "ID、管理者名、メールアドレス" %>
+          </div>
+        <%= f.submit "検索", class: "btn btn-danger col-lg-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--管理者一覧-->
+      <table class="table mt-3">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col" class="col-lg-1 pr-0">ID</th>
+            <th scope="col" class="col-lg-2 pr-0">管理者名</th>
+            <th scope="col" class="col-lg-4 pr-0">メールアドレス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @admins.each do |admin| %>
+            <tr>
+              <td scope="row" class="pr-0 align-middle"><%= admin.id %></td>
+              <td class="pr-0 align-middle"><%= admin.name %></td>
+              <td class="pr-0 align-middle"><%= admin.email %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    
+    <%= paginate @admins %>
+</div>
