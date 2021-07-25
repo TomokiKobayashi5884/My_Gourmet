@@ -1,0 +1,66 @@
+<div class="col-lg-10 p-0">
+    <h4 class~"mb-0 heading">コメント管理</h4>
+    
+    <hr>
+    <div class="mt-4">
+      <!--コメント一覧検索フォーム-->
+      <%= form_with url: dashboard_comments_path, method: :get, local: true do |f| %>
+        <%= f.label "", class: "col-form-labl pr-0" %>ユーザーID
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :user_id, value: params[:user_id], class: "form-control w-100", placeholder: "ユーザーID" %>
+          </div>
+        <%= f.label "", class: "col-form-labl pr-0" %>投稿ID
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :post_id, value: params[:post_id], class: "form-control w-100", placeholder: "投稿ID" %>
+          </div>
+        <%= f.label "キーワード", class: "col-form-labl pr-0" %>
+          <div class="col-lg-7 mb-3 px-0">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control w-100", placeholder: "ID, コメント内容など" %>
+          </div>
+        <%= f.submit "検索", class: "btn btn-danger col-lg-3" %>
+      <% end %>
+    </div>
+    
+    <div class="row d-flex align-items-center mt-3">
+        <h5 class="align-middle mb-0 px-3">全<%= @total_count %>件</h5>
+    </div>
+    <!--コメント一覧-->
+      <table class="table mt-3">
+        <thead>
+          <tr class="table-secondary">
+            <th scope="col" class="col-lg-1 pr-0">ID</th>
+            <th scope="col" class="col-lg-4 pr-0">コメント内容</th>
+            <th scope="col" class="col-lg-2 pr-0">ユーザー名</th>
+            <th scope="col" class="col-lg-2 pr-0">投稿ID</th>
+            <th scope="col" class="col-lg-1"></th>
+            <th scope="col" class="col-lg-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @comments.each do |comment| %>
+            <tr>
+              <td scope="row" class="pr-0"><div class="table-data-middle"><%= comment.id %></div></td>
+              <td class="pr-0"><div class="table-data-middle"><%= comment.content if comment.content.present?%></div></td>
+              <td class="pr-0">
+                  <div class="table-data-middle">
+                      <%= link_to dashboard_user_path(comment.user_id) do %>
+                          <%= User.find(comment.user_id).name %>
+                      <% end %>
+                  </div>
+              </td>
+              <td class="pr-0">
+                  <div class="table-data-middle">
+                      <%= link_to dashboard_post_path(comment.post_id) do %>
+                          <%= Post.find(comment.post_id).id %>
+                      <% end %>
+                  </div>
+              </td>
+              <td class="p-0 align-middle"><div><%= link_to "編集", edit_dashboard_comment_path(comment), class: "btn btn-sm" %></div></td>
+              <td class="p-0 align-middle"><div><%= link_to "削除", dashboard_comment_path(comment), method: :delete, data: { confirm: "#{comment.id}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></div></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    
+    <%= paginate @comments %>
+</div>

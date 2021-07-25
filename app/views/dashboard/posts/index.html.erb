@@ -53,25 +53,25 @@
       <tbody>
         <% @posts.each do |post| %>
           <tr>
-            <td scope="row" class="align-middle pr-0"><div class="table-data-restaurant"><%= post.id %></div></td>
-            <td class="align-middle pr-0"><div class="table-data-restaurant"><%= image_tag post.image.url, class: "img-data" %></div></td>
+            <td scope="row" class="align-middle pr-0"><div class="table-data-middle"><%= post.id %></div></td>
+            <td class="align-middle pr-0"><div class="table-data-middle"><%= image_tag post.image.url, class: "img-data" %></div></td>
             <td class="align-middle pr-0">
-              <div class="table-data-restaurant">
+              <div class="table-data-middle">
                 <%= link_to dashboard_post_path(post) do %>
                   <%= post.title %>
                 <% end %>
               </div>
             </td>
-            <td class="align-middle pr-0"><div class="table-data-restaurant"><%= Genre.find(post.genre_id).name %></div></td>
+            <td class="align-middle pr-0"><div class="table-data-middle"><%= Genre.find(post.genre_id).name %></div></td>
             <td class="align-middle pr-0">
-              <div class="table-data-restaurant">
+              <div class="table-data-middle">
                 <%= link_to dashboard_user_path(post.user_id) do %>
                   <%= User.find(post.user_id).name %>
                 <% end %>
               </div>
             </td>
             <td class="align-middle pr-0">
-              <div class="table-data-restaurant">
+              <div class="table-data-middle">
                 <% if post.restaurant_id.present? %>
                   <%= link_to dashboard_restaurant_path(post.restaurant_id) do %>
                     <%= post.restaurant_id %>

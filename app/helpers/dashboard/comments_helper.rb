@@ -1,0 +1,2 @@
+module Dashboard::CommentsHelper
+end

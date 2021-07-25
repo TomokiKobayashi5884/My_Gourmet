@@ -17,7 +17,8 @@ Rails.application.routes.draw do
    resources :middle_areas
    resources :genres
    resources :restaurants
-   resources :posts
+   resources :posts, except: [:new]
+   resources :comments, except: [:show, :new]
   end
   
   devise_for :users, :controllers => {
