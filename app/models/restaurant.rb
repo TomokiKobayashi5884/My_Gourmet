@@ -13,7 +13,7 @@ class Restaurant < ApplicationRecord
     attr_accessor :large_area_code
     attr_accessor :middle_area_code
     
-     extend DisplayList
+    extend DisplayList
     
     scope :search_by_keyword, -> (keyword) {
         where("id LIKE ? OR name LIKE ? OR address LIKE ? OR open_time LIKE ? OR close_day LIKE ? OR address LIKE ? OR url LIKE ? OR hotpepper_id LIKE ?",
