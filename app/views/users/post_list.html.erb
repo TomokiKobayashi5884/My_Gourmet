@@ -53,7 +53,7 @@
                     </article>
                 </div>
                 <div class="col-lg-1 d-flex align-items-center">
-                    <%= link_to "編集", edit_post_path(post), method: :get, class: "btn btn-sm text-nowrap mr-1" %>
+                    <%= link_to "編集", edit_post_path(post), method: :get, class: "btn btn-outline-dark btn-sm text-nowrap mr-1" %>
                     <%= link_to "削除", post_path(post), method: :delete, data: {confirm: "#{post}を削除しますか？"}, class: "btn btn-sm btn-outline-danger text-nowrap" %>
                 </div>
               </div>

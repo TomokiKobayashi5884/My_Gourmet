@@ -55,7 +55,7 @@
                       <% end %>
                   </div>
               </td>
-              <td class="p-0 align-middle"><div><%= link_to "編集", edit_dashboard_comment_path(comment), class: "btn btn-sm" %></div></td>
+              <td class="p-0 align-middle"><div><%= link_to "編集", edit_dashboard_comment_path(comment), class: "btn btn-outline-dark btn-sm" %></div></td>
               <td class="p-0 align-middle"><div><%= link_to "削除", dashboard_comment_path(comment), method: :delete, data: { confirm: "#{comment.id}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></div></td>
             </tr>
           <% end %>

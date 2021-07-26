@@ -79,7 +79,7 @@
                 <% end %>
               </div>
             </td>
-            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_post_path(post), class: "btn btn-sm"  %></td>
+            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_post_path(post), class: "btn btn-outline-dark btn-sm"  %></td>
             <td class="align-middle p-0"><%= link_to "削除", dashboard_post_path(post), method: :delete, data: { confirm: "#{post.title}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
           </tr>
         <% end %>

@@ -40,7 +40,7 @@
                   <!--ユーザーを退会、復帰させられるように-->
                   <%= form_with model: user, url: dashboard_user_path(user), local: true, method: :delete do |f| %>
                       <% if user.deleted_flg %>
-                          <%= f.submit "復帰", class: "btn btn-sm" %>
+                          <%= f.submit "復帰", class: "btn btn-outline-dark btn-sm" %>
                       <% else %>
                           <%= f.submit "削除", data: { confirm: "#{user.name}を削除しますか？" }, class: "btn btn-outline-danger btn-sm" %>
                       <% end %>

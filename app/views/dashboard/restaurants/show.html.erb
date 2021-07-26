@@ -44,6 +44,6 @@
 </div>
 
 <div class="my-5">
-  <%= link_to "編集", edit_dashboard_restaurant_path(@restaurant), class: "btn col-lg-4 mb-5" %>
+  <%= link_to "編集", edit_dashboard_restaurant_path(@restaurant), class: "btn btn-outline-dark col-lg-4 mb-5" %>
   <%= link_to "削除", dashboard_restaurant_path(@restaurant), method: :delete, data: { confirm: "#{@restaurant.name}を削除しますか？"}, class: "btn btn-outline-danger col-lg-4 mb-5" %>
 </div>

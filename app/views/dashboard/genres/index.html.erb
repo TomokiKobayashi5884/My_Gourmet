@@ -34,7 +34,7 @@
             <td scope="row" class="align-middle pr-0"><%= genre.id %></td>
             <td class="align-middle pr-0"><%= genre.name %></td>
             <td class="align-middle pr-0"><%= genre.genre_code %></td>
-            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_genre_path(genre), class: "btn btn-sm"  %></td>
+            <td class="align-middle p-0"><%= link_to "編集", edit_dashboard_genre_path(genre), class: "btn btn-outline-dark btn-sm"  %></td>
             <td class="align-middle p-0"><%= link_to "削除", dashboard_genre_path(genre), method: :delete, data: { confirm: "#{genre.name}を削除しますか？"}, class: "btn btn-outline-danger btn-sm" %></td>
           </tr>
         <% end %>
