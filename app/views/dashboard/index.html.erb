@@ -47,7 +47,7 @@
               <% if @mom_creation_rate_of_list.zero? %>
                 <%= @post_count %> (±0)
               <% else %>
-                <%= @post_count %> (<%= format( '%+d', @mom_creation_rate_of_list ) %>) 
+                <%= @post_count %> (<%= format( '%+d', @mom_post_count ) %>) 
               <% end %>
             </td>
             <td class="align-middle pr-0">
