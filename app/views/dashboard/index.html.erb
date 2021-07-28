@@ -1,9 +1,65 @@
 <div class="col-lg-10 p-0">
-    <h4 class="mb-0 heading">集計一覧</h4>
+    <h4 class="mb-0 heading">月別集計一覧</h4>
     
     <hr>
-    
-    <div class="">
-        
+    <div class="mt-4">
+      <!--エリア（中エリア）一覧検索フォーム-->
+      <%= form_with url: dashboard_path, method: :get, local: true, class: "form_inline month-form" do |f| %>
+        <div class="col-lg-7 mb-3 px-0 form-inline">
+          <%= f.label "期間", class: "col-form-labl pr-0 mr-3" %>
+            <% if params[:date].present? %>
+                <%= f.date_select :date, {selected: params[:date], start_year: 2010, end_year: Time.now.year, discard_day: true, use_month_numbers: true, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
+            <% else %>
+                <%= f.date_select :date, {start_year: 2010, end_year: Time.now.year, discard_day: true, use_month_numbers: true, default: { year: Time.now.year, month: Time.now.month }, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
+            <% end %>
+        </div>
+      <% end %>
     </div>
+    
+    <!--集計一覧-->
+    <p class="d-flex justify-content-end mr-3">※ ( )内は前月比</p>
+    <table class="table mt-3">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col" class="col-lg-1 align-middle pr-0">総会員数</th>
+          <th scope="col" class="col-lg-2 align-middle pr-0">会員数に対するリスト作成率</th>
+          <th scope="col" class="col-lg-2 align-middle pr-0">総投稿数</th>
+          <th scope="col" class="col-lg-2 align-middle pr-0">総コメント数</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td class="align-middle pr-0">
+              <% if @mom_user_count.zero? %>
+                <%= @user_count %> (±0) 
+              <% else %>
+                <%= @user_count %> (<%= format( '%+d', @mom_user_count ) %>) 
+              <% end %>
+            </td>
+            <td class="align-middle pr-0">
+              <% if @mom_creation_rate_of_list.zero? %>
+                <%= @creation_rate_of_list %> % (±0%) 
+              <% else %>
+                <%= @creation_rate_of_list %> % (<%= format( '%+.2f', @mom_creation_rate_of_list ) %>%) 
+              <% end %>
+            </td>
+            <td class="align-middle pr-0">
+              <% if @mom_creation_rate_of_list.zero? %>
+                <%= @post_count %> (±0)
+              <% else %>
+                <%= @post_count %> (<%= format( '%+d', @mom_creation_rate_of_list ) %>) 
+              <% end %>
+            </td>
+            <td class="align-middle pr-0">
+              <% if @mom_comment_count.zero? %>
+                <%= @comment_count %> (±0)
+              <% else %>
+                <%= @comment_count %> (<%= format( '%+d', @mom_comment_count ) %>) 
+              <% end %>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 </div>
+
+<%= javascript_include_tag "dashboards/index" %>
