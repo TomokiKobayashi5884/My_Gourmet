@@ -239,10 +239,24 @@
                     </span>
                   <% end %>
                </div>
+               
+               <!--URL記入欄(url)-->
+               <div class="form-inline row my-4 px-3">
+                  <%= r.label "●URL", class: "col-lg-3 d-flex justify-content-start p-0", style: "text-transform:uppercase;" %>
+                  <%= r.text_field :url, class: "form-control col-lg-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:url].any? }", id: "url-input" %>
+                  
+                  <!--エラー発生時はエラーメッセージを表示-->
+                  <% if @restaurant.errors.messages[:url].any? %>
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
+                       <% @restaurant.errors.full_messages_for(:url).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+               </div>
            
                <!--ホットペッパーidとURLを保存(非表示)(店舗情報がホットペッパーにある場合)-->
                <%= r.hidden_field :hotpepper_id, id: "hotpepper_id-input" %>
-               <%= r.hidden_field :url, id: "url-input" %>
                
                <div class="d-flex mt-5 d-flex row justify-content-between px-3">
                  <%= f.submit "編集完了", class: "btn btn-danger col-lg-5 my-2" %>

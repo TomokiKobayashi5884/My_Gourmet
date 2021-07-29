@@ -52,7 +52,6 @@ Rails.application.routes.draw do
    end
   end
   
-  
   resources :contacts, only: [:new, :create] do
    collection do
     post 'confirm', to: 'contacts#confirm'
@@ -61,10 +60,8 @@ Rails.application.routes.draw do
    end
   end
   
-  
   get 'favorites/create'
   get 'favorites/destroy'
-  
   
   resources :posts do
    collection do

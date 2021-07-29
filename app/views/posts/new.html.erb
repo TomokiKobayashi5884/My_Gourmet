@@ -15,14 +15,16 @@
             <div class="col-lg-9 d-flex flex-column px-0">
               <!--ユーザーが画像をアップロードした場合は画像をプレビュー表示-->
               <% if @post.image.present? %>
-                <%= image_tag @post.image.url, id: "post-image-preview", class: "img-fluid d-flex img" %>
+                <div class="img-box">
+                  <%= image_tag @post.image.url, id: "post-image-preview", class: "img-fluid" %>
+                </div>
                 <%= f.hidden_field :image_cache %>
               <!--アップロードしていない状態は何も表示しない-->
               <% else %>
                 <img src="", id="post-image-preview" class="">
               <% end %>
               <div class="d-flex flex-column">
-                <small class="">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 600px × 400 px推奨<br>※ アップロード可能なファイル形式はjpg、jpeg、gif、pngです。</small>
+                <small class="">オススメしたい、または食べたい料理の画像をアップロードしてください。<br>※ 600px × 400px(横 × 縦)推奨<br>※ アップロード可能なファイル形式はjpg、jpeg、gif、pngです。</small>
                   <%= f.label "画像を選択", for: "post_image", class: "btn btn-warning w-100 text-center mt-3 #{"is-invalid" if @post.errors.messages[:image].any? }" %>
                   <%= f.file_field :image, { onChange: "javascript: handleImage(this.files);", style: "position: relative; bottom: 34px; opacity: 0;", required: "", class: "w-25" } %>
                   
@@ -230,10 +232,24 @@
                     </span>
                   <% end %>
                </div>
+               
+               <!--URL記入欄(url)-->
+               <div class="form-inline row my-4 px-3">
+                  <%= r.label "●URL", class: "col-lg-3 d-flex justify-content-start p-0", style: "text-transform:uppercase;" %>
+                  <%= r.text_field :url, class: "form-control col-lg-9 mb-2 w-100 #{"is-invalid" if @restaurant.errors.messages[:url].any? }", id: "url-input" %>
+                  
+                  <!--エラー発生時はエラーメッセージを表示-->
+                  <% if @restaurant.errors.messages[:url].any? %>
+                    <span class="invalid-feedback col-lg-9 p-0 ml-auto">
+                       <% @restaurant.errors.full_messages_for(:url).each do |message| %>
+                         <stronng><%= message %></stronng><br>
+                       <% end %>
+                    </span>
+                  <% end %>
+               </div>
            
-               <!--ホットペッパーidとURLを保存(非表示)(店舗情報がホットペッパーにある場合)-->
+               <!--ホットペッパーidを保存(非表示)(店舗情報がホットペッパーにある場合)-->
                <%= r.hidden_field :hotpepper_id, id: "hotpepper_id-input" %>
-               <%= r.hidden_field :url, id: "url-input" %>
                
                <div class="d-flex mt-5 row justify-content-between px-3">
                  <%= f.submit "投稿", class: "btn btn-danger col-lg-5 my-2" %>
