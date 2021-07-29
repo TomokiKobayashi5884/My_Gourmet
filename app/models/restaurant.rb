@@ -9,6 +9,8 @@ class Restaurant < ApplicationRecord
     validates :address, length: { maximum: 100 }
     validates :open_time, length: { maximum: 250 }
     validates :close_day, length: { maximum: 250 }
+    VALID_URL_REGEX = /\A#{URI::regexp(%w(http https))}\z/
+    validates :url, format: VALID_URL_REGEX
     
     attr_accessor :large_area_code
     attr_accessor :middle_area_code

@@ -30,6 +30,7 @@ ja:
         address: 住所
         open_time: 営業時間
         close_day: 定休日
+        url: URL
         large_area_id: 都道府県
         middle_area_id: エリア
       large_area:
