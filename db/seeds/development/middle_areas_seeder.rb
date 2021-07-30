@@ -40,10 +40,9 @@ MiddleArea.all.destroy_all
     large_area = LargeArea.find_by(large_area_code: middle_area[2])
     
     MiddleArea.create(
-                id: i+1,
+                id: i + 1,
                 name: middle_area[0],
                 middle_area_code: middle_area[1],
                 large_area_id: large_area.id
                     )
-    
 end

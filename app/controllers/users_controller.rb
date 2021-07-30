@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   # 1ページあたりの表示件数
   PER = 10
   
+  
   def edit
   end
 
@@ -51,8 +52,6 @@ class UsersController < ApplicationController
       post_middle_area = favorites_posts.all.pluck(:id)
     end
     
-    
-    
     if params[:genre_id].present?
       post_genre = favorites_posts.where(genre_id: params[:genre_id]).pluck(:id)
     else
@@ -68,9 +67,7 @@ class UsersController < ApplicationController
                    .order("updated_at DESC")
       @posts = @hit_posts.page(params[:page]).per(PER)
     end
-    
   end
-  
   
   # 過去の投稿一覧
   def post_list
@@ -104,7 +101,6 @@ class UsersController < ApplicationController
       flash[:alert] = "退会できませんでした"
       redirect_to mypage_edit_users_path
     end
-    
   end
   
   
@@ -121,5 +117,4 @@ class UsersController < ApplicationController
     def password_set?
       user_params[:password].present? && user_params[:password_confirmation].present? ? true : false
     end
-    
 end

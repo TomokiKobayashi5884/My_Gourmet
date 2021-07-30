@@ -1,3 +1,4 @@
+// 都道府県選択後、エリア絞り込み
 $(document).on('change', '#large_area_id', function() {
   return $.ajax({
     type: 'GET',

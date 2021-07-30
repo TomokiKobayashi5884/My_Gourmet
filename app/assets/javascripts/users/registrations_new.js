@@ -7,6 +7,7 @@ $('#user_agreement_terms, #user_agreement_privacy').on('change', () => {
     };
 });
 
+
 // 利用規約とプライバシーポリシーのリンクを押したときは対応するモーダルの内容に書き換える
 $('#terms_of_servise').on('click', () => {
     console.log('-----------click');
@@ -22,6 +23,7 @@ $('#privacy_policy').on('click', () => {
     $('.terms_of_servise_text').hide();
     $('#agreement').modal();
 });
+
 
 // モーダル閉じるボタン
 $('#close').on('click', () => {

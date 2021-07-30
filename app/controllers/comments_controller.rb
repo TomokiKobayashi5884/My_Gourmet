@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
     before_action :authenticate_user!
+
     
     def create
         post = Post.find(params[:post_id])
@@ -33,7 +34,6 @@ class CommentsController < ApplicationController
         
     end
         
-    
     
     private
       

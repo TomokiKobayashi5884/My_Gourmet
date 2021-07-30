@@ -56,11 +56,8 @@
 
 .title {
     font-size: 1.8rem;
-    // display: -webkit-box;
-    // overflow: hidden;
-    // -webkit-line-clamp: 2;
-    // -webkit-box-orient: vertical;
 }
+
 .storename {
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
@@ -94,6 +91,7 @@
     // margin-top: 0.7rem;
     marginbottom: 0;
 }    
+
 .article-content {
     min-height: 8vw;
 }
@@ -105,17 +103,14 @@ table {
     word-wrap: break-all;
 }
 
-
-
 .h-restaurant-image {
     width: 130px;
     height: 130px;
 }
 
 .h-title {
-        // font-size: 18px;
         margin-top: 0.3rem;
-    }
+}
     
 .h-genre {
     display: inline-flex;
@@ -131,7 +126,6 @@ table {
 .h-address {
     font-size: 17px;
     margin-top: 1rem;
-    // margin-bottom: 0;
 }
 
 .paginateButton {
@@ -143,14 +137,12 @@ table {
     background: #007bff;
     border-radius: 15px;
     color: #fff;
-    
 }
 
 .paginateButton:hover {
     background: #d3d3d3;
     border-radius: 18px;
 }
-
 
 
 @media screen and (max-width: 599px) {
@@ -187,10 +179,6 @@ table {
     .title {
         font-size: 5vw;
         margin-top: 0.4rem;
-        // display: -webkit-box;
-        // overflow: hidden;
-        // -webkit-line-clamp: 2;
-        // -webkit-box-orient: vertical;
     }
     
     .genre {
@@ -221,14 +209,7 @@ table {
     
     .sub-article-info {
         font-size: 4vw;
-        // margin-top: 0.2rem;
         marginbottom: 0;
-    }
-    
-    .article-content {
-        // position: relative;
-        // bottom: 0%;
-        // width: 100%;
     }
     
     table {
