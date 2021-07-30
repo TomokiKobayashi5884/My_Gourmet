@@ -24,6 +24,7 @@ class Dashboard::ContactsController < ApplicationController
         redirect_to dashboard_contacts_path
     end
 
+
     private
     
         def set_contact

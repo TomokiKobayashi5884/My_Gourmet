@@ -2,6 +2,7 @@ class DashboardController < ApplicationController
     before_action :authenticate_admin!
     layout 'dashboard/dashboard'
     
+    
     def index
         # データの日時を指定
         params[:date] = date_info
@@ -44,6 +45,7 @@ class DashboardController < ApplicationController
         @mom_post_count = @post_count - last_post_count
         @mom_comment_count = @comment_count - last_comment_count
     end
+    
     
     private
     

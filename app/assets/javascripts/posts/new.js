@@ -68,6 +68,7 @@ $('.paginateButton').on('click', function() {
   $('html, body, #exampleModalLong').animate({ scrollTop: 0 }, 500);
 });
 
+
 // 検索条件を変更し、検索ボタンを押した場合は1ページ目に戻る
 $('#keyword, #large_area_selected, #restaurant_middle_area_code, #genre_selected').on('change', function() {
   $('#search_hotpepper').on('click', function() {

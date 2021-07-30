@@ -3,6 +3,7 @@ class Dashboard::PostsController < ApplicationController
     before_action :set_post, only: %w[show edit update destroy]
     layout "dashboard/dashboard"
     
+    
     def index
       @genres = Genre.all
       posts = Post.search_by_keyword(params[:keyword]).search_by_user(params[:user_info])

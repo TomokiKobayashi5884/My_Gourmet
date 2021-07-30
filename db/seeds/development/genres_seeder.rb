@@ -39,4 +39,3 @@ Genre.all.destroy_all
         genre_code: genre_array[1]
         )
 end
-

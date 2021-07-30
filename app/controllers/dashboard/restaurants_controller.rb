@@ -4,6 +4,8 @@ class Dashboard::RestaurantsController < ApplicationController
     layout "dashboard/dashboard"
     
     HOTPEPPER_PER = 10
+    
+    
     def index
         # 店舗情報検索機能
         restaurants = Restaurant.search_by_keyword(params[:keyword])

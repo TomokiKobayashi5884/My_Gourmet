@@ -9,7 +9,6 @@ class User < ApplicationRecord
   
   extend DisplayList
   extend SwitchFlg
-         
   
   validates :name, uniqueness: true, length: { maximum: 10 }, presence: true
   VALID_EMAIL_REGEX = /\A[\w+-.]+@[a-z\d-]+(.[a-z\d-]+)*.[a-z]+\z/i
@@ -25,8 +24,6 @@ class User < ApplicationRecord
       params.delete(:password)
       params.delete(:password_confirmation) if params[:password_confirmation].blank?
     end
-    
-    
     result = update(params, *options)
     clean_up_passwords
     result

@@ -40,5 +40,3 @@ prepare_params = { "key": keyid, "format": data_format }
             name: large_area_array[1]
             )
     end
-    
-    

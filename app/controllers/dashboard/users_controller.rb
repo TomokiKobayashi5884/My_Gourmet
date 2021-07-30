@@ -2,6 +2,7 @@ class Dashboard::UsersController < ApplicationController
     before_action :authenticate_admin!
     layout "dashboard/dashboard"
     
+    
     def index
         users = User.search_by_keyword(params[:keyword])
         @users = users.display_list(params[:page])

@@ -1,7 +1,7 @@
 console.log(`~~~~~~~~~~~~~~~~~~~~ edit.js.erb`);
 
 <% if params[:hotpepper_id] %>
-console.log("1");
+  console.log("1");
   
   店舗情報を投稿編集フォームにセット
   $("#name-input").val("<%= @name %>");
@@ -11,17 +11,14 @@ console.log("1");
   $("#hotpepper_id-input").val("<%= @hotpepper_id %>");
   $("#url-input").val("<%= @url %>");
   $("#post_restaurant_large_area_code").val("<%= @large_area_code %>");
-  
   $(".middle_area").html("<%= j( collection_select :restaurant, :middle_area_code, MiddleArea.where(large_area_id: LargeArea.where(large_area_code: @large_area_code).pluck(:id)), :middle_area_code, :name, { selected: @middle_area_code, include_blank: "選択してください(new2)" }, required: "required", class: "form-control w-100 mb-2" ) %>");
   
-モーダルを閉じる
+  <!--モーダルを閉じる-->
   $("#exampleModalLong").modal("hide");
   $('body').removeClass('modal-open');　　　　　
   $('.modal-backdrop').remove();
   
 <% else %>
-console.log("2");
+  console.log("2");
   $("#searched-restaurants").html("<%= j( render partial: "search_results", locals: { h_restaurants: @h_restaurants, available_restaurants: @available_restaurants } ) %>");
-   
 <% end %>
-

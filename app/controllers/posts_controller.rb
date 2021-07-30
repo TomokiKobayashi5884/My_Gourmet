@@ -1,8 +1,4 @@
 class PostsController < ApplicationController
-  
-  include CommonHelper
-  
-  
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   
   require 'net/http'

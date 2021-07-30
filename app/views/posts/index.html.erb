@@ -4,7 +4,6 @@
   <h1 class="logo text-nowrap">My Gourmet</h1>
 </div>
 
-
 <div id="main" class="container">
   <div class="row">
     <!--投稿記事一覧部分-->
@@ -60,11 +59,11 @@
           <h4 class="ranking mb-3"><i class="fas fa-crown crown"></i>&ensp;食べたい数ランキング</h4>
           <ol class="pl-4">
             <% @ranking.each do |ranking| %>
-              <li class="ranking-list">
-                <%= link_to post_path(ranking), class: "link" do %>
-                  <p class="text-nowrap text-truncate mb-0"><%= ranking.title %></p>
-                <% end %>
-              </li>
+              <%= link_to post_path(ranking), class: "link text-nowrap text-truncate mb-0" do %>
+                <li class="ranking-list">
+                  <%= ranking.title %>
+                </li>
+              <% end %>
             <% end %>
           </ol>
       </div>
