@@ -8,9 +8,9 @@
         <div class="col-lg-7 mb-3 px-0 form-inline">
           <%= f.label "期間", class: "col-form-labl pr-0 mr-3" %>
             <% if params[:date].present? %>
-                <%= f.date_select :date, {selected: params[:date], start_year: 2010, end_year: Time.now.year, discard_day: true, use_month_numbers: true, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
+                <%= f.date_select :date, {selected: params[:date], start_year: 2021, end_year: Time.now.year, discard_day: true, use_month_numbers: true, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
             <% else %>
-                <%= f.date_select :date, {start_year: 2010, end_year: Time.now.year, discard_day: true, use_month_numbers: true, default: { year: Time.now.year, month: Time.now.month }, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
+                <%= f.date_select :date, {start_year: 2021, end_year: Time.now.year, discard_day: true, use_month_numbers: true, default: { year: Time.now.year, month: Time.now.month }, date_separator: "&emsp;年&emsp;"}, class: "form-control" %>月分
             <% end %>
         </div>
       <% end %>
@@ -62,4 +62,4 @@
     </table>
 </div>
 
-<%= javascript_include_tag "dashboards/index" %>
+<%= javascript_include_tag "dashboard/index" %>

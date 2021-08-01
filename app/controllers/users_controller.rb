@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     end
     
     if params[:keyword].present?
-      @hit_posts = favorites_posts.keyword_search(params[:keyword].strip).where(" id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre)
+      @hit_posts = favorites_posts.search_by_keyword(params[:keyword].strip).where(" id IN (?) and id IN (?) and id IN (?)", post_large_area, post_middle_area, post_genre)
                    .order("updated_at DESC")
       @posts = @hit_posts.page(params[:page]).per(PER)
     else
