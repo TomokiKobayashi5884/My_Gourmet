@@ -8,17 +8,17 @@ class DashboardController < ApplicationController
         params[:date] = date_info
         @date = params[:date] ? params[:date] : Time.zone.today
         
-        # 総会員数
+        # 指定した月までの総会員数
         @user_count = User.where( created_at: Date.new(2021,1,1)..@date.end_of_month ).count
-        # 総会員数に対する食べたい物リストの作成率(%)
+        # 指定した月までの総会員数に対する食べたい物リストの作成率(%)
         if @user_count.zero?
             @creation_rate_of_list = 0.0
         else
             @creation_rate_of_list = ( ( Favorite.where( created_at: Date.new(2021,1,1)..@date.end_of_month ).distinct.pluck(:user_id).count.to_f / @user_count.to_f ) * 100 ).round(2)
         end
-        # 総投稿数
+        # 指定した月までの総投稿数
         @post_count = Post.where( created_at: Date.new(2021,1,1)..@date.end_of_month ).count
-        # 総コメント数
+        # 指定した月までの総コメント数
         @comment_count = Comment.where( created_at: Date.new(2021,1,1)..@date.end_of_month ).count
         
         logger.debug("-----------------------@user_count #{@user_count}")
@@ -28,11 +28,13 @@ class DashboardController < ApplicationController
         
         # 前月比データ
         @mom_user_count = User.where( created_at: @date.all_month ).count
-        if @user_count.zero?
-            @mom_creation_rate_of_list = 0.0
+        last_user_count = User.where( created_at: Date.new(2021,1,1)..@date.last_month.end_of_month ).count
+        if last_user_count.zero?
+            last_creation_rate_of_list = 0.0
         else
-            @mom_creation_rate_of_list = ( ( Favorite.where( created_at: @date.all_month ).distinct.pluck(:user_id).count.to_f / @user_count.to_f ) * 100 ).round(2)
+            last_creation_rate_of_list = ( ( Favorite.where( created_at: Date.new(2021,1,1)..@date.last_month.end_of_month ).distinct.pluck(:user_id).count.to_f / last_user_count.to_f ) * 100 ).round(2)
         end
+        @mom_creation_rate_of_list = @creation_rate_of_list - last_creation_rate_of_list
         @mom_post_count = Post.where( created_at: @date.all_month ).count
         @mom_comment_count = Comment.where( created_at: @date.all_month ).count
     end
