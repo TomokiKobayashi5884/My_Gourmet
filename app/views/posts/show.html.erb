@@ -40,7 +40,7 @@
                           <h6 class="font-weight-bold"><%= comment.user.name if comment.user %></h6>
                           <div class="mb-2 d-flex">
                                <p class="col-11 text-wrap m-0 p-1 border"><%= comment.content %></p>
-                               <% if current_user = comment.user %>
+                               <% if current_user == comment.user %>
                                    <%= link_to "削除", "/posts/#{@post.id}/comments/#{comment.id}", method: :delete, data: { confirm: "コメントを削除しますか？" }, class: "col-1 link align-self-center text-nowrap" %>
                                <% end %>
                           </div>
