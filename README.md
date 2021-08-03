@@ -18,7 +18,7 @@ My Gourmetを使用するユーザーが増えることでグルメ好きな人�
 
 ## 機能一覧
 
-- ユーザー登録機能、ログイン機能 [devise]　　
+- 会員登録機能、ログイン機能 [devise]　　
 - ユーザー情報編集機能　　
 - 退会機能　　
 - 投稿機能  
@@ -83,21 +83,21 @@ My Gourmetでは大きく分けて3つのことができます。
 - ### フレームワーク
   - Ruby on Rails 5.2.4.2
 - ### gem
-  - devise
-  - kaminari
-  - rails-i18n
-  - CarrierWave
-  - mini_magick
-  - dotenv-rails
-  - high-voltage
-  - aws-sdh-s3
-  - fog-aws
+  - devise (会員登録、ログイン機能）
+  - kaminari (ページネーション)
+  - rails-i18n (ページネーションのボタンにfontawesomeを導入）
+  - CarrierWave (画像アップロード機能）
+  - mini_magick (画像加工）
+  - dotenv-rails　（環境変数）
+  - high-voltage （利用規約、プライバシーポリシーなどのページを作成）
+  - aws-sdh-s3 （画像の保存先をS3に変更）
+  - fog-aws　（画像の保存先をS3に変更）
 - ### CDN  
   - jQuery
-  - bootstrap
-  - Font Awesome
+  - bootstrap 
+  - Font Awesome  
 - ### 外部API
-  - ホットペッパーAPI
+  - ホットペッパーAPI (投稿時に店舗情報を検索する用）
 - ### データベース
   - sqlite3 (開発環境）
   - postgresql (本番環境）
