@@ -93,15 +93,15 @@ My Gourmetでは大きく分けて3つのことができます。
   - aws-sdh-s3 （画像の保存先をS3に変更）
   - fog-aws　（画像の保存先をS3に変更）
 - ### CDN  
-  - jQuery
-  - bootstrap 
+  - jQuery 3.6.0
+  - bootstrap 4.6.0
   - Font Awesome  
 - ### 外部API
   - ホットペッパーAPI (投稿時に店舗情報を検索する用）
 - ### データベース
   - sqlite3 (開発環境）
   - postgresql (本番環境）
-- ### デプロイ先
+- ### 本番環境
   - heroku
 - ### 画像保存先
   - amazon S3
