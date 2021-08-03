@@ -42,11 +42,9 @@ gem 'dotenv-rails'
 gem 'carrierwave', '~> 2.0'
 # 画像書こう用
 gem 'mini_magick'
-# ER図確認
-gem 'rails-erd'
 # ページネーション機能
 gem 'kaminari'
-# ページネーションの表示を変更
+# ページネーションのボタンにfontawesomeを使用
 gem 'rails-i18n'
 # 利用規約、プライバシーポリシーなどの静的ページ作成
 gem 'high_voltage'
