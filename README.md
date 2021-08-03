@@ -92,3 +92,10 @@ My Gourmetでは大きく分けて3つのことができます。
   - high-voltage
   - aws-sdh-s3
   - fog-aws
+- ### CDN  
+  - jQuery
+  - bootstrap
+  - Font Awesome
+- ### 外部API
+  - ホットペッパーAPI
+
