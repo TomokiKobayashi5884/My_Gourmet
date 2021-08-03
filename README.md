@@ -78,9 +78,17 @@ My Gourmetでは大きく分けて3つのことができます。
      ![食べたい！2](https://user-images.githubusercontent.com/82651310/127955363-58ccbbb5-65fb-46bb-b233-c2f025e4702e.gif)
 
 ## 使用技術  
-- HTML/CSS  
-- JavaScript  
-- jQuery 3.6.0  
-- Ruby 2.6.5  
-- Ruby on Rails 5.2.4.2  
-- 
+- ### 言語
+  - Ruby 2.6.5
+- ### フレームワーク
+  - Ruby on Rails 5.2.4.2
+- ### gem
+  - devise
+  - kaminari
+  - rails-i18n
+  - CarrierWave
+  - mini_magick
+  - dotenv-rails
+  - high-voltage
+  - aws-sdh-s3
+  - fog-aws
