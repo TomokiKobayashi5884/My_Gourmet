@@ -98,4 +98,11 @@ My Gourmetでは大きく分けて3つのことができます。
   - Font Awesome
 - ### 外部API
   - ホットペッパーAPI
+- ### データベース
+  - sqlite3 (開発環境）
+  - postgresql (本番環境）
+- ### デプロイ先
+  - heroku
+- ### 画像保存先
+  - amazon S3
 
