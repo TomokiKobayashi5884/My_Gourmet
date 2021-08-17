@@ -98,7 +98,7 @@ Rails.application.configure do
     #default URL
     config.action_mailer.default_url_options = {
       protocol: 'https',
-      host: ENV["HEROKU_DOMAIN"]
+      host: ENV["DOMAIN"]
     }
     
     #email setting
