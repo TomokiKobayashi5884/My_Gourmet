@@ -1,1 +1,49 @@
-<%= render "layouts/devise/sessions_new", resource: resource, resource_name: resource_name %>
+<div class="container">
+  <div class="row justify-content-center">
+    
+    <div class="col-lg-8 mt-5">
+        <h4 class="my-3 heading">管理者ログイン画面</h4>
+      
+        <hr>
+      
+      <!--ログインのためのフォーム入力部分-->
+        <%= form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          
+            <div class="form-group">
+              <%= f.email_field :email, class: "form-control #{ "is-invalid" if alert }", autofocus: "true",
+                required: "required", autocomplete: "email", placeholder: "メールアドレス" %>
+              <!--エラーメッセージ表示部分  -->
+              <% if alert %>
+                <span class="invalid-feedback">
+                  <storng>メールアドレスが正しくない可能性があります。</storng>
+                </span>
+              <% end %>
+            </div>
+            
+            <div class="form-group">
+              <%= f.password_field :password, class: "form-control #{ "is-invalid" if alert }",
+                required: "required", placeholder: "パスワード" %>
+              <!--エラーメッセージ表示部分-->
+              <% if alert %>
+                <span class="invalid-feedback">
+                  <storng>パスワードが正しくない可能性があります。</storng>
+                </span>
+              <% end %>
+            </div>
+            
+            <!--自動ログイン機能-->
+            <div class="form-group">
+              <div class="form-check">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, "次回から自動的にログインする", class: "form-check-label" %>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <%= f.submit "ログイン", class: "btn btn-danger w-100" %>
+            </div>
+        <% end %>    
+    </div>
+  </div>
+</div>

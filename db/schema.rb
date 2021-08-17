@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_07_22_103329) do
 
-  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "admins", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -25,17 +25,17 @@ ActiveRecord::Schema.define(version: 2021_07_22_103329) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.string "content"
-    t.bigint "user_id"
-    t.bigint "post_id"
+    t.integer "user_id"
+    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "contacts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "contacts", force: :cascade do |t|
     t.string "subject", null: false
     t.string "message", null: false
     t.string "name", null: false
@@ -44,46 +44,46 @@ ActiveRecord::Schema.define(version: 2021_07_22_103329) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "post_id"
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_favorites_on_post_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "genres", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "genres", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "genre_code"
   end
 
-  create_table "large_areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "large_areas", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "large_area_code"
   end
 
-  create_table "middle_areas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "middle_areas", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "large_area_id"
+    t.integer "large_area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "middle_area_code"
     t.index ["large_area_id"], name: "index_middle_areas_on_large_area_id"
   end
 
-  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "posts", force: :cascade do |t|
     t.string "title", null: false
     t.text "content"
     t.boolean "ate", default: true, null: false
     t.string "image", null: false
-    t.bigint "user_id"
-    t.bigint "genre_id"
-    t.bigint "restaurant_id"
+    t.integer "user_id"
+    t.integer "genre_id"
+    t.integer "restaurant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_posts_on_genre_id"
@@ -91,13 +91,13 @@ ActiveRecord::Schema.define(version: 2021_07_22_103329) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "restaurants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.string "address"
     t.string "open_time"
     t.string "close_day"
-    t.bigint "large_area_id"
-    t.bigint "middle_area_id"
+    t.integer "large_area_id"
+    t.integer "middle_area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "url"
@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2021_07_22_103329) do
     t.index ["middle_area_id"], name: "index_restaurants_on_middle_area_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -126,14 +126,4 @@ ActiveRecord::Schema.define(version: 2021_07_22_103329) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
-  add_foreign_key "favorites", "posts"
-  add_foreign_key "favorites", "users"
-  add_foreign_key "middle_areas", "large_areas"
-  add_foreign_key "posts", "genres"
-  add_foreign_key "posts", "restaurants"
-  add_foreign_key "posts", "users"
-  add_foreign_key "restaurants", "large_areas"
-  add_foreign_key "restaurants", "middle_areas"
 end

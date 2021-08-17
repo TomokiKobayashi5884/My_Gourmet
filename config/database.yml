@@ -5,13 +5,9 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: mysql2
-  encoding: utf8
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password: 
-  host: localhost
-  socket: /var/lib/mysql/mysql.sock
+  timeout: 5000
 
 development:
   <<: *default
@@ -25,9 +21,13 @@ test:
   database: My_Gourmet_test
 
 production:
-  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  socket: /var/lib/mysql/mysql.sock
   database: My_Gourmet_production
   username: <%= Rails.application.credentials.db[:username] %>
   password: <%= Rails.application.credentials.db[:password] %>
   host: <%= Rails.application.credentials.db[:hostname] %>
-  
+ 
