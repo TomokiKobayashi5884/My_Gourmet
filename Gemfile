@@ -59,9 +59,6 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
-  # データベースにMySQLを使用
-  # gem 'mysql2'
-  
   gem 'pry-rails'
 end
 
@@ -86,6 +83,8 @@ group :production do
   gem 'listen', '>= 3.0.5', '< 3.2'
   # データベースにMySQLを使用
   gem 'mysql2'
+  # アプリケーションサーバーにUnicornを使用
+  gem 'unicorn'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
