@@ -107,7 +107,7 @@ My Gourmetでは大きく分けて3つのことができます。
 - ### データベース
   - MySQL8.0 (RDS)
 - ### デプロイ先
-  - heroku (移行前) → AWS EC2　（移行後）
+  - heroku（移行前) → AWS EC2（移行後）
 - ### 画像保存先
   - amazon S3
 
