@@ -6,8 +6,8 @@
 (レスポンシブ対応となっているため、PC、iPad、スマホからも使用することができます。）
 
 ## URL  
-https://mygourmet2021.herokuapp.com  (heroku)
-               ↓
+https://mygourmet2021.herokuapp.com  (heroku)  
+               ↓　移行しました  
 https://mygourmet2021.com/posts  (AWS EC2)
 
 ## 作成した目的
@@ -100,7 +100,7 @@ My Gourmetでは大きく分けて3つのことができます。
   - Font Awesome  
 - ### 外部API
   - ホットペッパーAPI (投稿時に店舗情報を検索する用）
-- インフラ構成図
+- ### インフラ構成図
 ![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130078868-9536eddf-b8a7-4819-9890-dc0c38a7e486.png)
 - ### データベース
   - MySQL8.0 (RDS)
