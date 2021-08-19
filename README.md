@@ -105,6 +105,7 @@ My Gourmetでは大きく分けて3つのことができます。
   - heroku
 - ### 画像保存先
   - amazon S3
+![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130075399-627db9d5-b79c-415d-a6d5-f61a95ff7bd3.png)
 
 ## 今後の予定
 - インフラをAWSへ移行
