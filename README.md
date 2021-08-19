@@ -8,7 +8,7 @@
 ## URL  
 https://mygourmet2021.herokuapp.com  (heroku)  
                  ↓　移行しました  
-https://mygourmet2021.com/posts  (AWS EC2)
+https://mygourmet2021.com  (AWS EC2)
 
 ## 作成した目的
 
