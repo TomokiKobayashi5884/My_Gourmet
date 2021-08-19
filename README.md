@@ -94,6 +94,8 @@ My Gourmetでは大きく分けて3つのことができます。
   - high-voltage （利用規約、プライバシーポリシーなどのページを作成）
   - aws-sdh-s3 （画像の保存先をS3に変更）
   - fog-aws　（画像の保存先をS3に変更）
+  - unicorn (本番環境のアプリケーションサーバー用）
+  - mysql2 (本番環境のデータベース用）
 - ### CDN  
   - jQuery 3.6.0
   - bootstrap 4.6.0
@@ -105,10 +107,9 @@ My Gourmetでは大きく分けて3つのことができます。
 - ### データベース
   - MySQL8.0 (RDS)
 - ### デプロイ先
-  - heroku (移行前) → AWS EC2（移行後）
+  - heroku (移行前) → AWS EC2　（移行後）
 - ### 画像保存先
   - amazon S3
-
 
 ## 今後の予定
 - Dockerの導入
