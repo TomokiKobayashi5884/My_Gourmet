@@ -6,6 +6,12 @@ $('#user_agreement_terms, #user_agreement_privacy').on('change', () => {
         $('.registration-btn').prop('disabled', true);
     };
 });
+// バリデーション引っかかった場合に新規登録ボタンが押せなくならないように
+$(window).on('load', function() {
+    if ( $('#user_agreement_terms').prop('checked') && $('#user_agreement_privacy').prop('checked') ) {
+        $('.registration-btn').prop('disabled', false);
+    };
+});
 
 
 // 利用規約とプライバシーポリシーのリンクを押したときは対応するモーダルの内容に書き換える
