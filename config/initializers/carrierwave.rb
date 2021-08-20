@@ -13,4 +13,7 @@ CarrierWave.configure do |config|
     region: ENV['AWS_REGION'],
     path_style: true
   }
+  if Rails.env.production?
+    config.asset_host = "https://static.mygourmet2021.com"
+  end
 end
