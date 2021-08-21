@@ -83,37 +83,23 @@ My Gourmetでは大きく分けて3つのことができます。
 - ### 言語
   - Ruby 2.6.5
 - ### フレームワーク
-  - Ruby on Rails 5.2.4.2
-- ### gem
-  - devise (会員登録、ログイン機能）
-  - kaminari (ページネーション)
-  - rails-i18n (ページネーションのボタンにfontawesomeを導入）
-  - CarrierWave (画像アップロード機能）
-  - mini_magick (画像加工）
-  - dotenv-rails　（環境変数）
-  - high-voltage （利用規約、プライバシーポリシーなどのページを作成）
-  - aws-sdh-s3 （画像の保存先をS3に変更）
-  - fog-aws　（画像の保存先をS3に変更）
-  - unicorn (本番環境のアプリケーションサーバー用）
-  - mysql2 (本番環境のデータベース用）
-- ### CDN  
-  - jQuery 3.6.0
-  - bootstrap 4.6.0
-  - Font Awesome  
+  - Ruby on Rails 5.2.4.2 
 - ### 外部API
-  - ホットペッパーAPI (投稿時に店舗情報を検索する用）
+  - ホットペッパーAPI
 - ### インフラ構成図
 ![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130078868-9536eddf-b8a7-4819-9890-dc0c38a7e486.png)
-- ### デプロイ先
-  - heroku（移行前) → AWS EC2（移行後）
+- ### AWS
+  - VPC
+  - EC2
+  - RDS
+  - Route53
+  - ALB
+  - ACM
+  - S3
 - ### Webサーバー
-  - nginx 1.20.0
-- ### アプリケーションサーバー
-  - Unicorn 6.0.0
+  - Nginx 1.20.0
 - ### データベース
   - MySQL 8.0 (RDS)
-- ### 画像保存先
-  - amazon S3
 
 ## 今後の予定
 - Dockerの導入
