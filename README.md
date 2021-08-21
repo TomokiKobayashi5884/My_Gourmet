@@ -104,10 +104,14 @@ My Gourmetでは大きく分けて3つのことができます。
   - ホットペッパーAPI (投稿時に店舗情報を検索する用）
 - ### インフラ構成図
 ![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130078868-9536eddf-b8a7-4819-9890-dc0c38a7e486.png)
-- ### データベース
-  - MySQL8.0 (RDS)
 - ### デプロイ先
   - heroku（移行前) → AWS EC2（移行後）
+- ### Webサーバー
+  - nginx 1.20.0
+- ### アプリケーションサーバー
+  - Unicorn 6.0.0
+- ### データベース
+  - MySQL8.0 (RDS)
 - ### 画像保存先
   - amazon S3
 
