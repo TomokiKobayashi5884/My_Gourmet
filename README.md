@@ -87,7 +87,8 @@ My Gourmetでは大きく分けて3つのことができます。
 - ### 外部API
   - ホットペッパーAPI
 - ### インフラ構成図
-![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130078868-9536eddf-b8a7-4819-9890-dc0c38a7e486.png)
+![My_Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130348042-481edeb9-e7fd-4844-aa01-8b0b687dd8a3.png)
+
 - ### AWS
   - VPC
   - EC2
@@ -96,6 +97,7 @@ My Gourmetでは大きく分けて3つのことができます。
   - ALB
   - ACM
   - S3
+  - CloudFront
 - ### Webサーバー
   - Nginx 1.20.0
 - ### データベース
