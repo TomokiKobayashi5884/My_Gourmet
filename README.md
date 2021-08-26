@@ -86,7 +86,7 @@ My Gourmetでは大きく分けて3つのことができます。
   - Ruby on Rails 5.2.4.2 
 - ### 外部API
   - ホットペッパーAPI
-- ### インフラ構成図png)
+- ### インフラ構成図
 ![My Gourmetのインフラ図](https://user-images.githubusercontent.com/82651310/130798559-04b6ceb9-ac8c-4bdc-b80f-7943e0e91de8.png)
 
 - ### AWS
