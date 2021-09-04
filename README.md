@@ -10,7 +10,7 @@ https://mygourmet2021.herokuapp.com  (heroku)
                  ↓　移行しました  
 https://mygourmet2021.com  (AWS EC2)  
 
-※ ゲストとしてログインする場合  
+※ 以下のメールアドレスとパスワードを使用するとゲストとしてログインできます  
 メールアドレス : guestuser@example.com  
 パスワード : guest2021
 
